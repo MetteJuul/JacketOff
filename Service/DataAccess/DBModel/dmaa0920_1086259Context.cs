@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Libraries.Model
+namespace DataAccess.Model
 {
     public partial class dmaa0920_1086259Context : DbContext
     {

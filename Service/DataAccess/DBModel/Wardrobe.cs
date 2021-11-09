@@ -3,18 +3,17 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Libraries.Model
+namespace DataAccess.Model
 {
-    public partial class Type
+    public partial class Wardrobe
     {
-        public Type()
+        public Wardrobe()
         {
             Items = new HashSet<Item>();
         }
 
-        public int TypeId { get; set; }
-        public decimal Price { get; set; }
-        public string TypeName { get; set; }
+        public string WardrobeId { get; set; }
+        public int MaxAmountOfItems { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
     }

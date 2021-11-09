@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Libraries.Model
+namespace DataAccess.Model
 {
     public partial class Reservation
     {
