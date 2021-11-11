@@ -11,11 +11,11 @@ namespace DataAccess.Interfaces
 {
     internal interface IGuestDB
     {
-        int createGuest(Guest guest);
-        List<Guest> getAllGuests();
-        Guest getbyID(int iD);
-        int updateGuest(Guest guest);
-        bool deleteByID(int iD);
-        List<Guest> getByGuest(int guestID);
+        int CreateGuest(Guest guest);
+        List<Guest> GetAllGuests();
+        Guest GetbyID(int iD);
+        int UpdateGuest(Guest guest);
+        bool DeleteByID(int iD);
+        List<Guest> GetByGuest(int guestID);
     }
 }

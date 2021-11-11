@@ -9,12 +9,12 @@ namespace DataAccess.Interfaces
 {
     internal interface IReservationDB
     {
-        int createReservation(Reservation reservation);
-        List<Reservation> getAllReservations();
-        Reservation getByID(int iD);
-        int updateReservation(Reservation reservation);
-        bool deleteByID(int iD);
-        List<Reservation> getByGuest(int guestID);
+        int CreateReservation(Reservation reservation);
+        List<Reservation> GetAllReservations();
+        Reservation GetByID(int iD);
+        int UpdateReservation(Reservation reservation);
+        bool DeleteByID(int iD);
+        List<Reservation> GetByGuest(int guestID);
         
     }
 }
