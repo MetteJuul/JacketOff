@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Model;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,32 +11,77 @@ namespace TestService.TestDataAccess {
 
         //Setup fields
         private GuestDB _guestDB;
-        private Guest _guest;
+        private Guest _newGuest;
 
         [SetUp]
-        public void Setup() {
+        public async Task AsyncSetup() {
             //Initiate fields
             _guestDB = new GuestDB(Configuration.CONNECTION_STRING);
-            _newGuest = new Guest();
-            _guest.ID = await _authorRepository.CreateAsync(_newGuest, "test1234");
-
+            await CreateNewGuestAsync();
         }
 
         [TearDown]
         public async Task CleanUpAsync() {
-            await new GuestDB(Configuration.CONNECTION_STRING).DeleteAsync(_guest.ID);
+            await new GuestDB(Configuration.CONNECTION_STRING).DeleteAsync(_newGuest.ID);
         }
 
-        //Write tests for each method from class diagram
+        private async Task<Guest> CreateNewGuestAsync() {
+            _newGuest = new Guest("testGuest@mail.com"); 
+            _newGuest.ID = await _guestDB.CreateAsync(_newGuest);
+            return _newGuest;
+        }
+
         [Test]
-        public async Task Test1() {
-        // arrange
+        public void TestCreateGuest() { 
+            // arrange & act is done in setup    
 
-        // act
-
-        // assert
-
-            Assert.Pass();
+            // assert
+            Assert.IsTrue(_newGuest.ID > 0, "Created guest ID not returned");
         }
+
+        [Test]
+        public async Task TestGetAllGuests() {
+            // arrange
+
+            // act
+            var guests = await _guestDB.GetAllAsync();
+            // assert
+            Assert.IsTrue(guests.Count() > 0, "No guests returned");
+        }
+
+        [Test]
+        public async Task TestGetByID() {
+            // arrange
+
+            // act
+            var foundGuest = await _guestDB.GetByID(_newGuest.ID);
+            // assert          
+            Assert.IsTrue(_newGuest.ID == foundGuest.ID, "Guest not found");
+        }
+
+        [Test]
+        public async Task TestUpdateGuestAsync() {
+            // arrange
+            string updatedEmail = "andreas@dahlgaard.dk";
+            _newGuest.Email = updatedEmail;
+
+            // act
+            await _guestDB.UpdateGuest(_newGuest);
+
+            // assert       
+            var foundGuest = await _guestDB.GetByID(_newGuest.ID);
+            Assert.IsTrue(foundGuest.Email == updatedEmail, "Guest not updated");
+        }
+
+        [Test]
+        public async Task TestDeleteByIDAsync() {
+            // arrange
+
+            // act
+            bool deleted = await _guestDB.deleteByID(_newGuest.ID);
+            
+            // assert
+            Assert.IsTrue(deleted, "Guest not deleted");
+        }  
     }
 }
