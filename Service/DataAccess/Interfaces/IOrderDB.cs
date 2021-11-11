@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IOrdderDB
+    internal interface IOrderDB
     {
-        int createOrder(Order order);
-        List<Order> getAllOrders();
-        Order getByID(int iD);
-        int updateOrder(Order order);
-        bool deleteByID(int iD);
+        int CreateOrder(Order order);
+        List<Order> GetAllOrders();
+        Order GetByID(int iD);
+        int UpdateOrder(Order order);
+        bool DeleteByID(int iD);
     }
 }
