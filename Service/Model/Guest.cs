@@ -12,7 +12,7 @@ namespace Model {
             Email = email;
         }
 
-        //Cosntructor for creating and sending Guests to the database
+        //Constructor for creating and sending Guests to the database
         public Guest(string email) {
             Email = email;
         }
