@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess;
 using Model;
 using NUnit;
 using NUnit.Framework;
@@ -22,12 +23,13 @@ namespace TestService.TestDataAccess {
 
         [TearDown]
         public async Task CleanUpAsync() {
-            await new ReservationDB(Configuration.CONNECTION_STRING).DeleteAsync();
+            await new ReservationDB(Configuration.CONNECTION_STRING).DeleteByID(_newReservation.ReservationID);
         }
 
         public async Task<Reservation> CreateNewReservationAsync() {
-            _newReservation = new Reservation(DateTime.Now, DateTime.Now, 1, 2, 50);
-            _newReservation.ID = await _reservationDB.CreateAsync(_newReservation);
+            _newReservation = new Reservation() { GuestID_FK = 2, OrderTime = DateTime.Now, ArrivalTime = DateTime.Now, 
+                AmountOfJackets = 2, AmountOfBags = 1, Price = 150};
+            _newReservation.ReservationID = await _reservationDB.CreateReservation(_newReservation);
             return _newReservation;
         }
 
@@ -36,7 +38,7 @@ namespace TestService.TestDataAccess {
             //ARRANGE & ACT is done in setup()
 
             //ASSERT
-            Assert.IsTrue(_newReservation.ID > 0, "Created reservation ID not returned");
+            Assert.IsTrue(_newReservation.ReservationID > 0, "Created reservation ID not returned");
         }
 
         [Test]
@@ -54,10 +56,11 @@ namespace TestService.TestDataAccess {
             //ARRANGE is done in Setup()
 
             //ACT
-            var foundReservation = await _reservationDB.GetByID(_newReservation.ID);
+            var foundReservation = await _reservationDB.GetByID(_newReservation.ReservationID);
 
             //ASSERT
-            Assert.IsTrue(_newReservation.ID == foundReservation.ID && _newReservation.ArrivalTime == foundReservation.ArrivalTime && _newReservation.OrderTime == foundReservation.OrderTime && _newReservation.AmountOfJackets == foundReservation.AmountOfJackets && _newReservation.AmountOfBags == foundReservation.AmountOfBags && _newReservation.Price == foundReservation.Price, "Reservation not found by id");
+            //TODO specify why we are not comparing datetime
+            Assert.IsTrue(_newReservation.ReservationID == foundReservation.ReservationID && _newReservation.GuestID_FK == foundReservation.GuestID_FK && _newReservation.AmountOfJackets == foundReservation.AmountOfJackets && _newReservation.AmountOfBags == foundReservation.AmountOfBags && _newReservation.Price == foundReservation.Price, "Reservation not found by ID");
         }
 
         [Test]
@@ -70,7 +73,7 @@ namespace TestService.TestDataAccess {
             await _reservationDB.UpdateReservation(_newReservation);
 
             //ASSERT
-            var foundReservation = await _reservationDB.GetByID(_newReservation.ID);
+            var foundReservation = await _reservationDB.GetByID(_newReservation.ReservationID);
             Assert.IsTrue(foundReservation.Price == _newReservation.Price, "Reservation not updated");
         }
 
@@ -79,10 +82,22 @@ namespace TestService.TestDataAccess {
             //ARRANGE is done in Setup()
 
             //ACT
-            bool deleted = await _reservationDB.DeleteByID(_newReservation.ID);
+            bool deleted = await _reservationDB.DeleteByID(_newReservation.ReservationID);
 
             //ASSERT
             Assert.IsTrue(deleted, "Reservation not deleted");
+        }
+
+        [Test]
+        public async Task TestGetByGuestID() {
+            //ARRANGE
+            int guestID = _newReservation.GuestID_FK;
+            
+            //ACT
+            var reservations = await _reservationDB.GetByGuestID(guestID);
+            
+            //ASSERT
+            Assert.IsTrue(reservations.Count() > 0, "No reservations returned");
         }
 
     }

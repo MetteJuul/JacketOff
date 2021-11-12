@@ -16,6 +16,5 @@ namespace DataAccess.Interfaces
         Guest GetbyID(int iD);
         int UpdateGuest(Guest guest);
         bool DeleteByID(int iD);
-        List<Guest> GetByGuest(int guestID);
     }
 }
