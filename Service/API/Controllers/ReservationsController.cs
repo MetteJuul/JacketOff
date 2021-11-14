@@ -6,64 +6,76 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationsController : ControllerBase {
 
         ReservationDB _reservationDB;
 
-        public ReservationsController(ReservationDB reservationDB) {
-            _reservationDB = reservationDB;
+        public ReservationsController() {
+            _reservationDB = new ReservationDB("data Source=hildur.ucn.dk; database=dmaa0920_1086259; user=dmaa0920_1086259; password=Password1!");
+        }
+
+        //GET: api/reservations        
+        [HttpGet]
+        public async Task<ActionResult<List<Reservation>>> GetAllReservations() {
+
+            //We create a variable to store our list of reservations
+            var reservations = await _reservationDB.GetAllReservations();
+
+            //If no reservations are found we return NotFound
+            if (reservations == null) {
+                return NotFound("Ingen reservationer blev fundet");
+            } else {
+                //Else we return 200 OK and the list of reservations
+                return Ok(reservations);
+            }
         }
 
         //GET: api/reservations/1
-        [HttpGet("{id}")]
+        [HttpGet("{iD}")]
         public async Task<ActionResult<Reservation>> GetByID(int iD) {
             var reservation = await _reservationDB.GetByID(iD);
-            if(reservation == null) { return NotFound(); } 
-            else { return Ok(reservation); }
+            if (reservation == null) {
+                return NotFound();
+            } else {
+                return Ok(reservation);
+            }
         }
 
+        //POST: api/reservations
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateReservation([FromBody] Reservation reservation) {
+            return Ok(await _reservationDB.CreateReservation(reservation));
+        }
 
-        ////GET: api/reservations
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<ReservationDB>>> GetByID([FromQuery] int reservationID) {
-        //    IEnumerable<Reservation> reservations = null;
-        //    if (reservationID > 0) { 
-        //        reservations = new List<Reservation>() { await _reservationDB.GetByID(reservationID) 
-        //        }; 
-        //    } else {
-        //        reservations = await _reservationDB.GetAllReservations();
-        //    }
+        //PUT: api/reservations/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateReservation([FromBody] Reservation reservation) {
+            if (!await _reservationDB.UpdateReservation(reservation)) {
+                return NotFound("Opdatering af reservationen mislykkedes");
+            } else {
+                return Ok();
+            }
+        }
+
+        // DELETE api/authors/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id) {
+            if (!await _reservationDB.DeleteByID(id)) { return NotFound(); } else { return Ok(); }
+        }
+
+        //Get api/reservations/
+        //[HttpGet{""}]
+        //public async Task<ActionResult<IEnumerable<Reservation>>> GetByGuestID([FromBody] int guestID) {
+        //IEnumerable<Reservation> reservations = null;
+        //reservations = await _reservationDB.GetByGuestID(guestID);
+        //if (reservations == null) {
+        //    return NotFound("Ingen reservationer blev fundet");
+        //} else {
         //    return Ok(reservations);
         //}
-
-        //// GET: api/<ReservationsController>
-        //[HttpGet]
-        //public IEnumerable<string> Get() {
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<ReservationsController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id) {
-        //    return "value";
-        //}
-
-        //// POST api/<ReservationsController>
-        //[HttpPost]
-        //public void Post([FromBody] string value) {
-        //}
-
-        //// PUT api/<ReservationsController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value) {
-        //}
-
-        //// DELETE api/<ReservationsController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id) {
-        //}
     }
+}
 }

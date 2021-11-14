@@ -81,7 +81,7 @@ namespace DataAccess {
         public async Task<bool> UpdateReservation(Reservation reservation) {
             try {
                 //Query is created and each reservation property is mapped using Dapper
-                var query = "UPDATE Reservation SET guestID_FK=@guestID_FK, orderTime=@orderTime, arrivalTime=@arrivalTime, amountOfJackets=@amountOfJackets, amountOfBags=@amountOfBags, price=@price";
+                var query = "UPDATE Reservation SET guestID_FK=@guestID_FK, orderTime=@orderTime, arrivalTime=@arrivalTime, amountOfJackets=@amountOfJackets, amountOfBags=@amountOfBags, price=@price WHERE reservationID=@reservationID";
 
                 //Connection is made
                 using var connection = CreateConnection();
