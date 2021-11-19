@@ -1,5 +1,5 @@
 ﻿
-using Model;
+using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IOrderDB
+    internal interface IOrderRepository
     {
         int CreateOrder(Order order);
         List<Order> GetAllOrders();

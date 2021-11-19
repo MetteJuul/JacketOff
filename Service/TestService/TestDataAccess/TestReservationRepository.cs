@@ -4,32 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess;
-using Model;
 using NUnit;
 using NUnit.Framework;
 
 namespace TestService.TestDataAccess {
-    public class testDBReservation {
-        private ReservationDB _reservationDB;
+    public class TestReservationRepository {
+        private ReservationRepository _reservationRepository;
         private Reservation _newReservation;
         private ItemType _itemType;
         private Wardrobe _wardrobe;
 
         [SetUp]
         public async Task SetupAsync() {
-            _reservationDB = new ReservationDB(Configuration.CONNECTION_STRING);
+            _reservationRepository = new ReservationRepository(Configuration.CONNECTION_STRING);
             await CreateNewReservationAsync();
         }
 
         [TearDown]
         public async Task CleanUpAsync() {
-            await new ReservationDB(Configuration.CONNECTION_STRING).DeleteByID(_newReservation.ReservationID);
+            await new ReservationRepository(Configuration.CONNECTION_STRING).DeleteByID(_newReservation.ReservationID);
         }
 
         public async Task<Reservation> CreateNewReservationAsync() {
-            _newReservation = new Reservation() { GuestID_FK = 2, OrderTime = DateTime.Now, ArrivalTime = DateTime.Now, 
-                AmountOfJackets = 2, AmountOfBags = 1, Price = 150};
-            _newReservation.ReservationID = await _reservationDB.CreateReservation(_newReservation);
+            _newReservation = new Reservation() {
+                GuestID_FK = 2, OrderTime = DateTime.Now, ArrivalTime = DateTime.Now,
+                AmountOfJackets = 2, AmountOfBags = 1, Price = 150
+            };
+            _newReservation.ReservationID = await _reservationRepository.CreateReservation(_newReservation);
             return _newReservation;
         }
 
@@ -45,8 +46,8 @@ namespace TestService.TestDataAccess {
         public async Task TestGetAllReservations() {
             //ARRANGE
             //ACT
-            var reservations = await _reservationDB.GetAllReservations();
-            
+            var reservations = await _reservationRepository.GetAllReservations();
+
             //ASSERT
             Assert.IsTrue(reservations.Count() > 0, "No reservations returned");
         }
@@ -56,7 +57,7 @@ namespace TestService.TestDataAccess {
             //ARRANGE is done in Setup()
 
             //ACT
-            var foundReservation = await _reservationDB.GetByID(_newReservation.ReservationID);
+            var foundReservation = await _reservationRepository.GetByID(_newReservation.ReservationID);
 
             //ASSERT
             //TODO specify why we are not comparing datetime
@@ -70,10 +71,10 @@ namespace TestService.TestDataAccess {
             _newReservation.Price = updatedPrice;
 
             //ACT
-            await _reservationDB.UpdateReservation(_newReservation);
+            await _reservationRepository.UpdateReservation(_newReservation);
 
             //ASSERT
-            var foundReservation = await _reservationDB.GetByID(_newReservation.ReservationID);
+            var foundReservation = await _reservationRepository.GetByID(_newReservation.ReservationID);
             Assert.IsTrue(foundReservation.Price == _newReservation.Price, "Reservation not updated");
         }
 
@@ -82,20 +83,22 @@ namespace TestService.TestDataAccess {
             //ARRANGE is done in Setup()
 
             //ACT
-            bool deleted = await _reservationDB.DeleteByID(_newReservation.ReservationID);
+            bool deleted = await _reservationRepository.DeleteByID(_newReservation.ReservationID);
 
             //ASSERT
             Assert.IsTrue(deleted, "Reservation not deleted");
         }
 
         [Test]
-        public async Task TestGetByGuestID() {
-            //ARRANGE
-            int guestID = _newReservation.GuestID_FK;
-            
+        public async Task TestGetByGuestEmail() {
+            //ARRANGE 
+
+            string email = "palle@dahlgaardstivoli.dk";
+
+
             //ACT
-            var reservations = await _reservationDB.GetByGuestID(guestID);
-            
+            var reservations = await _reservationRepository.GetByGuestEmail(email);
+
             //ASSERT
             Assert.IsTrue(reservations.Count() > 0, "No reservations returned");
         }

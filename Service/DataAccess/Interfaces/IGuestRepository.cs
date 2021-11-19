@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
 namespace DataAccess.Interfaces
 {
-    internal interface IGuestDB
+    internal interface IGuestRepository
     {
         int CreateGuest(Guest guest);
         List<Guest> GetAllGuests();

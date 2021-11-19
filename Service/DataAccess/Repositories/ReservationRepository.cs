@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using DataAccess.Interfaces;
-using Model;
+using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess {
-    public class ReservationDB : BaseDB, IReservationDB {
-        public ReservationDB(string connectionString) : base(connectionString) {}
+    public class ReservationRepository : BaseDB, IReservationRepository {
+        public ReservationRepository(string connectionString) : base(connectionString) {}
 
         public async Task<int> CreateReservation(Reservation reservation) {
             try {
@@ -93,19 +93,19 @@ namespace DataAccess {
             }
         }
 
-        public async Task<IEnumerable<Reservation>> GetByGuestID(int guestID) {
+        public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email) {
             try {
                 //Query is created taking guestID as a variable
-                var query = "SELECT * FROM Reservation WHERE guestID_FK=@guestID";
+                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email)";
 
                 //Connection is made
                 using var connection = CreateConnection();
 
                 //Query is executed passing guestID to retrieve a list of all reservations
                 //made by that guest
-                return (await connection.QueryAsync<Reservation>(query, new { guestID })).ToList();
+                return (await connection.QueryAsync<Reservation>(query, new { email })).ToList();
             } catch (Exception e) {
-                throw new Exception($"Error getting all reservation with guest Id {guestID} '{e.Message}'.", e);
+                throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
             }
         }
     }

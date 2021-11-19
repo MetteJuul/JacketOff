@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Model;
+using DataAccess;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IItemDB
+    internal interface IItemRepository
     {
         int createItem(Item item);
         List<Item> getAllItems();
