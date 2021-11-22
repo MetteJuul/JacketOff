@@ -4,6 +4,8 @@ using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.DTOs;
+using API.DTOs.Converters;
 
 namespace API.Controllers {
     [Route("api/[controller]")]
@@ -18,7 +20,7 @@ namespace API.Controllers {
 
         //GET: api/reservations        
         [HttpGet]
-        public async Task<ActionResult<List<Reservation>>> GetAllReservations() {
+        public async Task<ActionResult<List<ReservationDTO>>> GetAllReservations() {
 
             //We create a variable to store our list of reservations
             var reservations = await _reservationRepository.GetAllReservations();
@@ -28,7 +30,7 @@ namespace API.Controllers {
                 return NotFound("Ingen reservationer blev fundet");
             } else {
                 //Else we return 200 OK and the list of reservations
-                return Ok(reservations);
+                return Ok(reservations.ToDTOs());
             }
         }
 
@@ -45,14 +47,15 @@ namespace API.Controllers {
 
         //POST: api/reservations
         [HttpPost]
-        public async Task<ActionResult<int>> CreateReservation([FromBody] Reservation reservation) {
-            return Ok(await _reservationRepository.CreateReservation(reservation));
+        public async Task<ActionResult<int>> CreateReservation([FromBody] ReservationDTO newReservationDTO) {
+            return Ok(await _reservationRepository.CreateReservation(newReservationDTO.FromDTO()));
         }
 
         //PUT: api/reservations/5
+        //TODO: Test om id virker i test. hvis det kan undlades skal det slettes.
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateReservation([FromBody] Reservation reservation) {
-            if (!await _reservationRepository.UpdateReservation(reservation)) {
+        public async Task<ActionResult> UpdateReservation(int id, [FromBody] ReservationDTO reservationDTOUpdate) {
+            if (!await _reservationRepository.UpdateReservation(reservationDTOUpdate.FromDTO())) {
                 return NotFound("Opdatering af reservationen mislykkedes");
             } else {
                 return Ok();
@@ -67,13 +70,13 @@ namespace API.Controllers {
 
         //GET api/reservations/email
         [HttpGet("{email}")]
-        public async Task<ActionResult<IEnumerable<Reservation>>> GetByGuestEmail(string email) {
+        public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetByGuestEmail(string email) {
             IEnumerable<Reservation> reservations = null;
             reservations = await _reservationRepository.GetByGuestEmail(email);
             if (reservations == null) {
                 return NotFound("Ingen reservationer blev fundet");
             } else {
-                return Ok(reservations);
+                return Ok(reservations.ToDTOs());
             }
         }
 
