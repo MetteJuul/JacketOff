@@ -24,7 +24,7 @@ namespace ConsumerWebClient.Controllers {
             var reservationViewModel = new ReservationViewModel();
             reservationViewModel.Reservations = reservations;
 
-            return View(reservations);
+            return View(reservationViewModel);
         }
         
         //[HttpPost]

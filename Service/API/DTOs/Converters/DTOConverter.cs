@@ -19,9 +19,13 @@ namespace API.DTOs.Converters {
         }
 
         public static IEnumerable<ReservationDTO> ToDTOs(this IEnumerable<Reservation> reservationsToConvert) {
+            var reservationList = new List<ReservationDTO>();
+            
             foreach (var reservation in reservationsToConvert) {
-                yield return reservation.ToDTO();
+                //yield return reservation.ToDTO();
+                reservationList.Add(reservation.ToDTO());
             }
+            return reservationList;    
         }
 
         public static IEnumerable<Reservation> FromDTOs(this IEnumerable<ReservationDTO> reservationDTOsToConvert) {

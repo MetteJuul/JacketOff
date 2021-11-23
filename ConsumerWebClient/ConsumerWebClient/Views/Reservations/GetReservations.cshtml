@@ -2,13 +2,18 @@
 
 @{
     ViewData["Title"] = "GetReservations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //this is to test that Model populates our "test" attribute with the correct reservations
+    var test = Model;
 }
 
 <h2>All Reservations</h2>
 <h3>@ViewBag.Message </h3>
 
-<hr />
-@*@(Html
+
+
+<hr />@*
+@(Html
     .Grid(Model.Reservations)
     .Build(columns =>
     {
@@ -28,10 +33,10 @@
     })
     .Filterable()
     .Sortable()
-)*@
+)
 
 
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
     </p>
     <table class="table">
