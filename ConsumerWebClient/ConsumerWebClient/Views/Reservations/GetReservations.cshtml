@@ -1,0 +1,90 @@
+﻿@model ConsumerWebClient.Models.ReservationViewModel;
+
+@{
+    ViewData["Title"] = "GetReservations";
+}
+
+<h2>All Reservations</h2>
+<h3>@ViewBag.Message </h3>
+
+<hr />
+@*@(Html
+    .Grid(Model.Reservations)
+    .Build(columns =>
+    {
+        columns.Add(model => model.FirstName).Titled("First name: ");
+        columns.Add(model => model.LastName).Titled("Last name: ");
+
+        columns.Add(model => model.Age).Titled("Age: ");
+        columns.Add(model => model.Birthday).Titled("Birthday: ").Formatted("{0:d}");
+        columns.Add(model => model.IsWorking).Titled("Employed: ");
+    })
+    .Empty("No data found")
+    .Id("my-ajax-grid")
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 2;
+        pager.RowsPerPage = 5;
+    })
+    .Filterable()
+    .Sortable()
+)*@
+
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+    <thead>
+    <tr>
+    <th>
+    @Html.DisplayNameFor(model => model.ReservationID)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.GuestID_FK)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.OrderTime)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.ArrivalTime)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.AmountOfJackets)
+    </th>
+    <th>
+    @Html.DisplayNameFor(model => model.Price)
+    </th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+    <tr>
+    <td>
+    @Html.DisplayFor(modelItem => item.ReservationID)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.GuestID_FK)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.OrderTime)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.ArrivalTime)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.AmountOfJackets)
+    </td>
+    <td>
+    @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table>*@

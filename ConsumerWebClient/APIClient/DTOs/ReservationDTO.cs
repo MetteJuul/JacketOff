@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ConsumerWebClient.DTOs
+namespace APIClient.DTOs
 {
     public class ReservationDTO
     {

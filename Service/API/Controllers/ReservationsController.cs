@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Converters;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationsController : ControllerBase {
 
-        ReservationRepository _reservationRepository;
+        IReservationRepository _reservationRepository;
 
-        public ReservationsController() {
-            _reservationRepository = new ReservationRepository("data Source=hildur.ucn.dk; database=dmaa0920_1086259; user=dmaa0920_1086259; password=Password1!");
+        public ReservationsController(IConfiguration configuration) {
+            _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
         }
 
         //GET: api/reservations        
