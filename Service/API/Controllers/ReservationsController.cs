@@ -34,17 +34,6 @@ namespace API.Controllers {
             }
         }
 
-        ////GET: api/reservations/1
-        //[HttpGet("{iD}")]
-        //public async Task<ActionResult<Reservation>> GetByID(int iD) {
-        //    var reservation = await _reservationRepository.GetByID(iD);
-        //    if (reservation == null) {
-        //        return NotFound();
-        //    } else {
-        //        return Ok(reservation);
-        //    }
-        //}
-
         //POST: api/reservations
         [HttpPost]
         public async Task<ActionResult<int>> CreateReservation([FromBody] ReservationDTO newReservationDTO) {
@@ -79,6 +68,5 @@ namespace API.Controllers {
                 return Ok(reservations.ToDTOs());
             }
         }
-
     }
 }
