@@ -18,13 +18,19 @@ namespace ConsumerWebClient.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetReservations() {
+        public async Task<ActionResult> GetAllReservations() {
 
             IEnumerable<ReservationDTO> reservations = await _client.GetAllReservations();
-            var reservationViewModel = new ReservationViewModel();
-            reservationViewModel.Reservations = reservations;
+            
+            return View(reservations);
+        }
 
-            return View(reservationViewModel);
+        [HttpGet]
+        public async Task<ActionResult> GetMyReservations() {
+
+            IEnumerable<ReservationDTO> reservations = await _client.GetReservationsByGuestEmail("palle@dahlgaardstivoli.dk");
+
+            return View(reservations);
         }
         
         //[HttpPost]
