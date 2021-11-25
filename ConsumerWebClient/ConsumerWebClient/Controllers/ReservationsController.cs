@@ -3,6 +3,7 @@ using APIClient.DTOs;
 using ConsumerWebClient.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,15 +33,27 @@ namespace ConsumerWebClient.Controllers {
 
             return View(reservations);
         }
-        
-        //[HttpPost]
-        //public async Task <ActionResult> Create (ReservationDTO newReservation) {
-            
-        //    var 
-        //}
 
+        public ActionResult Create() {
+            return View();
+        }
 
-        
+        [HttpPost]
+        public async Task <ActionResult> Create(ReservationDTO newReservation) {
+
+            //Placeholder until we can retrieve the data
+            newReservation.GuestID_FK = 2;
+
+            //We set the order time, as the time the order is created
+            newReservation.OrderTime = DateTime.Now;
+
+            try {
+               await _client.CreateReservation(newReservation);
+               return RedirectToAction(nameof(GetAllReservations));
+            } catch {
+                return View();
+            }
+        }
 
     }
 }
