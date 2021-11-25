@@ -25,5 +25,9 @@ namespace ConsumerDesktopClient.DTOs
         public int AmountOfBags { get; set; } 
 
         public decimal Price { get; set; }
+
+        public override string ToString() {
+            return $"ReservationsDetaljer: Ankomst klokken {ArrivalTime.ToString()}, Jakker: {AmountOfJackets}, Tasker: {AmountOfBags}, Pris: {Price}";
+        }
     }
 }
