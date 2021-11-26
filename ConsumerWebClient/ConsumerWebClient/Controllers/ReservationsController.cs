@@ -6,30 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ConsumerWebClient.TestData;
 
 namespace ConsumerWebClient.Controllers {
 
     public class ReservationsController : Controller {
 
+        readonly DataPopulation _data;
         private IJacketOffApiClient _client;
         private string baseURL = "https://localhost:44391/api/reservations";
 
         public ReservationsController(IJacketOffApiClient client) {
             _client = client;
+            _data = new DataPopulation();
         }
 
+        //Retrieves all the user's reservations
         [HttpGet]
-        public async Task<ActionResult> GetAllReservations() {
+        public async Task<ActionResult> MyReservations() {
 
-            IEnumerable<ReservationDTO> reservations = await _client.GetAllReservations();
-            
-            return View(reservations);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> GetMyReservations() {
-
-            IEnumerable<ReservationDTO> reservations = await _client.GetReservationsByGuestEmail("palle@dahlgaardstivoli.dk");
+            IEnumerable<ReservationDTO> reservations = await _client.GetReservationsByGuestEmail(_data.Guest.Email);
 
             return View(reservations);
         }

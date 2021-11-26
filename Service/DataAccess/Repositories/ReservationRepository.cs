@@ -12,7 +12,12 @@ namespace DataAccess {
         public ReservationRepository(string connectionString) : base(connectionString) {}
 
         public async Task<int> CreateReservation(Reservation reservation) {
+            
             try {
+                //Before creating our query, we set the order time
+                //as the current time
+                reservation.OrderTime = DateTime.Now;
+
                 //Query is created and each property of the reservation object
                 //is mapped to the query using dapper
                 var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price)" +
