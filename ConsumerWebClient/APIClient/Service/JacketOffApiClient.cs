@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 namespace APIClient {
     public class JacketOffApiClient : IJacketOffApiClient {
 
-        //readonly string restUrl = "https://localhost:44391/api";
-        readonly RestClient _restClient;
+        private RestClient _restClient;
 
-        //In our constructor we inject the restclient into the constructor and create a new RestClient object
-        //and store it in our attribute
-        public JacketOffApiClient(string uri = "https://localhost:44391/api") => _restClient = new RestClient(new Uri(uri));
-
-
+        public JacketOffApiClient(string uri) => _restClient = new RestClient(new Uri(uri));
 
         public async Task<IEnumerable<ReservationDTO>> GetAllReservations() {
             
