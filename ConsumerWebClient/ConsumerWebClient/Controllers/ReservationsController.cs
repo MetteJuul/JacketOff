@@ -51,5 +51,33 @@ namespace ConsumerWebClient.Controllers {
             }
         }
 
+=======
+
+        //This method is purely used to generate the view
+        //for creating a reservation. The data from
+        //the view is not utilised before our Post method.
+        //Therefore, nothing is added to this method.
+        public ActionResult Reservation() {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task <ActionResult> Reservation(ReservationDTO newReservation) {
+
+            //Placeholder for retrieving guestID
+            //from logged in user 
+            newReservation.GuestID_FK = _data.Guest.GuestId;
+
+            //We attempt to pass our reservation to
+            //the CreateReservation method in our APIClient
+            //If we fail, we show the error.
+            try {
+               await _client.CreateReservation(newReservation);
+               return RedirectToAction(nameof(MyReservations));
+            } catch {
+                return View();
+            }
+        }
+>>>>>>> Stashed changes
     }
 }
