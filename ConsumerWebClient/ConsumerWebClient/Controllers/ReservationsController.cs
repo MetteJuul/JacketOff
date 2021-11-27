@@ -30,29 +30,6 @@ namespace ConsumerWebClient.Controllers {
             return View(reservations);
         }
 
-        public ActionResult Create() {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task <ActionResult> Create(ReservationDTO newReservation) {
-
-            //Placeholder until we can retrieve the data
-            newReservation.GuestID_FK = 2;
-
-            //We set the order time, as the time the order is created
-            newReservation.OrderTime = DateTime.Now;
-
-            try {
-               await _client.CreateReservation(newReservation);
-               return RedirectToAction(nameof(GetAllReservations));
-            } catch {
-                return View();
-            }
-        }
-
-=======
-
         //This method is purely used to generate the view
         //for creating a reservation. The data from
         //the view is not utilised before our Post method.
@@ -78,6 +55,5 @@ namespace ConsumerWebClient.Controllers {
                 return View();
             }
         }
->>>>>>> Stashed changes
     }
 }
