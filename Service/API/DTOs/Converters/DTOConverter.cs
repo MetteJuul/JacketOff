@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace API.DTOs.Converters {
     public static class DTOConverter {
 
+        //Reservation
         public static ReservationDTO ToDTO(this Reservation reservationDTOToConvert) {
             var reservationDTO = new ReservationDTO();
             reservationDTOToConvert.CopyPropertiesTo(reservationDTO);
@@ -19,14 +20,12 @@ namespace API.DTOs.Converters {
         }
 
         public static IEnumerable<ReservationDTO> ToDTOs(this IEnumerable<Reservation> reservationsToConvert) {
-            var reservationList = new List<ReservationDTO>();
-            
+
             foreach (var reservation in reservationsToConvert) {
-                //yield return reservation.ToDTO();
-                reservationList.Add(reservation.ToDTO());
+                yield return reservation.ToDTO();
             }
-            return reservationList;    
         }
+
 
         public static IEnumerable<Reservation> FromDTOs(this IEnumerable<ReservationDTO> reservationDTOsToConvert) {
 
@@ -37,5 +36,33 @@ namespace API.DTOs.Converters {
 
         }
 
+        //ItemType
+        public static ItemTypeDTO ItemTypeToDTO(this ItemType itemTypeToConvert) {
+            var itemTypeDTO = new ItemTypeDTO();
+            itemTypeToConvert.CopyPropertiesTo(itemTypeDTO);
+            return itemTypeDTO;
+        }
+
+
+        public static ItemType ItemTypeFromDTO(this ItemTypeDTO itemTypeDTOToConvert) {
+
+            var itemType = new ItemType();
+            itemTypeDTOToConvert.CopyPropertiesTo(itemType);
+            return itemType;
+        }
+
+        public static IEnumerable<ItemTypeDTO> ItemTypesToDTOs(this IEnumerable<ItemType> itemTypesToConvert) {
+
+            foreach (var itemType in itemTypesToConvert) {
+                yield return itemType.ItemTypeToDTO();
+            }
+        }
+
+        public static IEnumerable<ItemType> ItemTypesFromDTOs(this IEnumerable<ItemTypeDTO> itemTypeDTOsToConvert) {
+
+            foreach (var itemTypeDTO in itemTypeDTOsToConvert) {
+                yield return itemTypeDTO.ItemTypeFromDTO();
+            }
+        }
     }
 }

@@ -7,12 +7,9 @@ using DataAccess;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IItemRepository
+    public interface IItemRepository
     {
-        int createItem(Item item);
-        List<Item> getAllItems();
-        Item GetItem(int iD);
-        int updateItem(Item item);
-        int deleteByID(int iD);
+        Task<IEnumerable<Item>> GetAllItems();
+        Task<Item> GetItem(int iD); 
     }
 }
