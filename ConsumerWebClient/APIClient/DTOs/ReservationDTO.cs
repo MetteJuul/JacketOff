@@ -5,6 +5,7 @@ namespace APIClient.DTOs
 {
     public class ReservationDTO
     {
+
         public int ReservationID { get; set; } 
 
         [Required]
