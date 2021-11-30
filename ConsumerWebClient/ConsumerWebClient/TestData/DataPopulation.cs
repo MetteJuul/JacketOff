@@ -3,6 +3,7 @@
 namespace ConsumerWebClient.TestData {
     public class DataPopulation {
 
+
         public DataPopulation() {
             Guest = new RegisteredGuestDTO();
 
@@ -12,9 +13,13 @@ namespace ConsumerWebClient.TestData {
             Guest.LastName = "Zeberg";
             Guest.PhoneNumber = "69696969";
             Guest.PasswordHash = "jjjjjj";
+            ItemTypeDTO = new APIClient.DTOs.ItemTypeDTO();
         }
 
         public RegisteredGuestDTO Guest { get; set; }
+
+        public ItemTypeDTO ItemTypeDTO { get; set; }
+
 
     }
 }

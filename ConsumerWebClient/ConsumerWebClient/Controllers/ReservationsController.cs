@@ -1,12 +1,10 @@
 ﻿using APIClient;
 using APIClient.DTOs;
-using ConsumerWebClient.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ConsumerWebClient.TestData;
+
 
 namespace ConsumerWebClient.Controllers {
 
@@ -14,11 +12,11 @@ namespace ConsumerWebClient.Controllers {
 
         readonly DataPopulation _data;
         private IJacketOffApiClient _client;
-        private string baseURL = "https://localhost:44391/api/reservations";
 
         public ReservationsController(IJacketOffApiClient client) {
             _client = client;
             _data = new DataPopulation();
+            
         }
 
         //Retrieves all the user's reservations
@@ -55,5 +53,7 @@ namespace ConsumerWebClient.Controllers {
                 return View();
             }
         }
+
+        
     }
 }

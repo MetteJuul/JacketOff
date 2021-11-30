@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace API.DTOs.Converters {
     public static class DTOConverter {
 
+        //Reservation
         public static ReservationDTO ToDTO(this Reservation reservationDTOToConvert) {
             var reservationDTO = new ReservationDTO();
             reservationDTOToConvert.CopyPropertiesTo(reservationDTO);

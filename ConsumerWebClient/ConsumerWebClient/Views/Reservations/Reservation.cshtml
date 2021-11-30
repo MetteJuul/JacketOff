@@ -4,6 +4,8 @@
     ViewData["Title"] = "Reservation";
 }
 
+
+
 <h1>Opret Reservation</h1>
 
 <hr />
@@ -27,6 +29,12 @@
                 <span asp-validation-for="AmountOfBags" class="text-danger"></span>
             </div>
             <div class="form-group">
+                Pris:
+                <input style="text-align:right" type="text" readonly="readonly" id="textTotalPrice" value="0.00" name="Price" class="form-control" />
+
+
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Opret Reservation" class="btn btn-primary" />
             </div>
         </form>
@@ -38,5 +46,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
