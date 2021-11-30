@@ -20,10 +20,7 @@ namespace ConsumerWebClient {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllersWithViews();
-            //Atomar: per request
-            services.AddTransient<IJacketOffApiClient, JacketOffApiClient>();
-            //Full scope
-            //services.AddScoped<IJacketOffApiClient, JacketOffApiClient>();
+            services.AddScoped<IJacketOffApiClient>((cs) => new JacketOffApiClient(Configuration["WebApiURI"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
