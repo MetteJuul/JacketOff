@@ -23,10 +23,10 @@ namespace API.DTOs.Converters {
 
             foreach (var reservation in reservationsToConvert) {
                 yield return reservation.ToDTO();
+                
             }
+
         }
-
-
         public static IEnumerable<Reservation> FromDTOs(this IEnumerable<ReservationDTO> reservationDTOsToConvert) {
 
             foreach (var reservationDTO in reservationDTOsToConvert) {
@@ -36,33 +36,5 @@ namespace API.DTOs.Converters {
 
         }
 
-        //ItemType
-        public static ItemTypeDTO ItemTypeToDTO(this ItemType itemTypeToConvert) {
-            var itemTypeDTO = new ItemTypeDTO();
-            itemTypeToConvert.CopyPropertiesTo(itemTypeDTO);
-            return itemTypeDTO;
-        }
-
-
-        public static ItemType ItemTypeFromDTO(this ItemTypeDTO itemTypeDTOToConvert) {
-
-            var itemType = new ItemType();
-            itemTypeDTOToConvert.CopyPropertiesTo(itemType);
-            return itemType;
-        }
-
-        public static IEnumerable<ItemTypeDTO> ItemTypesToDTOs(this IEnumerable<ItemType> itemTypesToConvert) {
-
-            foreach (var itemType in itemTypesToConvert) {
-                yield return itemType.ItemTypeToDTO();
-            }
-        }
-
-        public static IEnumerable<ItemType> ItemTypesFromDTOs(this IEnumerable<ItemTypeDTO> itemTypeDTOsToConvert) {
-
-            foreach (var itemTypeDTO in itemTypeDTOsToConvert) {
-                yield return itemTypeDTO.ItemTypeFromDTO();
-            }
-        }
     }
 }
