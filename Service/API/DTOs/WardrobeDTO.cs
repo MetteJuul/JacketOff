@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess {
-    public class Wardrobe {
+namespace API.DTOs {
+    public class WardrobeDTO {
 
         public string ID { get; set; }
 
@@ -15,8 +10,6 @@ namespace DataAccess {
 
         public byte[] RowID { get; set; }
 
-        public Int64 RowIDBig { get; set; }
-
-
+        public int64 RowIDBig { get; set; }
     }
 }

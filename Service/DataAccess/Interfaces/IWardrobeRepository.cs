@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IWardrobeRepository
+    public interface IWardrobeRepository
     {
         Task<IEnumerable<Wardrobe>> GetAllWardrobes();
-        Task<Wardrobe> GetWardrobeById(int ID);
-        Task<bool> UpdateWardrobe(Wardrobe wardrobe);
+        Task<Wardrobe> GetWardrobeById(string ID);
+        Task<bool> UpdateCount(Wardrobe wardrobe, int amountOfTotalItems);
     }
 }
