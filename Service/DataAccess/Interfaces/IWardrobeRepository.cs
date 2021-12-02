@@ -10,6 +10,5 @@ namespace DataAccess.Interfaces
     {
         Task<IEnumerable<Wardrobe>> GetAllWardrobes();
         Task<Wardrobe> GetWardrobeById(string ID);
-        Task<bool> UpdateCount(Wardrobe wardrobe, int amountOfTotalItems);
     }
 }
