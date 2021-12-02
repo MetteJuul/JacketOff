@@ -7,6 +7,6 @@ namespace DataAccess {
     public abstract class BaseDB {
         private string _connectionString;
         protected BaseDB(string connectionString) => _connectionString = connectionString;
-        protected IDbConnection CreateConnection() => new SqlConnection(_connectionString);
+        protected SqlConnection CreateConnection() => new SqlConnection(_connectionString);
     }
 }
