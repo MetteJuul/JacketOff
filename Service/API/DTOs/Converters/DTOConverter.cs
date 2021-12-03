@@ -1,6 +1,7 @@
 ﻿using System;
 using DataAccess;
 using System.Collections.Generic;
+using DataAccess.Model;
 
 namespace API.DTOs.Converters {
     public static class DTOConverter {
@@ -38,17 +39,34 @@ namespace API.DTOs.Converters {
 
         #region Wardrobe converter methods
 
-        public static WardrobeDTO ToDTO(this Wardrobe wardrobeDTOToConvert) {
+        public static WardrobeDTO ToDTO(this Wardrobe wardrobeToConvert) {
             var wardrobeDTO = new WardrobeDTO();
-            wardrobeDTOToConvert.CopyPropertiesTo(wardrobeDTO);
+            wardrobeToConvert.CopyPropertiesTo(wardrobeDTO);
             return wardrobeDTO;
         }
 
-        public static Wardrobe FromDTO(this WardrobeDTO wardrobeToConvert) {
 
+        public static Wardrobe FromDTO(this WardrobeDTO wardrobeDTOToConvert) {
             var wardrobe = new Wardrobe();
-            wardrobeToConvert.CopyPropertiesTo(wardrobe);
+            wardrobeDTOToConvert.CopyPropertiesTo(wardrobe);
             return wardrobe;
+        }
+
+        #endregion
+
+        #region WardrobeControl converter methods
+
+        public static WardrobeControlDTO ToDTO(this WardrobeControl wardrobeControlToConvert) {
+            var wardrobeControlDTO = new WardrobeControlDTO();
+            wardrobeControlToConvert.CopyPropertiesTo(wardrobeControlDTO);
+            return wardrobeControlDTO;
+        }
+
+
+        public static WardrobeControl FromDTO(this WardrobeControlDTO wardrobeControlDTOToConvert) {
+            var wardrobeControl = new WardrobeControl();
+            wardrobeControlDTOToConvert.CopyPropertiesTo(wardrobeControl);
+            return wardrobeControl;
         }
 
         #endregion
