@@ -61,8 +61,6 @@ namespace API.DTOs.Converters {
             wardrobeControlToConvert.CopyPropertiesTo(wardrobeControlDTO);
             return wardrobeControlDTO;
         }
-
-
         public static WardrobeControl FromDTO(this WardrobeControlDTO wardrobeControlDTOToConvert) {
             var wardrobeControl = new WardrobeControl();
             wardrobeControlDTOToConvert.CopyPropertiesTo(wardrobeControl);

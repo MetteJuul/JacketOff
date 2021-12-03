@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Interfaces {
     public interface IWardrobeControlRepository {
 
-        Task<WardrobeControl> GetWardrobeControlById(string ID);
+        Task<IEnumerable<WardrobeControl>> GetWardrobeControlsById(string ID);
 
         Task<bool> UpdateCount(WardrobeControl wardrobeControl);
 

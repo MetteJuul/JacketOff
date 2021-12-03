@@ -13,7 +13,7 @@ namespace DataAccess.Repositories {
     public class WardrobeControlRepository : BaseDB, IWardrobeControlRepository {
         public WardrobeControlRepository(string connectionString) : base(connectionString) { }
 
-        public async Task<WardrobeControl> GetWardrobeControlById(string ID) {
+        public async Task<IEnumerable<WardrobeControl>> GetWardrobeControlsById(string ID) {
             try {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID";
@@ -24,7 +24,9 @@ namespace DataAccess.Repositories {
 
 
                 //We execute the query that retrieves a reservation object based on ID
-                return await connection.QuerySingleAsync<WardrobeControl>(query, new { ID });
+                return (await connection.QueryAsync<WardrobeControl>(query, new {ID} )).ToList();
+
+                //return (await connection.QueryAsync<Reservation>(query, new { email })).ToList();
             } catch (Exception e) {
                 throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
             }
@@ -35,9 +37,9 @@ namespace DataAccess.Repositories {
             return await Task.Run(() => {
                 try {
 
+                    var selectQuery = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID"; 
                     var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID=@wardrobeID;";
-                    var selectQuery = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID";
-
+                    
                     using var connection = CreateConnection();
 
                     // Pass the original values to the WHERE clause parameters.  
