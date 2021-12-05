@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Converters;
 using Microsoft.Extensions.Configuration;
+using DataAccess.Model;
+using DataAccess.Repositories;
 
 namespace API.Controllers {
     [Route("api/[controller]")]
@@ -14,8 +16,9 @@ namespace API.Controllers {
     public class ReservationsController : ControllerBase {
 
         IReservationRepository _reservationRepository;
+        
 
-        public ReservationsController(IConfiguration configuration) {
+    public ReservationsController(IConfiguration configuration) {
             _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
         }
 
@@ -69,5 +72,7 @@ namespace API.Controllers {
                 return Ok(reservations.ToDTOs());
             }
         }
+
+        
     }
 }

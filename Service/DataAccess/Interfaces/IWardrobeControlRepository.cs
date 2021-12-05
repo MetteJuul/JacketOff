@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces {
     public interface IWardrobeControlRepository {
-
+        Task<bool> AddCount(long bigRowID, int count);
+        Task<int> GetWardrobeControlCount(string ID);
         Task<IEnumerable<WardrobeControl>> GetWardrobeControlsById(string ID);
-
-        Task<bool> UpdateCount(WardrobeControl wardrobeControl);
-
+        Task<WardrobeControl> GetWardrobeControlById(string ID);
+        Task<bool> SubtractCount(long bigRowID, int count);
     }
 }
