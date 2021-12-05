@@ -13,9 +13,9 @@ namespace API.Controllers {
         public WardrobeController(IConfiguration configuration) {
             _wardrobeControlRepository = new WardrobeControlRepository(configuration.GetConnectionString("JacketOff"));
         }
-               
 
-        //testing getCount
+
+        //GET: api/WardrobeControl/Count 
         [HttpGet("id")]
         public async Task<ActionResult<WardrobeControlDTO>> GetCount(string id) {
             var wardrobeControl = await _wardrobeControlRepository.GetWardrobeControlById(id);
@@ -23,8 +23,9 @@ namespace API.Controllers {
             if (wardrobeControl == null) {
                 return NotFound("Ingen garderober fundet blev fundet");
             } else {
-                return Ok(wardrobeControl.ToDTO().Count);
+                return Ok(wardrobeControl.ToDTO());
             }
         }
+
     }
 }

@@ -78,5 +78,17 @@ namespace APIClient {
             return response.Data;
         }
 
+        public async Task<WardrobeControlDTO> GetWardrobeControl() {
+
+            
+            var response = await _restClient.RequestAsync<WardrobeControlDTO>(Method.GET, $"reservations");
+
+            if (!response.IsSuccessful) {
+                throw new Exception($"Fejl ved hentning af garderobe. Fejl besked: {response.Content}");
+            }
+
+            return response.Data;
+        }
+
     }
 }
