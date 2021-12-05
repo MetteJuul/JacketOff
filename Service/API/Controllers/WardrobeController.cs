@@ -15,7 +15,7 @@ namespace API.Controllers {
         }
 
 
-        //GET: api/WardrobeControl/Count 
+        //GET: api/WardrobeControl 
         [HttpGet("id")]
         public async Task<ActionResult<WardrobeControlDTO>> GetCount(string id) {
             var wardrobeControl = await _wardrobeControlRepository.GetWardrobeControlById(id);
