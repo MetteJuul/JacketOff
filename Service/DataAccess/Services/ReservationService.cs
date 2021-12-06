@@ -1,4 +1,5 @@
-﻿using DataAccess.Model;
+﻿using DataAccess.Interfaces;
+using DataAccess.Model;
 using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace DataAccess.Services {
 
         private WardrobeControlRepository _wardrobeControlRepo;
         private ReservationRepository _reservationRepo;
+        
 
-        public ReservationService(WardrobeControlRepository wardrobeControlRepo, ReservationRepository reservationRepo) {
+        public ReservationService(IWardrobeControlRepository wardrobeControlRepo, IReservationRepository reservationRepo) {
             _wardrobeControlRepo = wardrobeControlRepo;
             _reservationRepo = reservationRepo;
+
         }
 
         //hente en liste af wardrobeControl objekter og sige når vi ved, hvilken dato der er valgt
