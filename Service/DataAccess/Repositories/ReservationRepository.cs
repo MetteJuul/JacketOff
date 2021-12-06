@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Repositories;
+using System.Data.SqlClient;
 
 namespace DataAccess {
     public class ReservationRepository : BaseDB, IReservationRepository {
         public ReservationRepository(string connectionString) : base(connectionString) { }
 
-        public async Task<int> CreateReservation(Reservation reservation) {
+        public async Task<int> CreateReservation(Reservation reservation, SqlConnection connection = null) {
 
             try {
                     //Before creating our query, we set the order time
@@ -24,11 +25,11 @@ namespace DataAccess {
                     var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price)" +
                         "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price)";
 
-                    //Connection is created
-                    using var connection = CreateConnection();
+                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
+                using var realConnection = connection?? CreateConnection();
 
-                    //TODO skriv forklaring
-                    return await connection.QuerySingleAsync<int>(query, reservation);
+                //TODO skriv forklaring
+                return await realConnection.QuerySingleAsync<int>(query, reservation);
 
                 } catch (Exception e) {
 
