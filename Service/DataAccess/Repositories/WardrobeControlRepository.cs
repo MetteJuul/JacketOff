@@ -32,7 +32,7 @@ namespace DataAccess.Repositories {
         public async Task<WardrobeControl> GetWardrobeControlById(string ID) {
             try {
                 //Query is created and the input parameter is assigned
-                var query = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID";
+                var query = "SELECT wardrobeID_FK,date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
 
                 //Connection is made
                 using var connection = CreateConnection();
