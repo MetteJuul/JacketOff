@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace API.Controllers {
+
+    [Route("api/[controller]")]
+    [ApiController]
     public class WardrobeController : Controller {
         private IWardrobeControlRepository _wardrobeControlRepository;
 
@@ -15,7 +18,7 @@ namespace API.Controllers {
         }
 
 
-        //GET: api/WardrobeControl 
+        //GET: api/WardrobeControl/{id} 
         [HttpGet("id")]
         public async Task<ActionResult<WardrobeControlDTO>> GetCount(string id) {
             var wardrobeControl = await _wardrobeControlRepository.GetWardrobeControlById(id);
@@ -27,5 +30,19 @@ namespace API.Controllers {
             }
         }
 
-    }
+        //PUT: /api/WardrobeControl/{id}
+
+        [HttpPut("id")]
+
+        public async Task<IActionResult> UpdateCount([FromBody] WardrobeControlDTO wardrobeControlDTOUpdate) {
+            if (!await _wardrobeControlRepository.UpdateCount(wardrobeControlDTOUpdate.FromDTO())) {
+                return NotFound("Kunne ikke opdatere antal ledige pladser");
+            } else {
+                return Ok();
+            }
+        }
+
 }
+
+}
+

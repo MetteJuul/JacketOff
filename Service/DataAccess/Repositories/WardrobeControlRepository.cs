@@ -18,6 +18,7 @@ namespace DataAccess.Repositories {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM wardrobeControl";
 
+
                 //Connection is made
                 using var realConnection = connection?? CreateConnection();
 
@@ -52,7 +53,9 @@ namespace DataAccess.Repositories {
         public async Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null) {
             try {
 
-                var query = "UPDATE Wardrobe SET count = @count WHERE wardrobeID = @wardrobeID";
+                var query = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" +
+                    "UPDATE WardrobeControl SET count=@count WHERE wardrobeID_FK='guldhornene'";
+
 
                 using var realConnection = connection?? CreateConnection();
 
