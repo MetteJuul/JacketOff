@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace DataAccess.Services {
     public class ReservationService {
 
-        private WardrobeControlRepository _wardrobeControlRepo;
-        private ReservationRepository _reservationRepo;
-        
+        private IWardrobeControlRepository _wardrobeControlRepo;
+        private IReservationRepository _reservationRepo;
+
 
         public ReservationService(IWardrobeControlRepository wardrobeControlRepo, IReservationRepository reservationRepo) {
             _wardrobeControlRepo = wardrobeControlRepo;
@@ -20,31 +20,12 @@ namespace DataAccess.Services {
 
         }
 
-        //hente en liste af wardrobeControl objekter og sige når vi ved, hvilken dato der er valgt
-        //-> vi tjekker om rowID på den dato har ændret sig
-        //mens brugeren har indtastet reservationsdetaljerne
-
-        //public IEnumerable<WardrobeControl> GetRowIDs() {
-
-        //    return 
-
-        //}
-
-
-         //1. hente sætte nyeste rowID
-         //2. hente count og maxAmount
-         //3. hente amount of items fra reservation og lave ny variabel med totalCountInReservation
-         //4. check om count + (hvad der kommer fra reservationen) >= maxAmount
-         //5. kalde opret reservation(CreateReservation i repository)
-         //6. kalde opdater count(UpdateCount i repository)
-         //7. returner om succes
-
-        //public Task<Reservation> CreateReservation(Reservation reservation) {
-
-        //    var wardrobeID = "guldhornene";
-
-
-        //}
+        //transaction
+        //lav en metode der hedder createReservation
+        //Opret med repeatable read (en del af queryen)
+        //tjek count, hvis ok ->
+        //opret reservation
+        //return bool på success/ikke success?
 
     }
 }

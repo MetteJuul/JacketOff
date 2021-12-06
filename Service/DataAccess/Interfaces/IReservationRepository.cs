@@ -9,10 +9,10 @@ using DataAccess;
 namespace DataAccess.Interfaces {
     public interface IReservationRepository {
         Task<int> CreateReservation(Reservation reservation, SqlConnection connection = null);
-        Task<IEnumerable<Reservation>> GetAllReservations();
-        Task<Reservation> GetByID(int iD);
-        Task<bool> UpdateReservation(Reservation reservation);
-        Task<bool> DeleteByID(int iD);
-        Task<IEnumerable<Reservation>> GetByGuestEmail(string guestEmail);
+        Task<IEnumerable<Reservation>> GetAllReservations(SqlConnection connection = null);
+        Task<Reservation> GetByID(int ID, SqlConnection connection = null);
+        Task<bool> UpdateReservation(Reservation reservation, SqlConnection connection = null);
+        Task<bool> DeleteByID(int ID, SqlConnection connection = null);
+        Task<IEnumerable<Reservation>> GetByGuestEmail(string guestEmail, SqlConnection connection = null);
     }
 }

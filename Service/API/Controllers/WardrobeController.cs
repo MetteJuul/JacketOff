@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers {
     public class WardrobeController : Controller {
-        IWardrobeControlRepository _wardrobeControlRepository;
+        private IWardrobeControlRepository _wardrobeControlRepository;
 
         public WardrobeController(IConfiguration configuration) {
             _wardrobeControlRepository = new WardrobeControlRepository(configuration.GetConnectionString("JacketOff"));
