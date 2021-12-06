@@ -59,7 +59,7 @@ namespace DataAccess.Repositories {
 
         //    using var connection = CreateConnection();
         //    wardrobeControl = await connection.QuerySingleAsync<WardrobeControl>(query, new { ID });
-        //    return wardrobeControl.SpaceCount;
+        //    return wardrobeControl.Count;
 
         //}
 
@@ -91,56 +91,51 @@ namespace DataAccess.Repositories {
             }
         }
 
-        
+        public async Task<bool> UpdateCount(WardrobeControl wardrobeControl) {
+
+            return await Task.Run(() => {
+                try {
+
+                    var selectQuery = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID";
+                    var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID=@wardrobeID;";
+
+                    using var connection = CreateConnection();
+
+                    // Pass the original values to the WHERE clause parameters.  
+                    //https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/optimistic-concurrency#optimistic-concurrency-example
+
+                    var adapter = new SqlDataAdapter(selectQuery, connection);
+
+                    //UpdateCommand er en specifik måde at opdatere på, og den kan håndtere optimistic concurrency
+                    adapter.UpdateCommand = new SqlCommand(query, connection);
+
+                    //adapteren kalder UpdateCommand og her sætter vi en binder til parameteret count, og fortæller at det er en int i databasen
+                    SqlParameter sqlParam = adapter.UpdateCommand.Parameters.Add("@count", SqlDbType.Int);
+
+                    //Vi kalder den indbyggede metode til at checke, om vi har den rigtige DataRowVersion (fra selectQuery)
+                    //og ikke en state, der har ændret sig efter at vi har hentet 
+
+                    sqlParam.SourceVersion = DataRowVersion.Original;
+
+                    //Vi laver en tom DataTable 
+                    var dataTable = new DataTable();
+
+                    //Vi fylder i DataTable med adapteren fra vores query-streng
+                    adapter.Fill(dataTable);
+
+                    //adapteren skriver til databasen 
+                    adapter.Update(dataTable);
 
 
 
-
-        //public async Task<bool> UpdateCount(WardrobeControl wardrobeControl) {
-
-        //    return await Task.Run(() => {
-        //        try {
-
-        //            var selectQuery = "SELECT * FROM wardrobeControl WHERE wardrobeID_FK=@ID"; 
-        //            var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID=@wardrobeID;";
-
-        //            using var connection = CreateConnection();
-
-        //            // Pass the original values to the WHERE clause parameters.  
-        //            //https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/optimistic-concurrency#optimistic-concurrency-example
-
-        //            var adapter = new SqlDataAdapter(selectQuery, connection);
-
-        //            //UpdateCommand er en specifik måde at opdatere på, og den kan håndtere optimistic concurrency
-        //            adapter.UpdateCommand = new SqlCommand(query, connection);
-
-        //            //adapteren kalder UpdateCommand og her sætter vi en binder til parameteret count, og fortæller at det er en int i databasen
-        //            SqlParameter sqlParam = adapter.UpdateCommand.Parameters.Add("@count", SqlDbType.Int);
-
-        //            //Vi kalder den indbyggede metode til at checke, om vi har den rigtige DataRowVersion (fra selectQuery)
-        //            //og ikke en state, der har ændret sig efter at vi har hentet 
-
-        //            sqlParam.SourceVersion = DataRowVersion.Original;
-
-        //            //Vi laver en tom DataTable 
-        //            var dataTable = new DataTable();
-
-        //            //Vi fylder i DataTable med adapteren fra vores query-streng
-        //            adapter.Fill(dataTable);
-
-        //            //adapteren skriver til databasen 
-        //            adapter.Update(dataTable);
+                    return true;
 
 
+                } catch (Exception e) {
 
-        //            return true;
-
-
-        //        } catch (Exception e) {
-
-        //            throw new Exception($"Kan ikke opdatere Garderobe: '{e.Message}'.", e);
-        //        }
-        //    });
-        //}
+                    throw new Exception($"Kan ikke opdatere Garderobe: '{e.Message}'.", e);
+                }
+            });
+        }
     }
 }
