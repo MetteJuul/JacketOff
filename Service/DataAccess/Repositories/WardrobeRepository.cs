@@ -36,18 +36,18 @@ namespace DataAccess.Repositories {
             }
         }
 
-        public async Task<bool> UpdateCount(Wardrobe wardrobe, int amountOfTotalItems) {
-            try {
+        //public async Task<bool> UpdateCount(Wardrobe wardrobe, int amountOfTotalItems) {
+        //    try {
 
-                var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID@wardrobeID;";
+        //        var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID@wardrobeID;";
 
-                using var connection = CreateConnection();
+        //        using var connection = CreateConnection();
 
-                //return await connection.ExecuteAsync(query, new { wardrobe });
-            } catch (Exception e) {
-                throw new Exception($"Kan ikke opdatere Garderobe: '{e.Message}'.", e);
-            }
+        //        //return await connection.ExecuteAsync(query, new { wardrobe });
+        //    } catch (Exception e) {
+        //        throw new Exception($"Kan ikke opdatere Garderobe: '{e.Message}'.", e);
+        //    }
 
-        }
+        //}
     }
 }

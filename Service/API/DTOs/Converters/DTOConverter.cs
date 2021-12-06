@@ -53,5 +53,25 @@ namespace API.DTOs.Converters {
 
         #endregion
 
+        #region ItemType
+        public static ItemTypeDTO ItemTypeToDTO(this ItemType itemTypeDTOToConvert)
+        {
+            var itemTypeDTO = new ItemTypeDTO();
+            itemTypeDTOToConvert.CopyPropertiesTo(itemTypeDTO);
+            return itemTypeDTO;
+        }
+
+        public static IEnumerable<ItemTypeDTO> ItemTypeToDTOs(this IEnumerable<ItemType> ItemTypeToConvert)
+        {
+
+            foreach (var itemType in ItemTypeToConvert)
+            {
+                yield return itemType.ItemTypeToDTO();
+            }
+        }
+
+        #endregion
+
+
     }
 }

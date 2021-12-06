@@ -10,6 +10,6 @@ namespace API.DTOs {
 
         public byte[] RowID { get; set; }
 
-        public int64 RowIDBig { get; set; }
+        public Int64 RowIDBig { get; set; }
     }
 }
