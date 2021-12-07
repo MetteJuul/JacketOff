@@ -24,76 +24,76 @@ namespace DataAccess.Services {
 
         ////transaction
         //public System.Data.SqlClient.SqlTransaction BeginTransaction();
-        //private async Task<int> CreateReservation(Reservation newReservation)
-        //{
+        private async Task<int> CreateReservation(Reservation newReservation) {
 
-        //    using SqlConnection connection = CreateConnection();
+            using SqlConnection connection = CreateConnection();
 
-        //    connection.Open();
+            connection.Open();
 
-        //    SqlCommand command = connection.CreateCommand();
-        //    SqlTransaction transaction = command.Transaction;
+            SqlCommand command = connection.CreateCommand();
+            SqlTransaction transaction = command.Transaction;
 
-        //    transaction = connection.BeginTransaction("opret reservation");
+            transaction = connection.BeginTransaction("opret reservation");
 
-        //    command.Connection = connection;
-        //    command.Transaction = transaction;
+            command.Connection = connection;
+            command.Transaction = transaction;
 
-        //    try
-        //    {
-        //        //find WardrobeControl for reservationens dato
-        //        //hvis datoen for reservationen ikke eksisterer CreateWardrobeControl(); ellers GetWardrobeControl();
-        //        //hvis objektet vi modtager ikke er null OG count ikke er større end maxAmountOfItems
+            try {
+                //find WardrobeControl for reservationens dato
+                //hvis datoen for reservationen ikke eksisterer CreateWardrobeControl(); ellers GetWardrobeControl();
+                //hvis objektet vi modtager ikke er null OG count ikke er større end maxAmountOfItems
 
-        //        //tjek at newReservation indeholder data
-        //        if (newReservation != null)
-        //        {
-        //            //
-        //            var foundWardrobeControl = wardrobeControlRepo.GetWardrobeControlByIdAndDate("guldhornene", newReservation.ArrivalTime);
+                //tjek at newReservation indeholder data
+                if (newReservation != null) {
+                    //
+                    var foundWardrobeControl = wardrobeControlRepo.GetWardrobeControlByIdAndDate("guldhornene", newReservation.ArrivalTime);
 
-        //            //hvis ikke null GetWardrobeControl()
-        //            if () {
+                    //hvis ikke null GetWardrobeControl()
+                    if () {
 
-        //            //CreateWardrobeControl()
-        //            } else {
+                        //CreateWardrobeControl()
+                    } else {
+                        try {
+                            var count = newReservation.AmountOfJackets + newReservation.AmountOfBags;
+                            var newWardrobeControl = new WardrobeControl { WardrobeID_FK = newReservation.WardrobeID_FK, Date = newReservation.ArrivalTime, Count = count };
+                            await wardrobeControlRepo.CreateWardrobeControl(newWardrobeControl);
+                        } catch (Exception e) {
 
-        //            }
-        //            List<WardrobeControl> wardrobeControls = (await wardrobeControlRepo.GetAllWardrobeControls()).ToList();
+                            throw new Exception("Fejl ved oprettelse af WardrobeControl.", e);
+                        }
+                        List<WardrobeControl> wardrobeControls = (await wardrobeControlRepo.GetAllWardrobeControls()).ToList();
 
-        //            //om dato i reservation eksisterer i WardrobeControl - skal iterere igennem liste af WardrobeControls
-                    
+                    //om dato i reservation eksisterer i WardrobeControl - skal iterere igennem liste af WardrobeControls
 
 
 
-        //                ExecuteNonQuery();
-        //                command.CommandText =
-        //                    "Insert into Reservation (reservationID, guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price) VALUES (3, 8, DateTime, DateTime, 2, 2, 250.00)";
-        //                command.ExecuteNonQuery();
 
-        //                transaction.Commit();
-        //                Console.WriteLine("Begge reservationer er oprettet");
-        //            } catch (Exception e)
-        //    {
+                    ExecuteNonQuery();
+                    command.CommandText =
+                        "Insert into Reservation (reservationID, guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price) VALUES (3, 8, DateTime, DateTime, 2, 2, 250.00)";
+                    command.ExecuteNonQuery();
 
-        //        Console.WriteLine("Exception type: {0}", e.GetType());
-        //        Console.WriteLine(" Message: {0}", e.Message);
-        //    }
+                    transaction.Commit();
+                    Console.WriteLine("Begge reservationer er oprettet");
+                } catch (Exception e) {
 
-        //    //Roll back
-        //    try
-        //    {
-        //        transaction.Rollback();
-        //    } catch (Exception e2)
-        //    {
-        //        Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
-        //        Console.WriteLine("Message: {0}", e2.Message);
-        //    }
-        //    //lav en metode der hedder createReservation
-        //    //Opret med repeatable read(en del af queryen)
-        //    //tjek count, hvis ok->
-        //    //opret reservation
-        //    //return bool på success/ ikke success ?
+                Console.WriteLine("Exception type: {0}", e.GetType());
+                Console.WriteLine(" Message: {0}", e.Message);
+            }
 
-        //}
+            //Roll back
+            try {
+                transaction.Rollback();
+            } catch (Exception e2) {
+                Console.WriteLine("Rollback Exception Type: {0}", e2.GetType());
+                Console.WriteLine("Message: {0}", e2.Message);
+            }
+            //lav en metode der hedder createReservation
+            //Opret med repeatable read(en del af queryen)
+            //tjek count, hvis ok->
+            //opret reservation
+            //return bool på success/ ikke success ?
+
+        }
     }
 }

@@ -82,28 +82,46 @@ namespace DataAccess.Repositories {
             }
         }
 
+        public async Task<int> CreateWardrobeControl(WardrobeControl wardrobeControl, SqlConnection connection = null) {
+
+            try {
+                var query = "INSERT INTO WardrobeControl (WardrobeID_FK, Date, Count) OUTPUT INSERTED.Id VALUES (@WardrobeID_FK, @Date, @Count);";
+                
+                using var realConnection = connection ?? CreateConnection();
+                
+                return await connection.QuerySingleAsync<int>(
+                    query,
+                    new { wardrobeID_FK = wardrobeControl.WardrobeID_FK, date = wardrobeControl.Date, count = wardrobeControl.Count });
+
+            } catch (Exception e) {
+                throw new Exception($"Fejl ved oprettelse af WardrobeControl: '{e.Message}'.", e);
+            }
 
 
-        //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
-        //    try {
-        //        //Query is created and the input parameter is assigned
-        //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
 
-        //        //Connection is made
-        //        using var realConnection = connection?? CreateConnection();
-
-        //        //We execute the query that retrieves a reservation object based on ID
-
-        //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
-        //        return (WardrobeControl)result;
+        }
 
 
-        //    } catch (Exception e) {
-        //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
-        //    }
+            //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
+            //    try {
+            //        //Query is created and the input parameter is assigned
+            //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
 
-        //}
-    }
+            //        //Connection is made
+            //        using var realConnection = connection?? CreateConnection();
+
+            //        //We execute the query that retrieves a reservation object based on ID
+
+            //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
+            //        return (WardrobeControl)result;
+
+
+            //    } catch (Exception e) {
+            //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
+            //    }
+
+            //}
+        }
 }
 
 
