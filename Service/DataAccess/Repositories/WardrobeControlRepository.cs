@@ -39,8 +39,8 @@ namespace DataAccess.Repositories {
                 using var realConnection = connection?? CreateConnection();
 
                 //We execute the query that retrieves a reservation object based on ID
-                var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID, date.Date });
-                return (WardrobeControl)result;
+                var result = await realConnection.QueryAsync<WardrobeControl>(query, new { ID, date.Date });
+                return (WardrobeControl)result.FirstOrDefault();
 
 
             } catch (Exception e) {
@@ -84,13 +84,13 @@ namespace DataAccess.Repositories {
         public async Task<int> CreateWardrobeControl(WardrobeControl wardrobeControl, SqlConnection connection = null) {
 
             try {
-                var query = "INSERT INTO WardrobeControl (WardrobeID_FK, Date, Count) OUTPUT INSERTED.Id VALUES (@WardrobeID_FK, @Date, @Count);";
+                var query = "INSERT INTO WardrobeControl (WardrobeID_FK, Date, Count) OUTPUT INSERTED.WardrobeID_FK VALUES ('@WardrobeID_FK', @Date, @Count);";
 
                 using var realConnection = connection ?? CreateConnection();
 
-                return await connection.QuerySingleAsync<int>(
+                return await realConnection.QuerySingleAsync<int>(
                     query,
-                    new { wardrobeID_FK = wardrobeControl.WardrobeID_FK, date = wardrobeControl.Date, count = wardrobeControl.Count });
+                    new { wardrobeID_FK = wardrobeControl.WardrobeID_FK, date = wardrobeControl.Date.Date, count = wardrobeControl.Count });
 
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af WardrobeControl: '{e.Message}'.", e);
