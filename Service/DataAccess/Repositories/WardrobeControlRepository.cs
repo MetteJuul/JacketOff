@@ -39,8 +39,7 @@ namespace DataAccess.Repositories {
                 using var realConnection = connection?? CreateConnection();
 
                 //We execute the query that retrieves a reservation object based on ID
-
-                var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID, date });
+                var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID, date.Date });
                 return (WardrobeControl)result;
 
 
@@ -51,7 +50,7 @@ namespace DataAccess.Repositories {
 
         public async Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null) {
             try {
-                
+
                 var query = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" +
                     "UPDATE WardrobeControl SET count=@count WHERE wardrobeID_FK=@wardrobeID_FK";
 
@@ -86,9 +85,9 @@ namespace DataAccess.Repositories {
 
             try {
                 var query = "INSERT INTO WardrobeControl (WardrobeID_FK, Date, Count) OUTPUT INSERTED.Id VALUES (@WardrobeID_FK, @Date, @Count);";
-                
+
                 using var realConnection = connection ?? CreateConnection();
-                
+
                 return await connection.QuerySingleAsync<int>(
                     query,
                     new { wardrobeID_FK = wardrobeControl.WardrobeID_FK, date = wardrobeControl.Date, count = wardrobeControl.Count });
@@ -102,26 +101,26 @@ namespace DataAccess.Repositories {
         }
 
 
-            //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
-            //    try {
-            //        //Query is created and the input parameter is assigned
-            //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
+        //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
+        //    try {
+        //        //Query is created and the input parameter is assigned
+        //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
 
-            //        //Connection is made
-            //        using var realConnection = connection?? CreateConnection();
+        //        //Connection is made
+        //        using var realConnection = connection?? CreateConnection();
 
-            //        //We execute the query that retrieves a reservation object based on ID
+        //        //We execute the query that retrieves a reservation object based on ID
 
-            //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
-            //        return (WardrobeControl)result;
+        //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
+        //        return (WardrobeControl)result;
 
 
-            //    } catch (Exception e) {
-            //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
-            //    }
+        //    } catch (Exception e) {
+        //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
+        //    }
 
-            //}
-        }
+        //}
+    }
 }
 
 
