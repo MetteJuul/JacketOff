@@ -28,7 +28,7 @@ namespace DataAccess {
                 //Connection is created - ?? betyder "er connection object null, så laver den en ny"
                 using var realConnection = connection?? CreateConnection();
 
-                //TODO skriv forklaring
+                //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
                 return await realConnection.QuerySingleAsync<int>(query, reservation);
 
                 } catch (Exception e) {

@@ -30,24 +30,23 @@ namespace DataAccess.Repositories {
             }
         }
 
-        public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
+        public async Task<WardrobeControl> GetWardrobeControlByIdAndDate(string ID, DateTime date, SqlConnection connection = null) {
             try {
                 //Query is created and the input parameter is assigned
-                var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
+                var query = "SELECT wardrobeID_FK, date, count FROM wardrobeControl WHERE wardrobeID_FK=@ID AND date=@date";
 
                 //Connection is made
                 using var realConnection = connection?? CreateConnection();
 
                 //We execute the query that retrieves a reservation object based on ID
 
-                var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
+                var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID, date });
                 return (WardrobeControl)result;
 
 
             } catch (Exception e) {
                 throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
             }
-
         }
 
         public async Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null) {
@@ -82,6 +81,28 @@ namespace DataAccess.Repositories {
                 throw new Exception($"Error deleting reservation with id {ID}: '{e.Message}'.", e);
             }
         }
+
+
+
+        //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
+        //    try {
+        //        //Query is created and the input parameter is assigned
+        //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
+
+        //        //Connection is made
+        //        using var realConnection = connection?? CreateConnection();
+
+        //        //We execute the query that retrieves a reservation object based on ID
+
+        //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
+        //        return (WardrobeControl)result;
+
+
+        //    } catch (Exception e) {
+        //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
+        //    }
+
+        //}
     }
 }
 

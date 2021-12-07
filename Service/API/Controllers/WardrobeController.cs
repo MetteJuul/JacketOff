@@ -4,6 +4,7 @@ using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Tasks;
 
 namespace API.Controllers {
@@ -20,8 +21,8 @@ namespace API.Controllers {
 
         //GET: api/WardrobeControl/{id} 
         [HttpGet("id")]
-        public async Task<ActionResult<WardrobeControlDTO>> GetCount(string id) {
-            var wardrobeControl = await _wardrobeControlRepository.GetWardrobeControlById(id);
+        public async Task<ActionResult<WardrobeControlDTO>> GetCount(string id, DateTime date) {
+            var wardrobeControl = await _wardrobeControlRepository.GetWardrobeControlByIdAndDate(id, date);
 
             if (wardrobeControl == null) {
                 return NotFound("Ingen garderober fundet blev fundet");
