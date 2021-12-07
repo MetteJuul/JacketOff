@@ -20,20 +20,37 @@
                 <span asp-validation-for="ArrivalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AmountOfJackets" class="control-label">Antal Jakker</label>
-                <input asp-for="AmountOfJackets" class="form-control" />
-                <span asp-validation-for="AmountOfJackets" class="text-danger"></span>
+                <label asp-for="Reservation.AmountOfJackets" class="control-label">Antal Jakker</label>
+                <input asp-for="Reservation.AmountOfJackets" class="form-control" id="amountOfJackets" onchange="calcPrice()"/>
+                <span asp-validation-for="Reservation.AmountOfJackets" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AmountOfBags" class="control-label">Antal Tasker</label>
-                <input asp-for="AmountOfBags" class="form-control" />
-                <span asp-validation-for="AmountOfBags" class="text-danger"></span>
+                <label asp-for="Reservation.AmountOfBags" class="control-label">Antal Tasker</label>
+                <input asp-for="Reservation.AmountOfBags" class="form-control" id="amountOfBags" onchange="calcPrice()"/>
+                <span asp-validation-for="Reservation.AmountOfBags" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" >
                 Pris:
-                <input style="text-align:right" type="text" readonly="readonly" id="textTotalPrice" value="0.00" name="Price" class="form-control" />
+                <span id="res"> 0 </span>
+                <script>
+                    function calcPrice(){
 
+                        let amountOfJackets = document.getElementById("amountOfJackets").value;
+                        if(isNaN(amountOfJackets)){
+                            amountOfJackets=0;
+                        }
 
+                        let amountOfBags = document.getElementById("amountOfBags").value;
+                        if(isNaN(amountOfBags)){
+                            amountOfBags=0;
+                        }
+
+                    let returnValue = parseInt(amountOfJackets)*30+parseInt(amountOfBags)*40;
+                    document.getElementById("res").innerHTML=returnValue;
+
+                    }
+    
+                </script>
             </div>
             <div class="form-group">
                 <input type="submit" value="Opret Reservation" class="btn btn-primary" />
@@ -50,4 +67,5 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+
 }
