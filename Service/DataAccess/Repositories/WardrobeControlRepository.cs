@@ -51,9 +51,9 @@ namespace DataAccess.Repositories {
 
         public async Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null) {
             try {
-
+                
                 var query = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" +
-                    "UPDATE WardrobeControl SET count=@count WHERE wardrobeID_FK='guldhornene'";
+                    "UPDATE WardrobeControl SET count=@count WHERE wardrobeID_FK=@wardrobeID_FK";
 
 
                 using var realConnection = connection?? CreateConnection();
