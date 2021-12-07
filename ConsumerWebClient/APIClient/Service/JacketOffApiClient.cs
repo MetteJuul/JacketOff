@@ -12,7 +12,6 @@ namespace APIClient {
 
         private readonly RestClient _restClient;
 
-        readonly RestClient _restClient;
 
         public JacketOffApiClient(string uri) => _restClient = new RestClient(new Uri(uri));
 

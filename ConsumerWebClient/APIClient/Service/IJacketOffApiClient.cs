@@ -12,7 +12,7 @@ namespace APIClient {
         Task<bool> UpdateReservation(ReservationDTO entity);
         Task<bool> DeleteReservation(int id);
         Task<IEnumerable<ReservationDTO>> GetReservationsByGuestEmail(string email);
-        Task<WardrobeControlDTO> GetWardrobeControl();
+        //Task<WardrobeControlDTO> GetWardrobeControl();
 
     }
 }
