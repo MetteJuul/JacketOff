@@ -9,6 +9,6 @@ namespace APIClient.DTOs {
 
         public int ID { get; set; }
         public decimal Price { get; set; }  
-        public string Name { get; set; }    
+        public string TypeName { get; set; }    
     }
 }

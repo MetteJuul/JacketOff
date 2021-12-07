@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace APIClient {
     public class JacketOffApiClient : IJacketOffApiClient {
 
+        private readonly RestClient _restClient;
+
         readonly RestClient _restClient;
 
         public JacketOffApiClient(string uri) => _restClient = new RestClient(new Uri(uri));
@@ -78,15 +80,23 @@ namespace APIClient {
             return response.Data;
         }
 
-        public async Task<WardrobeControlDTO> GetWardrobeControl() {
+        public async Task<IEnumerable<ItemTypeDTO>> GetAllItemTypes()
+        {
 
-            
-            var response = await _restClient.RequestAsync<WardrobeControlDTO>(Method.GET, $"reservations");
+            //We create a response variable in which we call our api/reservations
+            //in order to store our list of all reservations
+            var response = await _restClient.RequestAsync<IEnumerable<ItemTypeDTO>>(Method.GET, $"itemtypes");
 
-            if (!response.IsSuccessful) {
-                throw new Exception($"Fejl ved hentning af garderobe. Fejl besked: {response.Content}");
+            //We then test if the response is unsuccesful, if that is the case
+            //we throw an exception with a custom error message, as well as a 
+            //display of the error message recieved by the method
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Fejl ved hentning af alle ItemTypes. Fejl besked: {response.Content}");
             }
 
+            //We then return the response, which should contain the list
+            // of all reservations
             return response.Data;
         }
 
