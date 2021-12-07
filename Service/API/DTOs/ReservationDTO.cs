@@ -16,7 +16,7 @@ namespace API.DTOs {
 
         public decimal Price { get; set; }
 
-
+        public string WardrobeID_FK { get; set; }
 
     }
 }

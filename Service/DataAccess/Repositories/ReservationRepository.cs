@@ -22,8 +22,8 @@ namespace DataAccess {
 
                     //Query is created and each property of the reservation object
                     //is mapped to the query using dapper
-                    var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price)" +
-                        "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price)";
+                    var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price, wardrobeID_FK)" +
+                        "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price, @WardrobeID_FK)";
 
                 //Connection is created - ?? betyder "er connection object null, så laver den en ny"
                 using var realConnection = connection?? CreateConnection();
@@ -70,13 +70,13 @@ namespace DataAccess {
             public async Task<Reservation> GetByID(int ID, SqlConnection connection = null) {
                 try {
                     //Query is created and the input parameter is assigned
-                    var query = "SELECT * FROM Reservation WHERE reservationID=@iD";
+                    var query = "SELECT * FROM Reservation WHERE reservationID=@ID";
 
                     //Connection is made
-                    using var realConnection = CreateConnection();
+                    using var realConnection = connection?? CreateConnection();
 
                     //We execute the query that retrieves a reservation object based on ID
-                    return await connection.QuerySingleAsync<Reservation>(query, new { ID });
+                    return await realConnection.QuerySingleAsync<Reservation>(query, new { ID });
                 } catch (Exception e) {
                     throw new Exception($"Error getting reservation with id {ID}: '{e.Message}'.", e);
                 }
