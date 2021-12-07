@@ -40,7 +40,7 @@ namespace DataAccess.Repositories {
 
                 //We execute the query that retrieves a reservation object based on ID
                 var result = await realConnection.QueryAsync<WardrobeControl>(query, new { ID, date.Date });
-                return (WardrobeControl)result.FirstOrDefault();
+                return result.FirstOrDefault();
 
 
             } catch (Exception e) {
