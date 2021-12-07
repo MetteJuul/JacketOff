@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Services {
-    public class ReservationService : BaseDB {
+    public class ReservationService : BaseDB, IReservationService {
 
         private IWardrobeControlRepository wardrobeControlRepo;
         private IReservationRepository reservationRepo;
@@ -77,7 +77,7 @@ namespace DataAccess.Services {
                             //det til vores updateCount metode i wardrobeControlRepo
                             wardrobeControl.Count = wardrobeCount + addedAmountOfItems;
                             await wardrobeControlRepo.UpdateCount(wardrobeControl);
-                            
+
                         }
 
                         transaction.Commit();
