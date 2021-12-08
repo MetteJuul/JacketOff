@@ -84,13 +84,11 @@ namespace DataAccess.Repositories {
         public async Task<int> CreateWardrobeControl(WardrobeControl wardrobeControl, SqlConnection connection = null) {
 
             try {
-                var query = "INSERT INTO WardrobeControl (WardrobeID_FK, Date, Count) OUTPUT INSERTED.WardrobeID_FK VALUES ('@WardrobeID_FK', @Date, @Count);";
+                var query = "INSERT INTO WardrobeControl (wardrobeID_FK, date, count) OUTPUT INSERTED.WardrobeID_FK VALUES (@WardrobeID_FK, @Date, @Count);";
 
                 using var realConnection = connection ?? CreateConnection();
 
-                return await realConnection.QuerySingleAsync<int>(
-                    query,
-                    new { wardrobeID_FK = wardrobeControl.WardrobeID_FK, date = wardrobeControl.Date.Date, count = wardrobeControl.Count });
+                return await realConnection.QuerySingleAsync<int> (query, wardrobeControl);
 
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af WardrobeControl: '{e.Message}'.", e);
