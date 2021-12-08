@@ -54,17 +54,21 @@ namespace API.DTOs.Converters {
 
         #endregion
 
-        #region WardrobeControl converter methods
-
-        public static WardrobeControlDTO ToDTO(this WardrobeControl wardrobeControlToConvert) {
-            var wardrobeControlDTO = new WardrobeControlDTO();
-            wardrobeControlToConvert.CopyPropertiesTo(wardrobeControlDTO);
-            return wardrobeControlDTO;
+        #region ItemType
+        public static ItemTypeDTO ItemTypeToDTO(this ItemType itemTypeDTOToConvert)
+        {
+            var itemTypeDTO = new ItemTypeDTO();
+            itemTypeDTOToConvert.CopyPropertiesTo(itemTypeDTO);
+            return itemTypeDTO;
         }
-        public static WardrobeControl FromDTO(this WardrobeControlDTO wardrobeControlDTOToConvert) {
-            var wardrobeControl = new WardrobeControl();
-            wardrobeControlDTOToConvert.CopyPropertiesTo(wardrobeControl);
-            return wardrobeControl;
+
+        public static IEnumerable<ItemTypeDTO> ItemTypeToDTOs(this IEnumerable<ItemType> ItemTypeToConvert)
+        {
+
+            foreach (var itemType in ItemTypeToConvert)
+            {
+                yield return itemType.ItemTypeToDTO();
+            }
         }
 
         #endregion

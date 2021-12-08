@@ -17,7 +17,7 @@ namespace API.Controllers {
     public class ReservationsController : ControllerBase {
 
         IReservationRepository _reservationRepository;
-        ReservationService _service;
+        IReservationService _service;
         
 
     public ReservationsController(IConfiguration configuration) {
