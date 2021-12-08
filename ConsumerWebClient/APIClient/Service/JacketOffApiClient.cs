@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace APIClient {
     public class JacketOffApiClient : IJacketOffApiClient {
 
-        private readonly RestClient _restClient;
-
+        private RestClient _restClient;
 
         public JacketOffApiClient(string uri) => _restClient = new RestClient(new Uri(uri));
 

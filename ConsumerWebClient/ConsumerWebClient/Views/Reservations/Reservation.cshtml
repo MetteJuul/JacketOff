@@ -3,11 +3,25 @@
 @{
     ViewData["Title"] = "Reservation";
 }
+@*Her hentes priserne fra ItemTypesene ind, så de kan bruges til udregninger*@
+@{
+    decimal jakkePris = 0;
+    decimal taskePris = 0;
 
+    foreach(var itemType in Model.ItemTypes)
+    {
+        if (itemType.TypeName.Equals("taske")){
+            taskePris = itemType.Price;
+        } else if(itemType.TypeName.Equals("jakke")){
+            jakkePris = itemType.Price;
+        }
+    }
+}
 
 
 <h1>Opret Reservation</h1>
 
+@*Her laves den form vi bruger, til at sende data med ned igennem systemet*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,37 +34,19 @@
                 <span asp-validation-for="@Model.ArrivalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.AmountOfJackets" class="control-label">Antal Jakker</label>
-                <input asp-for="@Model.AmountOfJackets" class="form-control" id="amountOfJackets" onchange="calcPrice()"/>
-                <span asp-validation-for="@Model.AmountOfJackets" class="text-danger"></span>
+                <label asp-for="Reservation.AmountOfJackets" class="control-label">Antal Jakker</label>
+                <input asp-for="Reservation.AmountOfJackets" value=0 class="form-control" id="amountOfJackets" onchange="calcPrice()" />
+                <span asp-validation-for="Reservation.AmountOfJackets" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.AmountOfBags" class="control-label">Antal Tasker</label>
-                <input asp-for="@Model.AmountOfBags" class="form-control" id="amountOfBags" onchange="calcPrice()"/>
-                <span asp-validation-for="@Model.AmountOfBags" class="text-danger"></span>
+                <label asp-for="Reservation.AmountOfBags" class="control-label">Antal Tasker</label>
+                <input asp-for="Reservation.AmountOfBags" value=0 class="form-control" id="amountOfBags" onchange="calcPrice()" />
+                <span asp-validation-for="Reservation.AmountOfBags" class="text-danger"></span>
             </div>
-            <div class="form-group" >
-                Pris:
-                <span id="res"> 0 </span>
-                <script>
-                    function calcPrice(){
-
-                        let amountOfJackets = document.getElementById("amountOfJackets").value;
-                        if(isNaN(amountOfJackets)){
-                            amountOfJackets=0;
-                        }
-
-                        let amountOfBags = document.getElementById("amountOfBags").value;
-                        if(isNaN(amountOfBags)){
-                            amountOfBags=0;
-                        }
-
-                    let returnValue = parseInt(amountOfJackets)*30+parseInt(amountOfBags)*40;
-                    document.getElementById("res").innerHTML=returnValue;
-
-                    }
-    
-                </script>
+            <div class="form-group">
+                <label asp-for="Reservation.Price" class="control-label">Pris</label>
+                <input asp-for="Reservation.Price" id="res" class="form-control" onchange="calcPrice()"/>
+                <span asp-validation-for="Reservation.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Opret Reservation" class="btn btn-primary" />
@@ -67,5 +63,18 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+<script>
+    function calcPrice(){
+
+        let amountOfJackets = document.getElementById("amountOfJackets").value;
+        let amountOfBags = document.getElementById("amountOfBags").value;
+
+    let returnValue = parseInt(amountOfJackets)*@jakkePris+parseInt(amountOfBags)*@taskePris;
+    document.getElementById("res").value=returnValue;
+
+    
+    }
+
+</script>
 
 }
