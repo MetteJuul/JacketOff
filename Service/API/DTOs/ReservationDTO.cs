@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper.Contrib.Extensions;
+using System;
 
 namespace API.DTOs {
     public class ReservationDTO {
@@ -14,6 +15,8 @@ namespace API.DTOs {
         public int AmountOfBags { get; set; }
 
         public decimal Price { get; set; }
+
+        public string WardrobeID_FK { get; set; }
 
     }
 }

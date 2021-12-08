@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace APIClient {
     public class JacketOffApiClient : IJacketOffApiClient {
 
-        private RestClient _restClient;
-
+        readonly RestClient _restClient;
         public JacketOffApiClient(string uri) => _restClient = new RestClient(new Uri(uri));
 
         public async Task<IEnumerable<ReservationDTO>> GetAllReservations() {
@@ -75,6 +74,18 @@ namespace APIClient {
                 throw new Exception($"Fejl ved hentning af reservationer for bruger med email{email}. Fejl besked: {response.Content}");
             }
 
+            return response.Data;
+        }
+
+        public async Task<WardrobeControlDTO> GetWardrobeControl() {
+
+            
+            var response = await _restClient.RequestAsync<WardrobeControlDTO>(Method.GET, $"reservations");
+
+            if (!response.IsSuccessful) {
+                throw new Exception($"Fejl ved hentning af garderobe. Fejl besked: {response.Content}");
+            }
+
             return response.Data;
         }
 

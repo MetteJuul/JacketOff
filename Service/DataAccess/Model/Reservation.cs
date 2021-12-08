@@ -14,6 +14,7 @@ namespace DataAccess {
         public int AmountOfJackets { get; set; }
         public int AmountOfBags { get; set; }
         public decimal Price { get; set; }
+        public string WardrobeID_FK { get; set; }
 
     }
 }

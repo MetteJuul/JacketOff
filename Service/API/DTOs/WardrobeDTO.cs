@@ -6,10 +6,5 @@ namespace API.DTOs {
 
         public int MaxAmountOfItems { get; set; }
 
-        public int Count { get; set; }
-
-        public byte[] RowID { get; set; }
-
-        public Int64 RowIDBig { get; set; }
     }
 }

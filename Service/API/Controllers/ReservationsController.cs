@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Converters;
 using Microsoft.Extensions.Configuration;
+using DataAccess.Model;
+using DataAccess.Repositories;
+using DataAccess.Services;
 
 namespace API.Controllers {
     [Route("api/[controller]")]
@@ -14,9 +17,12 @@ namespace API.Controllers {
     public class ReservationsController : ControllerBase {
 
         IReservationRepository _reservationRepository;
+        ReservationService _service;
+        
 
-        public ReservationsController(IConfiguration configuration) {
+    public ReservationsController(IConfiguration configuration) {
             _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
+            _service = new ReservationService(configuration.GetConnectionString("JacketOff"));
         }
 
         //GET: api/reservations        
@@ -38,7 +44,10 @@ namespace API.Controllers {
         //POST: api/reservations
         [HttpPost]
         public async Task<ActionResult<int>> CreateReservation([FromBody] ReservationDTO newReservationDTO) {
-            return Ok(await _reservationRepository.CreateReservation(newReservationDTO.FromDTO()));
+
+            return Ok(await _service.CreateReservation(newReservationDTO.FromDTO()));
+
+            //return Ok(await _reservationRepository.CreateReservation(newReservationDTO.FromDTO()));
         }
 
         //PUT: api/reservations/5
@@ -69,5 +78,7 @@ namespace API.Controllers {
                 return Ok(reservations.ToDTOs());
             }
         }
+
+        
     }
 }

@@ -28,7 +28,7 @@ namespace TestService.TestDataAccess {
         public async Task<Reservation> CreateNewReservationAsync() {
             _newReservation = new Reservation() {
                 GuestID_FK = 2, OrderTime = DateTime.Now, ArrivalTime = DateTime.Now,
-                AmountOfJackets = 2, AmountOfBags = 1, Price = 150
+                AmountOfJackets = 2, AmountOfBags = 1, Price = 150, WardrobeID_FK = "guldhornene"
             };
             _newReservation.ReservationID = await _reservationRepository.CreateReservation(_newReservation);
             return _newReservation;
@@ -57,7 +57,9 @@ namespace TestService.TestDataAccess {
             //ARRANGE is done in Setup()
 
             //ACT
-            var foundReservation = await _reservationRepository.GetByID(_newReservation.ReservationID);
+
+            int ID = _newReservation.ReservationID;
+            var foundReservation = await _reservationRepository.GetByID(ID);
 
             //ASSERT
             //TODO specify why we are not comparing datetime
@@ -93,7 +95,7 @@ namespace TestService.TestDataAccess {
         public async Task TestGetByGuestEmail() {
             //ARRANGE 
 
-            string email = "palle@dahlgaardstivoli.dk";
+            string email = "Andreas@BigD.com";
 
 
             //ACT
