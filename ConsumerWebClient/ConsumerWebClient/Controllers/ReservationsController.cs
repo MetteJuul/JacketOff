@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ConsumerWebClient.TestData;
-
+using ConsumerWebClient.Models;
 
 namespace ConsumerWebClient.Controllers {
 
@@ -32,12 +32,21 @@ namespace ConsumerWebClient.Controllers {
         //for creating a reservation. The data from
         //the view is not utilised before our Post method.
         //Therefore, nothing is added to this method.
-        public ActionResult Reservation() {
-            return View();
+        public async Task<ActionResult> Reservation() {
+
+            IEnumerable<ItemTypeDTO> itemTypes = await _client.GetAllItemTypes();
+
+            ReservationViewModel reservationViewModel = new ReservationViewModel();
+            reservationViewModel.ItemTypes = itemTypes;
+
+            return View(reservationViewModel);
         }
 
         [HttpPost]
-        public async Task <ActionResult> Reservation(ReservationDTO newReservation) {
+        public async Task <ActionResult> Reservation(ReservationViewModel reservationViewModel) {
+
+            //We extract the reservationDTO from our view model, to post it's data
+            ReservationDTO newReservation = reservationViewModel.Reservation;
 
             //Placeholder for retrieving guestID
             //from logged in user 
@@ -55,6 +64,5 @@ namespace ConsumerWebClient.Controllers {
             }
         }
 
-        
     }
 }

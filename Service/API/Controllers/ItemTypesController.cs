@@ -21,18 +21,21 @@ namespace API.Controllers {
             _itemTypeRepository = new ItemTypeRepository(configuration.GetConnectionString("JacketOff"));
         }
 
-        ////GET: api/itemTypes        
-        //[HttpGet]
-        //public async Task<ActionResult<List<ItemTypeDTO>>> GetAllItemTypes() {
+        //GET: api/itemTypes        
+        [HttpGet]
+        public async Task<ActionResult<List<ItemTypeDTO>>> GetAllItemTypes()
+        {
 
-        //    var itemTypes = await _itemTypeRepository.GetAllItemTypes();
+            var itemTypes = await _itemTypeRepository.GetAllItemTypes();
 
-        //    if (itemTypes == null) {
-        //        return NotFound("Ingen reservationer blev fundet");
-        //    } else {
-        //        return Ok(itemTypes.ItemTypesToDTOs());
-        //    }
-        //}
+            if (itemTypes == null)
+            {
+                return NotFound("Ingen reservationer blev fundet");
+            } else
+            {
+                return Ok(itemTypes.ItemTypeToDTOs());
+            }
+        }
 
         //GET api/itemTypes/id
         [HttpGet("{id}")]

@@ -1,4 +1,4 @@
-﻿@model APIClient.DTOs.ReservationDTO
+﻿@model ConsumerWebClient.Models.ReservationViewModel
 
 @{
     ViewData["Title"] = "Reservation";
@@ -18,7 +18,6 @@
     }
 }
 
-
 <h1>Opret Reservation</h1>
 
 @*Her laves den form vi bruger, til at sende data med ned igennem systemet*@
@@ -29,24 +28,24 @@
             
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="@Model.ArrivalTime" class="control-label">Ankomst</label>
-                <input asp-for="@Model.ArrivalTime" class="form-control" />
-                <span asp-validation-for="@Model.ArrivalTime" class="text-danger"></span>
+                <label asp-for="Reservation.ArrivalTime" class="control-label">Ankomst</label>
+                <input asp-for="Reservation.ArrivalTime" class="form-control" />
+                <span asp-validation-for="Reservation.ArrivalTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.AmountOfJackets" class="control-label">Antal Jakker</label>
-                <input asp-for="Reservation.AmountOfJackets" value=0 class="form-control" id="amountOfJackets" onchange="calcPrice()" />
+                <input asp-for="Reservation.AmountOfJackets" class="form-control" />
                 <span asp-validation-for="Reservation.AmountOfJackets" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Reservation.AmountOfBags" class="control-label">Antal Tasker</label>
-                <input asp-for="Reservation.AmountOfBags" value=0 class="form-control" id="amountOfBags" onchange="calcPrice()" />
+                <input asp-for="Reservation.AmountOfBags" class="form-control" />
                 <span asp-validation-for="Reservation.AmountOfBags" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reservation.Price" class="control-label">Pris</label>
-                <input asp-for="Reservation.Price" id="res" class="form-control" onchange="calcPrice()"/>
-                <span asp-validation-for="Reservation.Price" class="text-danger"></span>
+                Pris:
+                @decimal price = 
+                <input style="text-align:right" type="text" readonly="readonly" id="textTotalPrice" value="0.00" name="Price" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Opret Reservation" class="btn btn-primary" />
