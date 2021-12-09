@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interfaces
 {
-    internal interface IGuestRepository
+    public interface IGuestRepository
     {
-        int CreateGuest(Guest guest);
-        List<Guest> GetAllGuests();
-        Guest GetbyID(int iD);
-        int UpdateGuest(Guest guest);
-        bool DeleteByID(int iD);
+        Task<Guest> GetByEmail(string email, SqlConnection connection = null);
     }
 }

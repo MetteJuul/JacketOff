@@ -22,27 +22,27 @@ namespace DataAccess {
 
             try {
 
-                    //Before creating our query, we set the order time
+                //Before creating our query, we set the order time
 
-                    //as the current time
+                //as the current time
 
-                    reservation.OrderTime = DateTime.Now;
+                reservation.OrderTime = DateTime.Now;
 
 
 
-                    //Query is created and each property of the reservation object
+                //Query is created and each property of the reservation object
 
-                    //is mapped to the query using dapper
+                //is mapped to the query using dapper
 
-                    var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price, wardrobeID_FK)" +
+                var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price, wardrobeID_FK)" +
 
-                        "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price, @WardrobeID_FK)";
+                    "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price, @WardrobeID_FK)";
 
 
 
                 //Connection is created - ?? betyder "er connection object null, så laver den en ny"
 
-                using var realConnection = connection?? CreateConnection();
+                using var realConnection = connection ?? CreateConnection();
 
 
 
@@ -52,61 +52,61 @@ namespace DataAccess {
 
 
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
 
 
-                    throw new Exception($"Error creating new reservation: '{e.Message}'.", e);
-
-                }
+                throw new Exception($"Error creating new reservation: '{e.Message}'.", e);
 
             }
 
+        }
 
 
-            public async Task<bool> DeleteByID(int ID, SqlConnection connection = null) {
 
-                try {
+        public async Task<bool> DeleteByID(int ID, SqlConnection connection = null) {
 
-                    //Query is created and the input parameter iD is inserted into it
+            try {
 
-                    var query = "DELETE FROM Reservation WHERE reservationID=@iD";
+                //Query is created and the input parameter iD is inserted into it
+
+                var query = "DELETE FROM Reservation WHERE reservationID=@iD";
 
 
 
                 //Connection is created
 
-                using var realConnection = connection?? CreateConnection();
+                using var realConnection = connection ?? CreateConnection();
 
                 //Using Async the query is executed only if the iD is larger than 0
 
                 return await realConnection.ExecuteAsync(query, new { ID }) > 0;
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
 
 
-                    throw new Exception($"Error deleting reservation with id {ID}: '{e.Message}'.", e);
-
-                }
+                throw new Exception($"Error deleting reservation with id {ID}: '{e.Message}'.", e);
 
             }
 
+        }
 
 
-            public async Task<IEnumerable<Reservation>> GetAllReservations(SqlConnection connection = null) {
 
-                try {
+        public async Task<IEnumerable<Reservation>> GetAllReservations(SqlConnection connection = null) {
 
-                    //Query is created
+            try {
 
-                    var query = "SELECT * FROM Reservation";
+                //Query is created
+
+                var query = "SELECT * FROM Reservation";
 
 
 
                 //Connection is made
 
-                using var realConnection = connection?? CreateConnection();
+                using var realConnection = connection ?? CreateConnection();
 
 
 
@@ -114,59 +114,59 @@ namespace DataAccess {
 
                 return (await realConnection.QueryAsync<Reservation>(query)).ToList();
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
-                    throw new Exception($"Error getting all reservations: '{e.Message}'.", e);
-
-                }
+                throw new Exception($"Error getting all reservations: '{e.Message}'.", e);
 
             }
 
-
-
-            public async Task<Reservation> GetByID(int ID, SqlConnection connection = null) {
-
-                try {
-
-                    //Query is created and the input parameter is assigned
-
-                    var query = "SELECT * FROM Reservation WHERE reservationID=@ID";
+        }
 
 
 
-                    //Connection is made
+        public async Task<Reservation> GetByID(int ID, SqlConnection connection = null) {
 
-                    using var realConnection = connection?? CreateConnection();
+            try {
 
+                //Query is created and the input parameter is assigned
 
-
-                    //We execute the query that retrieves a reservation object based on ID
-
-                    return await realConnection.QuerySingleAsync<Reservation>(query, new { ID });
-
-                } catch (Exception e) {
-
-                    throw new Exception($"Error getting reservation with id {ID}: '{e.Message}'.", e);
-
-                }
-
-            }
-
-
-
-            public async Task<bool> UpdateReservation(Reservation reservation, SqlConnection connection = null) {
-
-                try {
-
-                    //Query is created and each reservation property is mapped using Dapper
-
-                    var query = "UPDATE Reservation SET guestID_FK=@guestID_FK, orderTime=@orderTime, arrivalTime=@arrivalTime, amountOfJackets=@amountOfJackets, amountOfBags=@amountOfBags, price=@price WHERE reservationID=@reservationID";
+                var query = "SELECT * FROM Reservation WHERE reservationID=@ID";
 
 
 
                 //Connection is made
 
-                using var realConnection = connection?? CreateConnection();
+                using var realConnection = connection ?? CreateConnection();
+
+
+
+                //We execute the query that retrieves a reservation object based on ID
+
+                return await realConnection.QuerySingleAsync<Reservation>(query, new { ID });
+
+            } catch (Exception e) {
+
+                throw new Exception($"Error getting reservation with id {ID}: '{e.Message}'.", e);
+
+            }
+
+        }
+
+
+
+        public async Task<bool> UpdateReservation(Reservation reservation, SqlConnection connection = null) {
+
+            try {
+
+                //Query is created and each reservation property is mapped using Dapper
+
+                var query = "UPDATE Reservation SET guestID_FK=@guestID_FK, orderTime=@orderTime, arrivalTime=@arrivalTime, amountOfJackets=@amountOfJackets, amountOfBags=@amountOfBags, price=@price WHERE reservationID=@reservationID";
+
+
+
+                //Connection is made
+
+                using var realConnection = connection ?? CreateConnection();
 
 
 
@@ -174,29 +174,29 @@ namespace DataAccess {
 
                 return await realConnection.ExecuteAsync(query, reservation) > 0;
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
-                    throw new Exception($"Error updating reservation: '{e.Message}'.", e);
-
-                }
+                throw new Exception($"Error updating reservation: '{e.Message}'.", e);
 
             }
 
+        }
 
 
-            public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
 
-                try {
+        public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
 
-                    //Query is created taking guestID as a variable
+            try {
 
-                    var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email)";
+                //Query is created taking guestID as a variable
+
+                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email)";
 
 
 
                 //Connection is made
 
-                using var realConnection = connection?? CreateConnection();
+                using var realConnection = connection ?? CreateConnection();
 
 
 
@@ -206,14 +206,14 @@ namespace DataAccess {
 
                 return (await realConnection.QueryAsync<Reservation>(query, new { email })).ToList();
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
-                    throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
-
-                }
+                throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
 
             }
 
         }
 
     }
+
+}

@@ -10,7 +10,6 @@ namespace DataAccess.Interfaces {
         Task<IEnumerable<WardrobeControl>> GetAllWardrobeControls(SqlConnection connection = null);
         Task<WardrobeControl> GetWardrobeControlByIdAndDate(string ID, DateTime date, SqlConnection connection = null);
         Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null);
-
         Task<int> CreateWardrobeControl(WardrobeControl wardrobeControl, SqlConnection connection = null);
     }
 }

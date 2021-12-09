@@ -1,89 +1,58 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Model;
-//using NUnit;
-//using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DataAccess;
+using DataAccess.Repositories;
+using NUnit;
+using NUnit.Framework;
 
-//namespace TestService.TestDataAccess {
-//    public class TestDBOrder {
-//        //Setup fields
-//        private OrderDB _orderDB;
-//        private Order _newOrder;
-       
-//        [SetUp]
-//        public async Task AsyncSetup() {
-//            //Initiate fields
-//            _orderDB = new OrderDB(Configuration.CONNECTION_STRING);
-//            await CreateNewOrderAsync();
-//        }
+namespace TestService.TestDataAccess {
+    public class TestDBOrder {
+        //Setup fields
+        private OrderRepository _orderRepository;
+        private Order _newOrder;
 
-//        [TearDown]
-//        public async Task CleanUpAsync() {
-//            await new OrderDB(Configuration.CONNECTION_STRING).DeleteAsync(_newOrder.ID);
-//        }
+        [SetUp]
+        public async Task SetupAsync() {
+            _orderRepository = new OrderRepository(Configuration.CONNECTION_STRING);
+            await CreateNewOrderAsync();
+        }
 
-//        private async Task<Order> CreateNewOrderAsync() {
-//            _newOrder = new Order(876, "JegErEtLink.Com", DateTime.Now, DateTime.Now, true);
-//            _newOrder.ID = await _orderDB.CreateAsync(_newOrder);
-//            return _newOrder;
-//        }
+        [TearDown]
+        public async Task CleanUpAsync() {
+            await new OrderRepository(Configuration.CONNECTION_STRING).DeleteByID(_newOrder.OrderID);
+        }
 
-//        [Test]
-//        public void TestCreateOrder() {
-//            // arrange
+        public async Task<Order> CreateNewOrderAsync() {
+            _newOrder = new Order()
+            {
+                ItemID_FK = 9, GuestID_FK = 2, TicketNumber = 157, Link = "somethingsomething.com", Paid = true
+            };
+            _newOrder.OrderID = await _orderRepository.CreateOrder(_newOrder);
+            return _newOrder;
+        }
 
-//            // act
+        [Test]
+        public async Task TestCreateOrder() {
+            // arrange
 
-//            // assert
-//            Assert.IsTrue(_newOrder.ID > 0, "Created order ID not returned");
-//        }
+            // act
+            await CreateNewOrderAsync();
+            // assert
+            Assert.IsTrue(_newOrder.OrderID > 0, "Created order ID not returned");
+        }
 
-//        [Test]
-//        public async Task TestGetAllOrders() {
-//            // arrange
+        [Test]
+        public async Task DeleteByID() {
+            // arrange
 
-//            // act
-//            var orders = await _orderDB.GetAllAsync();
-//            // assert
-//            Assert.IsTrue(orders.Count() > 0, "No orders returned");
-//        }
+            // act
+            bool deleted = await _orderRepository.DeleteByID(_newOrder.OrderID);
 
-//        [Test]
-//        public async Task TestGetByID() {
-//            // arrange
-
-//            // act
-//            var foundOrder = await _orderDB.GetByID(_newOrder.ID);
-//            // assert          
-//            Assert.IsTrue(_newOrder.ID == foundOrder.ID && _newOrder.TicketNumber == foundOrder.TicketNumber && _newOrder.Link == foundOrder.Link && _newOrder.CheckInTime == foundOrder.CheckInTime && _newOrder.PickUpTime == foundOrder.PickUpTime && _newOrder.Paid == foundOrder.Paid, "Order not found");
-//        }
-
-//        [Test]
-//        public async Task TestUpdateOrderAsync() {
-//            // arrange
-//            int updatedTicketNumber = 420;
-//            _newOrder.TicketNumber = updatedTicketNumber;
-
-//            // act
-//            await _orderDB.UpdateOrder(_newOrder);
-
-//            // assert       
-//            var foundOrder = await _orderDB.GetByID(_newOrder.ID);
-//            Assert.IsTrue(foundOrder.TicketNumber == updatedTicketNumber, "Order not updated");
-//        }
-
-//        [Test]
-//        public async Task DeleteByID() {
-//            // arrange
-
-//            // act
-//            bool deleted = await _orderDB.deleteByID(_newOrder.ID);
-
-//            // assert
-//            Assert.IsTrue(deleted, "Order not deleted");
-//        }
-//    }
-//}
+            // assert
+            Assert.IsTrue(deleted, "Order not deleted");
+        }
+    }
+}
