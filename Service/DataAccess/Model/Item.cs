@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess {
     public class Item {
-        public int ID { get; set; }
-        public Wardrobe Wardrobe { get; set; }
-        public ItemType ItemType { get; set; }
+        public int ItemID { get; set; }
+        public string WardrobeID_FK { get; set; }
+        public int TypeID_FK { get; set; }
 
     }
 }

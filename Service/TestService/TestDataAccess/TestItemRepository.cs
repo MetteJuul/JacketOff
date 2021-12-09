@@ -1,90 +1,111 @@
-﻿//using Model;
-//using NUnit.Framework;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿
+using DataAccess;
+using DataAccess.Repositories;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace TestService.TestDataAccess {
-//    public class TestDBItem {
-        
-//        private ItemDB _itemDB;
-//        private Item _newItem;
-//        private ItemType _itemType;
-//        private Wardrobe _wardrobe;
+namespace TestService.TestDataAccess {
+    public class TestItemRepository {
 
-//        [SetUp]
-//        public async Task SetupAsync() {
-//            _itemDB = new ItemDB(Configuration.CONNECTION_STRING);
-//            _itemType = new ItemType(1, 50, "Jakke");
-//            _wardrobe = new Wardrobe("Guldhornene", 50);
-//            await CreateNewItemAsync();
-//        }
+        private ItemRepository _itemRepository;
+        private Item _newItem;
+        private ItemType _newItemType;
 
-//        [TearDown]
-//        public async Task CleanUpAsync() {
-//            await new ItemDB(Configuration.CONNECTION_STRING).DeleteAsync();
-//        }
+        #region Setup and Teardown
+        [SetUp]
+        public async Task SetupAsync() {
+            _itemRepository = new ItemRepository(Configuration.CONNECTION_STRING);
+            await CreateNewItemAsync();
+            await CreateNewItemTypeAsync();
+        }
 
-//        public async Task<Item> CreateNewItemAsync() {
-//            _newItem = new Item(_wardrobe, _itemType);
-//            _newItem.ID = await _itemDB.CreateAsync(_newItem);
-//            return _newItem;
-//        }
+        [TearDown]
+        public async Task CleanUpAsync() {
+            await new ItemRepository(Configuration.CONNECTION_STRING).DeleteByID(_newItem.ItemID);
+            await new ItemRepository(Configuration.CONNECTION_STRING).DeleteItemTypeByID(_newItemType.TypeID);
+        }
+        #endregion
 
-//        [Test]
-//        public void TestCreateItem() {
-//            //ARRANGE & ACT is done in setup()
+        #region Setup help methods
+        public async Task<Item> CreateNewItemAsync() {
+            _newItem = new Item()
+            {
+                WardrobeID_FK = "Guldhornene",
+                TypeID_FK = 1,
+            };
+            _newItem.ItemID = await _itemRepository.CreateItem(_newItem);
+            return _newItem;
+        }
 
-//            //ASSERT
-//            Assert.IsTrue(_newItem.ID > 0, "Created item ID not returned");
-//        }
+        public async Task<ItemType> CreateNewItemTypeAsync() {
+            _newItemType = new ItemType()
+            {
+                Price = 50,
+                TypeName = "Test Type"
+            };
+            _newItemType.TypeID = await _itemRepository.CreateItemType(_newItemType);
+            return _newItemType;
+        }
+        #endregion
 
-//        [Test]
-//        public async Task TestGetAllItems() {
-//            //ARRANGE
-//            //ACT
-//            var items = await _itemDB.GetAllItems();
-//            //
-//            Assert.IsTrue(items.Count() > 0, "No items returned");
-//        }
+        #region Item tests
+        [Test]
+        public void TestCreateItem() {
+            //ARRANGE & ACT is done in setup()
 
-//        [Test]
-//        public async Task TestGetById() {
-//            //ARRANGE is done in Setup()
+            //ASSERT
+            Assert.IsTrue(_newItem.ItemID > 0, "Created item ID not returned");
+        }
 
-//            //ACT
-//            var foundItem = await _itemDB.GetByID(_newItem.ID);
+        [Test]
+        public async Task TestGetAllItems() {
+            //ARRANGE
 
-//            //ASSERT
-//            Assert.IsTrue(_newItem.ID == foundItem.ID && _newItem.ItemType == foundItem.ItemType && _newItem.Wardrobe == foundItem.Wardrobe, "Item not found by id");
-//        }
+            //ACT
+            var items = await _itemRepository.GetAllItems();
 
-//        [Test]
-//        public async Task TestUpdateItem() {
-//            //ARRANGE
-//            Wardrobe updatedWardrobe = new Wardrobe("Den Nordjyske Ambassade", 5);
-//            _newItem.Wardrobe = updatedWardrobe;
+            //ASSERT
+            Assert.IsTrue(items.Count() > 0, "No items returned");
+        }
 
-//            //ACT
-//            await _itemDB.UpdateItem(_newItem);
+        [Test]
+        public async Task TestGetItemById() {
+            //ARRANGE is done in Setup()
 
-//            //ASSERT
-//            var foundItem = await _itemDB.GetByID(_newItem.ID);
-//            Assert.IsTrue(foundItem.Wardrobe == _newItem.Wardrobe, "Item not updated");
-//        }
+            //ACT
+            var foundItem = await _itemRepository.GetItemByID(_newItem.ItemID);
 
-//        [Test]
-//        public async Task TestDeleteByID() {
-//            //ARRANGE is done in Setup()
+            //ASSERT
+            Assert.IsTrue(_newItem.ItemID == foundItem.ItemID && _newItem.TypeID_FK == foundItem.TypeID_FK && _newItem.WardrobeID_FK == foundItem.WardrobeID_FK, "Item not found by id");
+        }
+        #endregion
 
-//            //ACT
-//            bool deleted = await _itemDB.DeleteByID(_newItem.ID);
+        #region ItemType tests
+        [Test]
+        public async Task TestGetAllItemTypes() {
+            //ARRANGE
 
-//            //ASSERT
-//            Assert.IsTrue(deleted, "Item not deleted");
-//        }
+            //ACT
+            var items = await _itemRepository.GetAllItemTypes();
+            
+            //ASSERT
+            Assert.IsTrue(items.Count() > 0, "No items returned");
+        }
 
-//    }
-//}
+        [Test]
+        public async Task TestGetItemTypeById() {
+            //ARRANGE
+
+            //ACT
+            var foundItemType = await _itemRepository.GetItemTypeByID(_newItemType.TypeID);
+
+            //ASSERT
+            Assert.IsTrue(_newItemType.TypeID == foundItemType.TypeID && _newItemType.Price == foundItemType.Price && _newItemType.TypeName == foundItemType.TypeName, "Item not found by id");
+        }
+        #endregion
+    }
+}

@@ -3,8 +3,8 @@
 namespace API.DTOs {
     public class ItemDTO {
         public int ID { get; set; }
-        public WardrobeDTO wardrobeDTO { get; set; }
-        public ItemTypeDTO itemTypeDTO { get; set; }
-            
+        public string WardrobeID_FK { get; set; }
+        public int TypeID_FK { get; set; }
+
     }
 }

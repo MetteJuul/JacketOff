@@ -18,7 +18,7 @@ namespace DataAccess.Repositories {
                 //as the current time
                 order.CheckInTime = DateTime.Now;
 
-                //Query is created and each property of the reservation object
+                //Query is created and each property of the Order object
                 //is mapped to the query using dapper
                 var query = "INSERT INTO [Order](itemID_FK, guestID_FK, ticketNumber, link, checkInTime, paid)" +
                     "OUTPUT INSERTED.orderID VALUES (@ItemID_FK, @GuestID_FK, @TicketNumber, @Link, @CheckInTime, @Paid)";

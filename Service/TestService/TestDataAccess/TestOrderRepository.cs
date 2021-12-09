@@ -9,11 +9,13 @@ using NUnit;
 using NUnit.Framework;
 
 namespace TestService.TestDataAccess {
-    public class TestDBOrder {
+    public class TestOrderRepository {
+        
         //Setup fields
         private OrderRepository _orderRepository;
         private Order _newOrder;
 
+        #region Setup and Teardown
         [SetUp]
         public async Task SetupAsync() {
             _orderRepository = new OrderRepository(Configuration.CONNECTION_STRING);
@@ -33,13 +35,13 @@ namespace TestService.TestDataAccess {
             _newOrder.OrderID = await _orderRepository.CreateOrder(_newOrder);
             return _newOrder;
         }
+        #endregion
 
         [Test]
-        public async Task TestCreateOrder() {
+        public void TestCreateOrder() {
             // arrange
 
             // act
-            await CreateNewOrderAsync();
             // assert
             Assert.IsTrue(_newOrder.OrderID > 0, "Created order ID not returned");
         }

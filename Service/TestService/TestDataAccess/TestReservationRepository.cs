@@ -11,9 +11,8 @@ namespace TestService.TestDataAccess {
     public class TestReservationRepository {
         private ReservationRepository _reservationRepository;
         private Reservation _newReservation;
-        private ItemType _itemType;
-        private Wardrobe _wardrobe;
 
+        #region Setup and Teardown
         [SetUp]
         public async Task SetupAsync() {
             _reservationRepository = new ReservationRepository(Configuration.CONNECTION_STRING);
@@ -33,6 +32,7 @@ namespace TestService.TestDataAccess {
             _newReservation.ReservationID = await _reservationRepository.CreateReservation(_newReservation);
             return _newReservation;
         }
+        #endregion
 
         [Test]
         public void TestCreateReservation() {

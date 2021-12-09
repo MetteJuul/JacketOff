@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess {
     public class Guest {
-        public int ID { get; set; }
+        public int GuestID { get; set; }
         public string Email { get; set; }
     }
 }
