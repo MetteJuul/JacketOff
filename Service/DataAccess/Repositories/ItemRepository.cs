@@ -36,7 +36,6 @@ namespace DataAccess.Repositories {
                 throw new Exception($"Error loading item: '{e.Message}'.", e);
             }
         }
-
     }
 }
 
