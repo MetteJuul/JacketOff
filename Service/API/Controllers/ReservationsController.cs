@@ -17,8 +17,7 @@ namespace API.Controllers {
     public class ReservationsController : ControllerBase {
 
         IReservationRepository _reservationRepository;
-        IReservationService _service;
-        
+        IReservationService _service;       
 
     public ReservationsController(IConfiguration configuration) {
             _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
@@ -61,7 +60,7 @@ namespace API.Controllers {
             }
         }
 
-        // DELETE api/authors/5
+        // DELETE api/reservations/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id) {
             if (!await _reservationRepository.DeleteByID(id)) { return NotFound(); } else { return Ok(); }

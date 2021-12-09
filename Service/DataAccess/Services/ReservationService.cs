@@ -16,8 +16,6 @@ namespace DataAccess.Services {
         private IReservationRepository reservationRepo;
         private IWardrobeRepository wardrobeRepo;
         private IDbTransaction transaction;
-
-
         public ReservationService(string connectionString) : base(connectionString) {
             reservationRepo = new ReservationRepository(connectionString);
             wardrobeControlRepo = new WardrobeControlRepository(connectionString);

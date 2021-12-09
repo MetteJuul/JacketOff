@@ -16,5 +16,7 @@ namespace DataAccess.Interfaces
         Task<bool> DeleteByID(int ID, SqlConnection connection = null);
         Task<IEnumerable<ItemType>> GetAllItemTypes(SqlConnection connection = null);
         Task<ItemType> GetItemTypeByID(int ID, SqlConnection connection = null);
+        Task<int> CreateItemType(ItemType itemType, SqlConnection connection = null);
+        Task<bool> DeleteItemTypeByID(int ID, SqlConnection connection = null);
     }
 }

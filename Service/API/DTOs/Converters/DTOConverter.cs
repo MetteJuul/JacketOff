@@ -73,8 +73,47 @@ namespace API.DTOs.Converters {
 
         #endregion
 
- 
+        #region Item
+        public static ItemDTO ToDTO(this Item itemToConvert) {
+            var itemDTO = new ItemDTO();
+            itemToConvert.CopyPropertiesTo(itemDTO);
+            return itemDTO;
+        }
 
+        public static Item FromDTO(this ItemDTO itemDTOToConvert) {
+            var item = new Item();
+            itemDTOToConvert.CopyPropertiesTo(item);
+            return item;
+        }
+        #endregion
+
+        #region Guest
+        public static GuestDTO ToDTO(this Guest guestToConvert) {
+            var guestDTO = new GuestDTO();
+            guestToConvert.CopyPropertiesTo(guestDTO);
+            return guestDTO;
+        }
+
+        public static Guest FromDTO(this GuestDTO guestDTOToConvert) {
+            var guest = new Guest();
+            guestDTOToConvert.CopyPropertiesTo(guest);
+            return guest;
+        }
+        #endregion
+
+        #region Order
+        public static OrderDTO ToDTO(this Order orderToConvert) {
+            var orderDTO = new OrderDTO();
+            orderToConvert.CopyPropertiesTo(orderDTO);
+            return orderDTO;
+        }
+
+        public static Order FromDTO(this OrderDTO orderDTOToConvert) {
+            var order = new Order();
+            orderDTOToConvert.CopyPropertiesTo(order);
+            return order;
+        }
+        #endregion
 
     }
 }

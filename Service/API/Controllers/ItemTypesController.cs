@@ -15,10 +15,10 @@ namespace API.Controllers {
     [ApiController]
     public class ItemTypesController : Controller {
 
-        IItemTypeRepository _itemTypeRepository;
+        IItemRepository _itemRepository;
 
         public ItemTypesController(IConfiguration configuration) {
-            _itemTypeRepository = new ItemTypeRepository(configuration.GetConnectionString("JacketOff"));
+            _itemRepository = new ItemRepository(configuration.GetConnectionString("JacketOff"));
         }
 
         //GET: api/itemTypes        
@@ -26,7 +26,7 @@ namespace API.Controllers {
         public async Task<ActionResult<List<ItemTypeDTO>>> GetAllItemTypes()
         {
 
-            var itemTypes = await _itemTypeRepository.GetAllItemTypes();
+            var itemTypes = await _itemRepository.GetAllItemTypes();
 
             if (itemTypes == null)
             {
@@ -40,7 +40,7 @@ namespace API.Controllers {
         //GET api/itemTypes/id
         [HttpGet("{id}")]
         public async Task<ActionResult<ItemTypeDTO>> GetByTypeID(int id) {
-            var itemTypeDTO = await _itemTypeRepository.GetItemType(id);
+            var itemTypeDTO = await _itemRepository.GetItemTypeByID(id);
             if (itemTypeDTO == null) { return NotFound("Ingen type fundet"); } else { return Ok(itemTypeDTO); }
         }
 

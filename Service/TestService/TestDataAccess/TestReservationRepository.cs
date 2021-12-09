@@ -62,7 +62,6 @@ namespace TestService.TestDataAccess {
             var foundReservation = await _reservationRepository.GetByID(ID);
 
             //ASSERT
-            //TODO specify why we are not comparing datetime
             Assert.IsTrue(_newReservation.ReservationID == foundReservation.ReservationID && _newReservation.GuestID_FK == foundReservation.GuestID_FK && _newReservation.AmountOfJackets == foundReservation.AmountOfJackets && _newReservation.AmountOfBags == foundReservation.AmountOfBags && _newReservation.Price == foundReservation.Price, "Reservation not found by ID");
         }
 
@@ -94,9 +93,7 @@ namespace TestService.TestDataAccess {
         [Test]
         public async Task TestGetByGuestEmail() {
             //ARRANGE 
-
             string email = "Andreas@BigD.com";
-
 
             //ACT
             var reservations = await _reservationRepository.GetByGuestEmail(email);

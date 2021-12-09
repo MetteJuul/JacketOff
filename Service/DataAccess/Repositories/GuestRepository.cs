@@ -15,20 +15,21 @@ namespace DataAccess.Repositories
 
         public async Task<int> CreateGuest(Guest guest, SqlConnection connection = null) {
             try {
-                //Query is created and each property of the Item object
-                //is mapped to the query using dapper
-                var query = "INSERT INTO Guest(email)" +
-                    "OUTPUT INSERTED.guestID VALUES (@Email)";
 
-                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
-                using var realConnection = connection ?? CreateConnection();
+                    //Query is created and each property of the Item object
+                    //is mapped to the query using dapper
+                    var query = "INSERT INTO Guest(email)" +
+                        "OUTPUT INSERTED.guestID VALUES (@Email)";
 
-                //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
-                return await realConnection.QuerySingleAsync<int>(query, guest);
+                    //Connection is created - ?? betyder "er connection object null, så laver den en ny"
+                    using var realConnection = connection ?? CreateConnection();
 
+                    //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
+                    return await realConnection.QuerySingleAsync<int>(query, guest);
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af Gæst: '{e.Message}'.", e);
             }
+            
         }
 
         public async Task<Guest> GetByEmail(string email, SqlConnection connection = null)
