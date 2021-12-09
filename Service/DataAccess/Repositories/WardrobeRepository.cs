@@ -35,19 +35,5 @@ namespace DataAccess.Repositories {
                 throw new Exception($"Error getting Wardrobe with id {iD}: '{e.Message}'.", e);
             }
         }
-
-        //public async Task<bool> UpdateCount(Wardrobe wardrobe, int amountOfTotalItems) {
-        //    try {
-
-        //        var query = "UPDATE Wardrobe SET count=@count WHERE wardrobeID@wardrobeID;";
-
-        //        using var connection = CreateConnection();
-
-        //        //return await connection.ExecuteAsync(query, new { wardrobe });
-        //    } catch (Exception e) {
-        //        throw new Exception($"Kan ikke opdatere Garderobe: '{e.Message}'.", e);
-        //    }
-
-        //}
     }
 }

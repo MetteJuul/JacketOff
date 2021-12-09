@@ -18,7 +18,6 @@ namespace DataAccess.Repositories {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM wardrobeControl";
 
-
                 //Connection is made
                 using var realConnection = connection?? CreateConnection();
 
@@ -93,31 +92,7 @@ namespace DataAccess.Repositories {
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af WardrobeControl: '{e.Message}'.", e);
             }
-
-
-
         }
-
-
-        //public async Task<WardrobeControl> GetWardrobeControlById(string ID, SqlConnection connection = null) {
-        //    try {
-        //        //Query is created and the input parameter is assigned
-        //        var query = "SELECT wardrobeID_FK, date, rowID, cast(rowID as bigint) as BigRowID, count FROM wardrobeControl WHERE wardrobeID_FK=@ID";
-
-        //        //Connection is made
-        //        using var realConnection = connection?? CreateConnection();
-
-        //        //We execute the query that retrieves a reservation object based on ID
-
-        //        var result = await realConnection.QuerySingleAsync<WardrobeControl>(query, new { ID });
-        //        return (WardrobeControl)result;
-
-
-        //    } catch (Exception e) {
-        //        throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
-        //    }
-
-        //}
     }
 }
 
