@@ -95,5 +95,9 @@ namespace APIClient {
             // of all reservations
             return response.Data;
         }
+
+        public Task<WardrobeControlDTO> GetWardrobeControl() {
+            throw new NotImplementedException();
+        }
     }
 }

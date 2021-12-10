@@ -1,10 +1,12 @@
-﻿using APIClient;
+using APIClient;
 using APIClient.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ConsumerWebClient.TestData;
 using ConsumerWebClient.Models;
+using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace ConsumerWebClient.Controllers {
 
@@ -12,6 +14,8 @@ namespace ConsumerWebClient.Controllers {
 
         readonly DataPopulation _data;
         private IJacketOffApiClient _client;
+        private readonly ILogger<HomeController> _logger;
+
 
         public ReservationsController(IJacketOffApiClient client) {
             _client = client;
@@ -23,9 +27,14 @@ namespace ConsumerWebClient.Controllers {
         [HttpGet]
         public async Task<ActionResult> MyReservations() {
 
-            IEnumerable<ReservationDTO> reservations = await _client.GetReservationsByGuestEmail(_data.Guest.Email);
+            try {
+                IEnumerable<ReservationDTO> reservations = await _client.GetReservationsByGuestEmail(_data.Guest.Email);
 
-            return View(reservations);
+                return View(reservations);
+
+            } catch {
+                return View("OhNo");
+            }
         }
 
         //This method is purely used to generate the view
@@ -34,12 +43,18 @@ namespace ConsumerWebClient.Controllers {
         //Therefore, nothing is added to this method.
         public async Task<ActionResult> Reservation() {
 
-            IEnumerable<ItemTypeDTO> itemTypes = await _client.GetAllItemTypes();
+            try {
+                IEnumerable<ItemTypeDTO> itemTypes = await _client.GetAllItemTypes();
 
-            ReservationViewModel reservationViewModel = new ReservationViewModel();
-            reservationViewModel.ItemTypes = itemTypes;
+                ReservationViewModel reservationViewModel = new ReservationViewModel();
+                reservationViewModel.ItemTypes = itemTypes;
 
-            return View(reservationViewModel);
+                return View(reservationViewModel);
+
+            } catch {
+                return View("OhNo");
+               
+            }
         }
 
         [HttpPost]
@@ -60,7 +75,7 @@ namespace ConsumerWebClient.Controllers {
                await _client.CreateReservation(newReservation);
                return RedirectToAction(nameof(MyReservations));
             } catch {
-                return View();
+                return View("OhNo");
             }
         }
 
