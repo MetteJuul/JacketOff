@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace APIClient.DTOs {
-    internal class WardrobeDTO {
+    public class WardrobeDTO {
         public string ID { get; set; }
         public int MaxAmountOfItems { get; set; }
     }

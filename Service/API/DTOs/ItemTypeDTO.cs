@@ -8,8 +8,5 @@ namespace API.DTOs {
         public decimal Price { get; set; }
         public string TypeName { get; set; }
 
-        public static implicit operator ItemTypeDTO(ItemType v) {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace APIClient.DTOs {
-    internal class ItemDTO {
+    public class ItemDTO {
         public int ID { get; set; }
-        public WardrobeDTO WardrobeDTO { get; set; }
-        public ItemTypeDTO ItemTypeDTO { get; set; }
+        public string WardrobeID_FK { get; set; }
+        public int TypeID_FK { get; set; }
     }
 }

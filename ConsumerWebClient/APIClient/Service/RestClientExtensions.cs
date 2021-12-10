@@ -13,6 +13,7 @@ namespace APIClient {
                 request.AddJsonBody(JsonSerializer.Serialize(body));
             }
             return await client.ExecuteAsync<T>(request, method);
+
         }
 
         public static async Task<IRestResponse> RequestAsync(this RestClient client, Method method, string resource = null, object body = null) {

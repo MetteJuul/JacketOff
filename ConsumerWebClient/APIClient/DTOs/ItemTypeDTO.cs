@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace APIClient.DTOs {
     public class ItemTypeDTO {
-
-        public int ID { get; set; }
-        public decimal Price { get; set; }  
-        public string TypeName { get; set; }    
+        public int TypeID { get; set; }
+        public decimal Price { get; set; }
+        public string TypeName { get; set; }
     }
 }

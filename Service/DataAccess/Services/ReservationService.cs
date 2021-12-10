@@ -50,15 +50,16 @@ namespace DataAccess.Services {
                         newReservation.ArrivalTime);
 
                     //Tjek om WardrobeControl eksisterer
-                    //if (wardrobeControl == null) {
+                    if (wardrobeControl == null) {
 
-                    //    //Hvis den ikke eksisterer - laver vi en og gemmer vi den i wardrobeControl
-                    //    wardrobeControl = new WardrobeControl {
-                    //        WardrobeID_FK = newReservation.WardrobeID_FK,
-                    //        Date = newReservation.ArrivalTime, Count = 0
-                    //    };
-                    //    await wardrobeControlRepo.CreateWardrobeControl(wardrobeControl);
-                    //} else {
+                        //Hvis den ikke eksisterer - laver vi en og gemmer vi den i wardrobeControl
+                        wardrobeControl = new WardrobeControl
+                        {
+                            WardrobeID_FK = newReservation.WardrobeID_FK,
+                            Date = newReservation.ArrivalTime, Count = 0
+                        };
+                        await wardrobeControlRepo.CreateWardrobeControl(wardrobeControl);
+                    } else {
 
                         //Lav variabler med count, antal items der skal tilføjes og maxAmount som kan genbruges
                         var wardrobeCount = wardrobeControl.Count;
@@ -81,7 +82,7 @@ namespace DataAccess.Services {
                         transaction.Commit();
                         //må man smide en int tilbage her som et tegn på, at transaction er committed uden fejl.
                         return 1;
-                    //}
+                    }
 
                 }
                 //End transaction

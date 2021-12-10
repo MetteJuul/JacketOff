@@ -15,8 +15,7 @@ namespace APIClient.DTOs {
         public string LastName { get; set; }
 
         [Required]
-        public string PhoneNumber { get; set; }
+        public string PhoneNo { get; set; }
 
-        public string PasswordHash { get; set; }
     }
 }

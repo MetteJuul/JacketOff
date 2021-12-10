@@ -77,7 +77,6 @@ namespace API.Controllers {
                 return Ok(reservations.ToDTOs());
             }
         }
-
         
     }
 }

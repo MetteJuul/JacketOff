@@ -5,22 +5,16 @@ namespace ConsumerWebClient.TestData {
 
 
         public DataPopulation() {
-            Guest = new RegisteredGuestDTO();
+            Guest = new GuestDTO();
 
             Guest.GuestId = 2;
             Guest.Email = "Andreas@BigD.com";
-            Guest.FirstName = "Andreas";
-            Guest.LastName = "Zeberg";
-            Guest.PhoneNumber = "69696969";
-            Guest.PasswordHash = "jjjjjj";
             WardrobeID = "guldhornene";
 
         }
 
-        public RegisteredGuestDTO Guest { get; set; }
-
+        public GuestDTO Guest { get; set; }
         public string WardrobeID { get; set; }
-
 
     }
 }
