@@ -24,14 +24,6 @@ namespace DataAccess.Services {
             guestRepo = new GuestRepository(connectionString);
             orderRepo = new OrderRepository(connectionString);
             itemRepo = new ItemRepository(connectionString);
-
-            //.NETs indbyggede mail client initieres og bruges
-            mailClient = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential(ourEmail, "JacketOffProjekt1!"),
-                EnableSsl = true,
-            };
         }
 
         public async Task<int> CreateOrder(Order newOrder) {
@@ -53,7 +45,7 @@ namespace DataAccess.Services {
                     Guest foundGuest = await guestRepo.GetByID(newOrder.GuestID_FK);
 
                     //Vi sender dem en email med deres ticketnumber
-                    mailClient.Send(ourEmail, foundGuest.Email, "Garderobenummer", writeEmail(newOrder));
+                    await writeEmail(foundGuest, newOrder.TicketNumber);
 
                     //Så opretter vi ordren
                     await orderRepo.CreateOrder(newOrder);
@@ -78,13 +70,28 @@ namespace DataAccess.Services {
         //men for at nå så meget som muligt, sender vi ind til videre ticketnumberet
         //direkte
         //TODO diskuter om det kun er gæsten, eller om det er ordren der skal sendes.
-        private String writeEmail(Order order) {
-
+        private async Task writeEmail(Guest guest, int ticketNumber) {
             //Snak om hvorvidt vi skal hente mere data, for at tilføje item-type osv
-            string email = $"Tak fordi du har tjekket ind i vores garderobe. Dit gardrobenummer er {order.TicketNumber}." +
-                "Hav en god aften.";
+            string email = $"Tak fordi du har tjekket ind i vores garderobe. Dit gardrobenummer er {ticketNumber}." +
+                " Hav en god aften.";
 
-            return email;
+            try {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress(ourEmail);
+                message.To.Add(new MailAddress(guest.Email));
+                message.Subject = "Garderobenummer";
+                message.Body = email;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(ourEmail, "JacketOffProjekt1!");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.SendAsync(message);
+            } catch (Exception e) {
+                throw new Exception($"Fejl ved sending af Email til {guest.Email} '{e.Message}'.", e);
+            }
         }
     }
 }
