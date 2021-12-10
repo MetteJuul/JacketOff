@@ -17,6 +17,7 @@ namespace DataAccess.Repositories {
                 //Before creating our query, we set the order time
                 //as the current time
                 order.CheckInTime = DateTime.Now;
+                order.Link = "testlink.dk";
 
                 //Query is created and each property of the Order object
                 //is mapped to the query using dapper

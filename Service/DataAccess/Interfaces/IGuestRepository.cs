@@ -13,6 +13,7 @@ namespace DataAccess.Interfaces
     {
         Task<int> CreateGuest(Guest guest, SqlConnection connection = null);
         Task<Guest> GetByEmail(string email, SqlConnection connection = null);
+        Task<Guest> GetByID(int ID, SqlConnection connection = null);
         Task<bool> DeleteByID(int ID, SqlConnection connection = null);
     }
 }

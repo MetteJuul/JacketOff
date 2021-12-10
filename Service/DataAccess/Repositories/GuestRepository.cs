@@ -39,14 +39,32 @@ namespace DataAccess.Repositories
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM Guest WHERE email=@email";
 
-                //Connection is made
+                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
                 using var realConnection = connection ?? CreateConnection();
 
-                //We execute the query that retrieves a guest object based on ID
+                //We execute the query that retrieves a guest object based on email
                 return await realConnection.QuerySingleAsync<Guest>(query, new { email });
             } catch (Exception e)
             {
                 throw new Exception($"Fejl ved hentning af gæst med email {email}: '{e.Message}'.", e);
+            }
+        } 
+        
+        public async Task<Guest> GetByID(int ID, SqlConnection connection = null)
+        {
+            try
+            {
+                //Query is created and the input parameter is assigned
+                var query = "SELECT * FROM Guest WHERE guestID=@ID";
+
+                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
+                using var realConnection = connection ?? CreateConnection();
+
+                //We execute the query that retrieves a guest object based on ID
+                return await realConnection.QuerySingleAsync<Guest>(query, new { ID });
+            } catch (Exception e)
+            {
+                throw new Exception($"Fejl ved hentning af gæst med id {ID}: '{e.Message}'.", e);
             }
         }
 
@@ -56,7 +74,7 @@ namespace DataAccess.Repositories
                 //Query is created and the input parameter ID is inserted into it
                 var query = "DELETE FROM Guest WHERE guestID=@ID";
 
-                //Connection is created if it hasn't been passed to the method
+                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
                 using var realConnection = connection ?? CreateConnection();
 
                 //Using Async the query is executed only if the iD is larger than 0

@@ -26,6 +26,5 @@ namespace API.Controllers {
 
             return Ok(await _service.CreateOrder(newOrderDTO.FromDTO()));
         }
-
     }
 }
