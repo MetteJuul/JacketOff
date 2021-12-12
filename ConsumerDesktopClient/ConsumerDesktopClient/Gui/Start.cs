@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsumerDesktopClient.Control;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace ConsumerDesktopClient.Gui {
         //We create a static field of the classes
         //own type to enable singleton
         static Start _object;
+        private OrderController orderController = new OrderController();
 
         //We create a static method to instantiate our
         //singleton class
@@ -48,10 +50,8 @@ namespace ConsumerDesktopClient.Gui {
         }
         
         public Start() {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
-
 
         private void Start_Load(object sender, EventArgs e) {
             
@@ -59,7 +59,7 @@ namespace ConsumerDesktopClient.Gui {
             _object = this;
 
             //We create a new usercontroller of all our Starting types
-            ModtagStart ucModtagStart = new ModtagStart();
+            ModtagStart ucModtagStart = new ModtagStart(orderController);
             UdleverStart ucUdleverStart = new UdleverStart();
             RedigerStart ucRedigerStart = new RedigerStart(); 
 

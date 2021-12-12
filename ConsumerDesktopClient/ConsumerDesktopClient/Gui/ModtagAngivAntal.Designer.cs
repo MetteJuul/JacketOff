@@ -1,5 +1,5 @@
 ﻿namespace ConsumerDesktopClient.Gui {
-    partial class UdleverCheckUd {
+    partial class ModtagAngivAntal {
         /// <summary> 
         /// Required designer variable.
         /// </summary>

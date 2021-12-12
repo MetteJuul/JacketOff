@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsumerDesktopClient.Control;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,10 @@ using System.Windows.Forms;
 
 namespace ConsumerDesktopClient.Gui {
     public partial class ModtagKvittering : UserControl {
-        public ModtagKvittering() {
+
+        private OrderController orderController;
+
+        public ModtagKvittering(OrderController orderController) {
             InitializeComponent();
         }
 

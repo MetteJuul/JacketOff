@@ -24,14 +24,14 @@
         /// </summary>
         private void InitializeComponent() {
             this.buttonRediger = new System.Windows.Forms.Button();
-            this.modtagKvittering1 = new ConsumerDesktopClient.Gui.ModtagKvittering();
-            this.modtagAngivAntal1 = new ConsumerDesktopClient.Gui.UdleverCheckUd();
+            this.modtagKvittering1 = new ConsumerDesktopClient.Gui.ModtagKvittering(orderController);
+            this.modtagAngivAntal1 = new ConsumerDesktopClient.Gui.ModtagAngivAntal(orderController);
             this.panelUdlever = new System.Windows.Forms.Panel();
             this.panelRediger = new System.Windows.Forms.Panel();
             this.labelModtagOverskrift = new System.Windows.Forms.Label();
             this.labelUdleverOverskrift = new System.Windows.Forms.Label();
             this.labelRedigerOverskrift = new System.Windows.Forms.Label();
-            this.modtagStart1 = new ConsumerDesktopClient.Gui.ModtagStart();
+            this.modtagStart1 = new ConsumerDesktopClient.Gui.ModtagStart(orderController);
             this.panelModtag = new System.Windows.Forms.Panel();
             this.panelRediger.SuspendLayout();
             this.SuspendLayout();
@@ -161,7 +161,7 @@
         private System.Windows.Forms.Label labelUdleverOverskrift;
         private System.Windows.Forms.Label labelRedigerOverskrift;
         private ModtagKvittering modtagKvittering1;
-        private UdleverCheckUd modtagAngivAntal1;
+        private ModtagAngivAntal modtagAngivAntal1;
         private ModtagStart modtagStart1;
         private System.Windows.Forms.Panel panelModtag;
     }

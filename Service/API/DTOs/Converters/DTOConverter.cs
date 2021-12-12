@@ -73,20 +73,6 @@ namespace API.DTOs.Converters {
 
         #endregion
 
-        #region Item
-        public static ItemDTO ToDTO(this Item itemToConvert) {
-            var itemDTO = new ItemDTO();
-            itemToConvert.CopyPropertiesTo(itemDTO);
-            return itemDTO;
-        }
-
-        public static Item FromDTO(this ItemDTO itemDTOToConvert) {
-            var item = new Item();
-            itemDTOToConvert.CopyPropertiesTo(item);
-            return item;
-        }
-        #endregion
-
         #region Guest
         public static GuestDTO ToDTO(this Guest guestToConvert) {
             var guestDTO = new GuestDTO();

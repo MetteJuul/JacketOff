@@ -11,24 +11,12 @@ namespace ConsumerDesktopClient.DTOs
     public class ReservationDTO
     {
         public int ReservationID { get; set; }
-
-        
         public int GuestID_FK { get; set; }
-
         public DateTime OrderTime { get; set; }
-
-        
         public DateTime ArrivalTime { get; set; }
-
-        
         public int AmountOfJackets { get; set; }
-
-        public int AmountOfBags { get; set; } 
-
+        public int AmountOfBags { get; set; }
         public decimal Price { get; set; }
-
-        public override string ToString() {
-            return $"ReservationsDetaljer: Ankomst klokken {ArrivalTime.ToString()}, Jakker: {AmountOfJackets}, Tasker: {AmountOfBags}, Pris: {Price}";
-        }
+        public string WardrobeID_FK { get; set; }
     }
 }

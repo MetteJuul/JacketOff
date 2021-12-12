@@ -32,6 +32,7 @@ namespace APIClient {
         }
 
         public async Task<int> CreateReservation(ReservationDTO entity) {
+
             var response = await _restClient.RequestAsync<int>(Method.POST, $"reservations", entity);
             if (!response.IsSuccessful) {
                 throw new Exception($"Fejl i oprettelse af reservation. Fejl besked: {response.Content}");

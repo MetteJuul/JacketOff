@@ -52,38 +52,6 @@ namespace TestService.TestDataAccess {
         }
         #endregion
 
-        #region Item tests
-        [Test]
-        public void TestCreateItem() {
-            //ARRANGE & ACT is done in setup()
-
-            //ASSERT
-            Assert.IsTrue(_newItem.ItemID > 0, "Created item ID not returned");
-        }
-
-        [Test]
-        public async Task TestGetAllItems() {
-            //ARRANGE
-
-            //ACT
-            var items = await _itemRepository.GetAllItems();
-
-            //ASSERT
-            Assert.IsTrue(items.Count() > 0, "No items returned");
-        }
-
-        [Test]
-        public async Task TestGetItemById() {
-            //ARRANGE is done in Setup()
-
-            //ACT
-            var foundItem = await _itemRepository.GetItemByID(_newItem.ItemID);
-
-            //ASSERT
-            Assert.IsTrue(_newItem.ItemID == foundItem.ItemID && _newItem.TypeID_FK == foundItem.TypeID_FK && _newItem.WardrobeID_FK == foundItem.WardrobeID_FK, "Item not found by id");
-        }
-        #endregion
-
         #region ItemType tests
         [Test]
         public async Task TestGetAllItemTypes() {

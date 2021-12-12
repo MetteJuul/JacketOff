@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace ConsumerDesktopClient.DTOs {
     public class WardrobeDTO {
         public string ID { get; set; }
-        public int maxAmountOfItems { get; set; }
+        public int MaxAmountOfItems { get; set; }
     }
 }

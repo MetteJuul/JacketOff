@@ -16,8 +16,6 @@ namespace DataAccess.Services {
         private IGuestRepository guestRepo;
         private IOrderRepository orderRepo;
         private IItemRepository itemRepo;
-        private IDbTransaction transaction;
-        private SmtpClient mailClient;
         readonly string ourEmail = "jacketoffprojekt@gmail.com";
 
         public OrderService(string connectionString) : base(connectionString) {
@@ -33,6 +31,8 @@ namespace DataAccess.Services {
             connection.Open();
             using var command = new SqlCommand();
 
+            //TODO : Find ud af om det skal være repeatable read? Det giver ved ikke mening
+            //i den her sammenhæng
             using SqlTransaction transaction = connection.BeginTransaction(IsolationLevel.RepeatableRead);
             command.Transaction = transaction;
 
@@ -45,7 +45,7 @@ namespace DataAccess.Services {
                     Guest foundGuest = await guestRepo.GetByID(newOrder.GuestID_FK);
 
                     //Vi sender dem en email med deres ticketnumber
-                    await writeEmail(foundGuest, newOrder.TicketNumber);
+                    writeEmail(foundGuest, newOrder.TicketNumber);
 
                     //Så opretter vi ordren
                     await orderRepo.CreateOrder(newOrder);
@@ -70,7 +70,7 @@ namespace DataAccess.Services {
         //men for at nå så meget som muligt, sender vi ind til videre ticketnumberet
         //direkte
         //TODO diskuter om det kun er gæsten, eller om det er ordren der skal sendes.
-        private async Task writeEmail(Guest guest, int ticketNumber) {
+        private void writeEmail(Guest guest, int ticketNumber) {
             //Snak om hvorvidt vi skal hente mere data, for at tilføje item-type osv
             string email = $"Tak fordi du har tjekket ind i vores garderobe. Dit gardrobenummer er {ticketNumber}." +
                 " Hav en god aften.";
@@ -88,7 +88,7 @@ namespace DataAccess.Services {
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new NetworkCredential(ourEmail, "JacketOffProjekt1!");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.SendAsync(message);
+                smtp.Send(message);
             } catch (Exception e) {
                 throw new Exception($"Fejl ved sending af Email til {guest.Email} '{e.Message}'.", e);
             }

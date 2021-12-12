@@ -21,8 +21,8 @@ namespace DataAccess.Repositories {
 
                 //Query is created and each property of the Order object
                 //is mapped to the query using dapper
-                var query = "INSERT INTO [Order](itemID_FK, guestID_FK, ticketNumber, link, checkInTime, paid)" +
-                    "OUTPUT INSERTED.orderID VALUES (@ItemID_FK, @GuestID_FK, @TicketNumber, @Link, @CheckInTime, @Paid)";
+                var query = "INSERT INTO [Order](typeID_FK, guestID_FK, wardrobeID_FK, ticketNumber, link, checkInTime, paid)" +
+                    "OUTPUT INSERTED.orderID VALUES (@TypeID_FK, @GuestID_FK, @WardrobeID_FK, @TicketNumber, @Link, @CheckInTime, @Paid)";
 
                 //Connection is created - ?? betyder "er connection object null, så laver den en ny"
                 using var realConnection = connection ?? CreateConnection();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsumerDesktopClient.Control;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,8 +10,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ConsumerDesktopClient.Gui {
-    public partial class UdleverCheckUd : UserControl {
-        public UdleverCheckUd() {
+    public partial class ModtagAngivAntal : UserControl {
+
+        private OrderController orderController;
+        private int antalJakker;
+        private int antalTasker;
+
+        public ModtagAngivAntal(OrderController orderController) {
+            this.orderController = orderController;
+            InitializeComponent();
+        }
+        public ModtagAngivAntal(OrderController orderController, int antalJakker, int antalTasker) {
+            this.orderController = orderController;
+            this.antalJakker = antalJakker;
+            this.antalTasker = antalTasker;
             InitializeComponent();
         }
 
@@ -26,7 +39,7 @@ namespace ConsumerDesktopClient.Gui {
             //of our user controller, we create one and add it to our Start form
             if (!Start.GetInstance.PnlModtag.Controls.ContainsKey("ModtagKvittering")) {
 
-                ModtagKvittering ucModtagKvittering = new ModtagKvittering();
+                ModtagKvittering ucModtagKvittering = new ModtagKvittering(orderController);
                 ucModtagKvittering.Dock = DockStyle.Fill;
                 Start.GetInstance.PnlModtag.Controls.Add(ucModtagKvittering);
             }
