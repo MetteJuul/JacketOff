@@ -17,6 +17,20 @@ namespace API.Controllers {
             _guestRepository = new GuestRepository(configuration.GetConnectionString("JacketOff"));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllGuests() {
+            //We create a variable to store our list of reservations
+            var guests = await _guestRepository.GetAllGuests();
+
+            //If no reservations are found we return NotFound
+            if (guests == null) {
+                return NotFound("Ingen Gæster blev fundet");
+            } else {
+                //Else we return 200 OK and the list of reservations
+                return Ok(guests.ToDTOs());
+            }
+        }
+
         //POST: api/guests
         [HttpPost]
         public async Task<ActionResult<int>> CreateGuest([FromBody] GuestDTO newGuestDTO) {

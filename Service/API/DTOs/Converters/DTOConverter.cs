@@ -85,6 +85,20 @@ namespace API.DTOs.Converters {
             guestDTOToConvert.CopyPropertiesTo(guest);
             return guest;
         }
+        public static IEnumerable<GuestDTO> ToDTOs(this IEnumerable<Guest> guestsToConvert) {
+
+            foreach (var guest in guestsToConvert) {
+                yield return guest.ToDTO();
+            }
+        }
+
+        public static IEnumerable<Guest> FromDTOs(this IEnumerable<GuestDTO> guestDTOsToConvert) {
+
+            foreach (var guestDTO in guestDTOsToConvert) {
+
+                yield return guestDTO.FromDTO();
+            }
+        }
         #endregion
 
         #region Order

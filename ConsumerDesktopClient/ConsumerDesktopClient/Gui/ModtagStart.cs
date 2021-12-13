@@ -14,27 +14,41 @@ namespace ConsumerDesktopClient.Gui {
 
         private OrderController orderController;
 
-        public ModtagStart(OrderController orderController) {
+        public ModtagStart() {
             InitializeComponent();
+            orderController = OrderController.GetInstance();
         }
 
-        private void buttonModtag_Click(object sender, EventArgs e) {
+        private async void buttonModtag_Click(object sender, EventArgs e) {
 
-            //We retrieve the number of jackets and bags
-            var antalJakker = Convert.ToInt32(textBoxJakkeNumre.Text);
-            var antalTasker = Convert.ToInt32(textBoxTaskeNumre.Text);
+            //We create the next UserController and pass,
+            //number of jackets and bags as well as the current
+            //ticket numbers into our OrderController
+            var ucVaelgGaest = new ModtagVaelgGaest();
 
-            //We create the next UserController and pass our orderController,
-            //number of jackets and bags
-            var ucModtagAngivAntal = new ModtagAngivAntal(orderController, antalJakker, antalTasker);
-            ucModtagAngivAntal.Dock = DockStyle.Fill;
+            //We prepare for the next user controller by repopulating
+            //the list of guests in the controller, so that they are ready
+            //await ButtonModtagHandlerAsync();
+
+            //We ensure that new lists are made, so that old wardrobenumbers
+            //are not still stored.
+            orderController.JakkeNumre = new List<int>();
+            orderController.TaskeNumre = new List<int>();
+            orderController.JakkeNumre.Add(Convert.ToInt32(textBoxJakkeNumre.Text));
+            orderController.TaskeNumre.Add(Convert.ToInt32(textBoxTaskeNumre.Text));
+            
+            ucVaelgGaest.Dock = DockStyle.Fill;
 
             //We add our user controller to our Start form
-            Start.GetInstance.PnlModtag.Controls.Add(ucModtagAngivAntal);
+            Start.GetInstance().PnlModtag.Controls.Add(ucVaelgGaest);
 
             //We bring it to the front of our start form
-            Start.GetInstance.PnlModtag.Controls["ModtagAngivAntal"].BringToFront();
+            Start.GetInstance().PnlModtag.Controls["ModtagVaelgGaest"].BringToFront();
         }
+
+        //private async Task ButtonModtagHandlerAsync() {
+        //    await orderController.GetAllGuests();
+        //}
 
         private void buttonPlusJakker_Click(object sender, EventArgs e) {
             var antalJakker = Convert.ToInt32(textBoxJakkeNumre.Text);

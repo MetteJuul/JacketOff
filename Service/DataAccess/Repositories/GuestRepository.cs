@@ -7,35 +7,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories
-{
-    public class GuestRepository : BaseDB, IGuestRepository
-    {
+namespace DataAccess.Repositories {
+    public class GuestRepository : BaseDB, IGuestRepository {
         public GuestRepository(string connectionString) : base(connectionString) { }
+
+        public async Task<IEnumerable<Guest>> GetAllGuests(SqlConnection connection = null) {
+            try {
+                //Query is created
+                var query = "SELECT * FROM Guest";
+                //Connection is made
+                using var realConnection = connection ?? CreateConnection();
+
+                //We execute the query that retreives a list of all reservations
+                return (await realConnection.QueryAsync<Guest>(query)).ToList();
+            } catch (Exception e) {
+                throw new Exception($"Error getting all Guests: '{e.Message}'.", e);
+            }
+        }
 
         public async Task<int> CreateGuest(Guest guest, SqlConnection connection = null) {
             try {
 
-                    //Query is created and each property of the Item object
-                    //is mapped to the query using dapper
-                    var query = "INSERT INTO Guest(email)" +
-                        "OUTPUT INSERTED.guestID VALUES (@Email)";
+                //Query is created and each property of the Item object
+                //is mapped to the query using dapper
+                var query = "INSERT INTO Guest(email)" +
+                    "OUTPUT INSERTED.guestID VALUES (@Email)";
 
-                    //Connection is created - ?? betyder "er connection object null, så laver den en ny"
-                    using var realConnection = connection ?? CreateConnection();
+                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
+                using var realConnection = connection ?? CreateConnection();
 
-                    //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
-                    return await realConnection.QuerySingleAsync<int>(query, guest);
+                //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
+                return await realConnection.QuerySingleAsync<int>(query, guest);
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af Gæst: '{e.Message}'.", e);
             }
-            
+
         }
 
-        public async Task<Guest> GetByEmail(string email, SqlConnection connection = null)
-        {
-            try
-            {
+        public async Task<Guest> GetByEmail(string email, SqlConnection connection = null) {
+            try {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM Guest WHERE email=@email";
 
@@ -44,16 +54,13 @@ namespace DataAccess.Repositories
 
                 //We execute the query that retrieves a guest object based on email
                 return await realConnection.QuerySingleAsync<Guest>(query, new { email });
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw new Exception($"Fejl ved hentning af gæst med email {email}: '{e.Message}'.", e);
             }
-        } 
-        
-        public async Task<Guest> GetByID(int ID, SqlConnection connection = null)
-        {
-            try
-            {
+        }
+
+        public async Task<Guest> GetByID(int ID, SqlConnection connection = null) {
+            try {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM Guest WHERE guestID=@ID";
 
@@ -62,8 +69,7 @@ namespace DataAccess.Repositories
 
                 //We execute the query that retrieves a guest object based on ID
                 return await realConnection.QuerySingleAsync<Guest>(query, new { ID });
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 throw new Exception($"Fejl ved hentning af gæst med id {ID}: '{e.Message}'.", e);
             }
         }
@@ -83,5 +89,6 @@ namespace DataAccess.Repositories
                 throw new Exception($"Fejl ved sletning af gæst med id {ID}: '{e.Message}'.", e);
             }
         }
+
     }
 }

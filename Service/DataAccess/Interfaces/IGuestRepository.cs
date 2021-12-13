@@ -11,6 +11,7 @@ namespace DataAccess.Interfaces
 {
     public interface IGuestRepository
     {
+        Task<IEnumerable<Guest>> GetAllGuests(SqlConnection connection = null);
         Task<int> CreateGuest(Guest guest, SqlConnection connection = null);
         Task<Guest> GetByEmail(string email, SqlConnection connection = null);
         Task<Guest> GetByID(int ID, SqlConnection connection = null);

@@ -29,6 +29,17 @@ namespace ConsumerDesktopClient.Service {
             //TODO finde ud af hvorfor response.Data ikke virker
             //return response.Data;
         }
+
+        public async Task<IEnumerable<GuestDTO>> GetAllGuests() {
+
+            var response = await _restClient.RequestAsync<IEnumerable<GuestDTO>>(Method.GET, $"guests");
+
+            if (!response.IsSuccessful) {
+                throw new Exception($"Fejl ved hentning af gæster. Fejl besked: {response.Content}");
+            }
+
+            return response.Data;
+        }
            
     }
 }
