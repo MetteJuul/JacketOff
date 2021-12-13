@@ -75,23 +75,23 @@ namespace DataAccess.Services {
             string email = $"Tak fordi du har tjekket ind i vores garderobe. Dit gardrobenummer er {ticketNumber}." +
                 " Hav en god aften.";
 
-            try {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress(ourEmail);
-                message.To.Add(new MailAddress(guest.Email));
-                message.Subject = "Garderobenummer";
-                message.Body = email;
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com"; //for gmail host  
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential(ourEmail, "JacketOffProjekt1!");
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.SendAsync(message);
-            } catch (Exception e) {
-                throw new Exception($"Fejl ved sending af Email til {guest.Email} '{e.Message}'.", e);
-            }
+            //try {
+            //    MailMessage message = new MailMessage();
+            //    SmtpClient smtp = new SmtpClient();
+            //    message.From = new MailAddress(ourEmail);
+            //    message.To.Add(new MailAddress(guest.Email));
+            //    message.Subject = "Garderobenummer";
+            //    message.Body = email;
+            //    smtp.Port = 587;
+            //    smtp.Host = "smtp.gmail.com"; //for gmail host  
+            //    smtp.EnableSsl = true;
+            //    smtp.UseDefaultCredentials = false;
+            //    smtp.Credentials = new NetworkCredential(ourEmail, "JacketOffProjekt1!");
+            //    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //    smtp.SendAsync(message);
+            //} catch (Exception e) {
+            //    throw new Exception($"Fejl ved sending af Email til {guest.Email} '{e.Message}'.", e);
+            //}
         }
     }
 }

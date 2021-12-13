@@ -22,80 +22,77 @@ namespace DataAccess.Services {
             wardrobeRepo = new WardrobeRepository(connectionString);
         }
 
-        //Transaction
-        //public System.Data.SqlClient.SqlTransaction BeginTransaction();
+
         public async Task<int> CreateReservation(Reservation newReservation) {
-
-            //Start transaction
-
             using SqlConnection connection = CreateConnection();
             connection.Open();
             using var command = new SqlCommand();
-
             using SqlTransaction transaction = connection.BeginTransaction(IsolationLevel.RepeatableRead);
             command.Transaction = transaction;
 
             try {
 
-                //Tjek om newReservation indeholder data
+                //Check if newReservation contains data
                 if (newReservation == null) {
 
                     return 0;
 
                 } else {
-                    //Lav wardrobeControl som kan genbruges
-                    //TODO: Lav subtask til formatering af datetime
-                    var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(
-                        newReservation.WardrobeID_FK,
-                        newReservation.ArrivalTime);
 
-                    //Tjek om WardrobeControl eksisterer
-                    if (wardrobeControl == null) {
-
-                        //Hvis den ikke eksisterer - laver vi en og gemmer vi den i wardrobeControl
-                        wardrobeControl = new WardrobeControl
-                        {
-                            WardrobeID_FK = newReservation.WardrobeID_FK,
-                            Date = newReservation.ArrivalTime, Count = 0
-                        };
-                        await wardrobeControlRepo.CreateWardrobeControl(wardrobeControl);
-                    } else {
-
-                        //Lav variabler med count, antal items der skal tilføjes og maxAmount som kan genbruges
-                        var wardrobeCount = wardrobeControl.Count;
-                        var addedAmountOfItems = newReservation.AmountOfJackets + newReservation.AmountOfBags;
-                        var MaxAmount = (await wardrobeRepo.GetWardrobeById(newReservation.WardrobeID_FK)).MaxAmountOfItems;
-
-                        //Tjek om der er plads i WardrobeControl til nyt count fra ny reservation
-                        if (wardrobeCount + addedAmountOfItems <= MaxAmount) {
-
-                            //Hvis der er plads opretter vi reservationen igennem reservationRepo
-                            await reservationRepo.CreateReservation(newReservation);
-
-                            //Så retter vi count i vores wardrobecontrol objekt, og sender
-                            //det til vores updateCount metode i wardrobeControlRepo
-                            wardrobeControl.Count = wardrobeCount + addedAmountOfItems;
-                            await wardrobeControlRepo.UpdateCount(wardrobeControl);
-
-                        }
-
-                        transaction.Commit();
-                        //må man smide en int tilbage her som et tegn på, at transaction er committed uden fejl.
-                        return 1;
+                    DateTime dateToUse = newReservation.ArrivalTime.Date.Date;
+                    DateTime arrivalDay = newReservation.ArrivalTime.Date;
+                    //Check which day to update the count in WardrobeControl
+                    if (newReservation.ArrivalTime > arrivalDay) {
+                        dateToUse = newReservation.ArrivalTime.AddDays(-1).Date;
                     }
 
+                    //Check that guest is not making a reservation more than 14 days into the future
+                    DateTime legalReservationTime = DateTime.Now.AddDays(14);
+                    if (dateToUse < legalReservationTime) {
+
+                        //Get WardrobeControl object
+                        var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse.Date);
+
+                        //if wardrobeControl is null we create a new with the data from newReservation
+                        if (wardrobeControl == null) {
+                            wardrobeControl = new WardrobeControl { WardrobeID_FK = newReservation.WardrobeID_FK, Date = dateToUse, Count = 0 };
+                            await wardrobeControlRepo.CreateWardrobeControl(wardrobeControl);
+                        } else {
+                            //Set variables needed for count check
+                            int wardrobeCount = wardrobeControl.Count;
+                            int addedAmountOfItems = newReservation.AmountOfJackets + newReservation.AmountOfBags;
+                            int MaxAmount = (await wardrobeRepo.GetWardrobeById(newReservation.WardrobeID_FK)).MaxAmountOfItems;
+
+                            //Check if there's enough space to add count of items from newReservation
+                            if (wardrobeCount + addedAmountOfItems <= MaxAmount) {
+
+                                //If there is space in the wardrobe we create the reservation
+                                await reservationRepo.CreateReservation(newReservation);
+
+                                //Then we update the wardrobeCount in our WardrobeControl object 
+                                //and send it to our updateCount method in wardrobeControlRepo
+                                wardrobeControl.Count = wardrobeCount + addedAmountOfItems;
+                                await wardrobeControlRepo.UpdateCount(wardrobeControl);
+
+                            } else {
+                                throw new Exception("Der er ikke plads i garderoben");
+                            }
+                        }
+
+                    } else {
+                        throw new Exception($"Du kan ikke oprette en reservation senere end {legalReservationTime}");
+                    }
+                    transaction.Commit();
+                    return 1;
                 }
-                //End transaction
 
-                return 0;
             } catch (Exception e) {
-
                 transaction.Rollback();
-
                 throw new Exception($"Kunne ikke oprette reservation: '{e.Message}'.", e);
-
             }
         }
+
     }
 }
+
 

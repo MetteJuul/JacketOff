@@ -13,6 +13,7 @@ namespace DataAccess.Repositories {
     public class WardrobeControlRepository : BaseDB, IWardrobeControlRepository {
         public WardrobeControlRepository(string connectionString) : base(connectionString) { }
 
+        //Retrieves a list of all WardrobeControl objects from the database
         public async Task<IEnumerable<WardrobeControl>> GetAllWardrobeControls(SqlConnection connection = null) {
             try {
                 //Query is created and the input parameter is assigned
@@ -29,21 +30,23 @@ namespace DataAccess.Repositories {
             }
         }
 
-        public async Task<WardrobeControl> GetWardrobeControlByIdAndDate(string ID, DateTime date, SqlConnection connection = null) {
+        //Retrieves a list of all WardrobeControl objects with a specific date and ID from the database
+        //BEWARE: returns a result where date only contains date and not time 
+        public async Task<WardrobeControl> GetWardrobeControlByIdAndDate(string WardrobeID_FK, DateTime Date, SqlConnection connection = null) {
             try {
                 //Query is created and the input parameter is assigned
-                var query = "SELECT wardrobeID_FK, date, count FROM wardrobeControl WHERE wardrobeID_FK=@ID AND date=@date";
-
+                var query = "SELECT wardrobeID_FK, date, count FROM wardrobeControl WHERE wardrobeID_FK=@WardrobeID_FK and date=@Date";
+                
                 //Connection is made
                 using var realConnection = connection?? CreateConnection();
 
                 //We execute the query that retrieves a reservation object based on ID
-                var result = await realConnection.QueryAsync<WardrobeControl>(query, new { ID, date.Date });
-                return result.FirstOrDefault();
+                var foundWardrobeControl = await realConnection.QueryFirstOrDefaultAsync<WardrobeControl>(query, new { WardrobeID_FK, Date });
+                return foundWardrobeControl;
 
 
             } catch (Exception e) {
-                throw new Exception($"Fejl ved hentning af garderobekontrol {ID}: '{e.Message}'.", e);
+                throw new Exception($"Fejl ved hentning af garderobekontrol {WardrobeID_FK}: '{e.Message}'.", e);
             }
         }
 
@@ -51,7 +54,7 @@ namespace DataAccess.Repositories {
             try {
 
                 var query = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" +
-                    "UPDATE WardrobeControl SET count=@count WHERE wardrobeID_FK=@wardrobeID_FK";
+                    "UPDATE WardrobeControl SET count=@Count WHERE wardrobeID_FK=@WardrobeID_FK and date=@Date";
 
 
                 using var realConnection = connection?? CreateConnection();
@@ -81,13 +84,15 @@ namespace DataAccess.Repositories {
         }
 
         public async Task<int> CreateWardrobeControl(WardrobeControl wardrobeControl, SqlConnection connection = null) {
-
             try {
-                var query = "INSERT INTO WardrobeControl (wardrobeID_FK, date, count) OUTPUT INSERTED.WardrobeID_FK VALUES (@WardrobeID_FK, @Date, @Count);";
+
+                var query = "INSERT INTO WardrobeControl (wardrobeID_FK, date, count) " +
+                    "OUTPUT INSERTED.wardrobeID_FK VALUES (@WardrobeID_FK, @Date, @Count);";
+                
 
                 using var realConnection = connection ?? CreateConnection();
 
-                return await realConnection.QuerySingleAsync<int> (query, wardrobeControl);
+                return await realConnection.QuerySingleAsync<int>(query, wardrobeControl);
 
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af WardrobeControl: '{e.Message}'.", e);

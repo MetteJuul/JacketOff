@@ -8,31 +8,31 @@ namespace API.DTOs.Converters {
 
         #region Reservation converter methods
 
-        public static ReservationDTO ToDTO(this Reservation reservationDTOToConvert) {
+        public static ReservationDTO ReservationToDTO(this Reservation reservationDTOToConvert) {
             var reservationDTO = new ReservationDTO();
             reservationDTOToConvert.CopyPropertiesTo(reservationDTO);
             return reservationDTO;
         }
 
-        public static Reservation FromDTO(this ReservationDTO reservationToConvert) {
+        public static Reservation ReservationFromDTO(this ReservationDTO reservationToConvert) {
 
             var reservation = new Reservation();
             reservationToConvert.CopyPropertiesTo(reservation);
             return reservation;
         }
 
-        public static IEnumerable<ReservationDTO> ToDTOs(this IEnumerable<Reservation> reservationsToConvert) {
+        public static IEnumerable<ReservationDTO> ReservationsToDTOs(this IEnumerable<Reservation> reservationsToConvert) {
 
             foreach (var reservation in reservationsToConvert) {
-                yield return reservation.ToDTO();
+                yield return reservation.ReservationToDTO();
             }
         }
 
-        public static IEnumerable<Reservation> FromDTOs(this IEnumerable<ReservationDTO> reservationDTOsToConvert) {
+        public static IEnumerable<Reservation> ReservationsFromDTOs(this IEnumerable<ReservationDTO> reservationDTOsToConvert) {
 
             foreach (var reservationDTO in reservationDTOsToConvert) {
 
-                yield return reservationDTO.FromDTO();
+                yield return reservationDTO.ReservationFromDTO();
             }
         }
         #endregion
@@ -50,6 +50,23 @@ namespace API.DTOs.Converters {
             var wardrobe = new Wardrobe();
             wardrobeDTOToConvert.CopyPropertiesTo(wardrobe);
             return wardrobe;
+        }
+
+        #endregion
+
+        #region WardrobeControl converter methods
+
+        public static WardrobeControlDTO WardrobeControlToDTO(this WardrobeControl wardrobeControlToConvert) {
+            var wardrobeControlDTO = new WardrobeControlDTO();
+            wardrobeControlToConvert.CopyPropertiesTo(wardrobeControlDTO);
+            return wardrobeControlDTO;
+        }
+
+
+        public static WardrobeControl WardrobeControlFromDTO(this WardrobeControlDTO wardrobeControlDTOToConvert) {
+            var wardrobeControl = new WardrobeControl();
+            wardrobeControlDTOToConvert.CopyPropertiesTo(wardrobeControl);
+            return wardrobeControl;
         }
 
         #endregion

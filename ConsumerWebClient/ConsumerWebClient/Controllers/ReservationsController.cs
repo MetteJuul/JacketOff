@@ -56,7 +56,7 @@ namespace ConsumerWebClient.Controllers {
                
             }
         }
-
+               
         [HttpPost]
         public async Task <ActionResult> Reservation(ReservationViewModel reservationViewModel) {
 
