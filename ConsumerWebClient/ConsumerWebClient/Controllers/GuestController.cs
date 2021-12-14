@@ -34,12 +34,13 @@ namespace ConsumerWebClient.Controllers {
             try {
                 if (await _client.CreateSimpleGuest(guestDTO) > 0) {
                     TempData["Message"] = $"Gæst {guestDTO} oprettet!";
-                    return RedirectToAction(nameof(Index), "Home");
+                    //return RedirectToAction(nameof(Index), "Home");
+                    return View("NewGuest");
                 } else {
                     ViewBag.ErrorMessage = "Gæsten blev ikke oprettet!";
                 }
-            } catch (Exception ex) {
-                ViewBag.ErrorMessage = ex.Message;
+            } catch (Exception e) {
+                ViewBag.ErrorMessage = e.Message;
             }
             return View();
         }
