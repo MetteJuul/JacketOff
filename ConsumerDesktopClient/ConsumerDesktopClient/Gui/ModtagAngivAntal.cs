@@ -27,6 +27,19 @@ namespace ConsumerDesktopClient.Gui {
         }
 
         private void buttonNaeste_Click(object sender, EventArgs e) {
+            
+            //Vi gemmer antallet af Tasker og Jakker
+            //til OrderControlleren ved at initiere arrays'ne
+            //med jakkenumre og taskenumre, til at have en længde
+            //tilsvarende til antallet af jakker og tasker.
+            if (antalJakker > 0) {
+                orderController.JakkeNumre = new int[antalJakker];
+                orderController.JakkeNumre[0] = orderController.SidsteJakkeNummer;
+            }
+            if (antalTasker > 0) {
+                orderController.TaskeNumre = new int[antalTasker];
+                orderController.TaskeNumre[0] = orderController.SidsteTaskeNummer;
+            }
 
             //Vi initiere den næste UserController
             ModtagKvittering ucModtagKvittering = new ModtagKvittering();
@@ -38,21 +51,18 @@ namespace ConsumerDesktopClient.Gui {
             //Vi tilføjer vores nye user controller til vores Modtag panel
             //i vores Start Form
             Start.GetInstance().PnlModtag.Controls.Add(ucModtagKvittering);
-            
-            //Vi gemmer antallet af Tasker og Jakker
-            //til OrderControlleren ved at initiere arrays'ne
-            //med jakkenumre og taskenumre, til at have en længde
-            //tilsvarende til antallet af jakker og tasker.
-            if(antalJakker > 0) {
-                orderController.JakkeNumre = new int[antalJakker];
-            }
-            if(antalTasker > 0) {
-                orderController.TaskeNumre = new int[antalTasker];
-            }
 
             //Vi bringer den næste user controller frem til at stå forrest
             //i Modtag panelet
             Start.GetInstance().PnlModtag.Controls["ModtagKvittering"].BringToFront();
+
+            //Vi resetter så antallet af jakker og tasker
+            //så de er klar til næste gang vi rammer samme
+            //user controller
+            antalJakker = 0;
+            antalTasker = 0;
+            textBoxAntalJakker.Text = antalJakker.ToString();
+            textBoxAntalTasker.Text = antalTasker.ToString();
         }
 
         private void buttonPlusJakker_Click(object sender, EventArgs e) {

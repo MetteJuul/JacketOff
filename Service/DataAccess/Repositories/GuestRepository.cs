@@ -14,7 +14,7 @@ namespace DataAccess.Repositories {
         public async Task<IEnumerable<Guest>> GetAllGuests(SqlConnection connection = null) {
             try {
                 //Query is created
-                var query = "SELECT * FROM Guest";
+                var query = "SELECT * FROM Guest ORDER BY guestID DESC";
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();
 

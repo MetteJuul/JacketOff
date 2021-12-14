@@ -56,6 +56,24 @@ namespace ConsumerDesktopClient.Gui {
             //Vi bringer den næste user controller frem til at stå forrest
             //i Modtag panelet.
             Start.GetInstance().PnlModtag.Controls["ModtagVaelgGaest"].BringToFront();
+
+        }
+
+
+        //TODO: find ud af hvor disse skal kaldes
+        public void reloadNumre() {
+
+            //Vi henter det sidste gemte jakkenummer putter det nye
+            //i vores field
+            var nytJakkeNummer = orderController.SidsteJakkeNummer;
+            if (nytJakkeNummer < 999) { nytJakkeNummer++; } else { nytJakkeNummer = 1; }
+            jakkeNummer = nytJakkeNummer;
+
+            //Vi henter det sidste gemte taskenummer og putter det nye
+            //i vores field
+            var nytTaskeNummer = orderController.SidsteTaskeNummer;
+            if (nytTaskeNummer < 999) { nytTaskeNummer++; } else { nytTaskeNummer = 1; }
+            taskeNummer = nytTaskeNummer;
         }
        
         //Metode til asynkront at hente alle gæster fra

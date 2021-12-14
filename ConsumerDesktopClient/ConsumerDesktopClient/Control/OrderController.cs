@@ -51,8 +51,8 @@ namespace ConsumerDesktopClient.Control {
             var orders = new List<OrderDTO>();
 
 
-            //Vi om der er flere end 0 jakker i ordren.
-            if (JakkeNumre.Length != 0) {
+            //Vi tjekker der er nogle jakker i ordren
+            if (JakkeNumre != null) {
 
                 //Vi går nu igennem alle de opbevarede jakkenumre
                 //og oprette ordre for hver og tilføjer dem.
@@ -72,8 +72,8 @@ namespace ConsumerDesktopClient.Control {
                 }
             }
 
-            //Vi om der er flere end 0 tasker i ordren.
-            if (TaskeNumre.Length != 0) {
+            //Vi tjekker om der er nogle tasker i ordren
+            if (TaskeNumre != null) {
 
                 //Vi går nu igennem alle de opbevarede taskenumre
                 //og oprette ordre for hver og tilføjer dem.

@@ -73,6 +73,8 @@ namespace ConsumerDesktopClient.Gui {
             //OrderController, så den kan bruges
             //til at oprette ordren.
             orderController.Guest = (GuestDTO)foundGuest;
+
+            listBoxGuests.SelectedIndex = -1;
         }
 
         private void listBoxGuests_SelectedIndexChanged(object sender, EventArgs e) {
