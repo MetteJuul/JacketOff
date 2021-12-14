@@ -30,7 +30,7 @@ namespace API.Controllers {
             
             var foundGuest = await _guestRepository.GetByEmail(email);
             if (foundGuest == null) {
-                return NotFound("Ingen reservationer blev fundet");
+                return NotFound("Ingen gæst fundet");
             } else {
                 return Ok(foundGuest.ToDTO());
             }
