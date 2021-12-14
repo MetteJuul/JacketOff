@@ -100,5 +100,25 @@ namespace APIClient {
         public Task<WardrobeControlDTO> GetWardrobeControl() {
             throw new NotImplementedException();
         }
+
+        public async Task<int> CreateSimpleGuest(GuestDTO entity) {
+
+            var response = await _restClient.RequestAsync<int>(Method.POST, $"guests", entity);
+            if (!response.IsSuccessful) {
+                throw new Exception($"Vi kunne desværre ikke oprette gæsten. Fejlbesked: {response.Content}");
+            }
+            return response.Data;
+        }
+
+        public async Task<GuestDTO> GetByGuestEmail(string email) {
+
+            var response = await _restClient.RequestAsync<GuestDTO>(Method.GET, $"guests/{email}");
+
+            if (!response.IsSuccessful) {
+                throw new Exception($"Fejl ved hentning af bruger. Fejlbesked: {response.Content}");
+            }
+            return response.Data;
+
+        }
     }
 }
