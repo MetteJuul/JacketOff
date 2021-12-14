@@ -36,7 +36,7 @@ namespace API.Controllers {
                 return NotFound("Ingen reservationer blev fundet");
             } else {
                 //Else we return 200 OK and the list of reservations
-                return Ok(reservations.ToDTOs());
+                return Ok(reservations.ReservationsToDTOs());
             }
         }
 
@@ -44,7 +44,7 @@ namespace API.Controllers {
         [HttpPost]
         public async Task<ActionResult<int>> CreateReservation([FromBody] ReservationDTO newReservationDTO) {
 
-            return Ok(await _service.CreateReservation(newReservationDTO.FromDTO()));
+            return Ok(await _service.CreateReservation(newReservationDTO.ReservationFromDTO()));
 
             //return Ok(await _reservationRepository.CreateReservation(newReservationDTO.FromDTO()));
         }
@@ -53,7 +53,7 @@ namespace API.Controllers {
         //TODO: Test om id virker i test. hvis det kan undlades skal det slettes.
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateReservation(int id, [FromBody] ReservationDTO reservationDTOUpdate) {
-            if (!await _reservationRepository.UpdateReservation(reservationDTOUpdate.FromDTO())) {
+            if (!await _reservationRepository.UpdateReservation(reservationDTOUpdate.ReservationFromDTO())) {
                 return NotFound("Opdatering af reservationen mislykkedes");
             } else {
                 return Ok();
@@ -74,7 +74,7 @@ namespace API.Controllers {
             if (reservations == null) {
                 return NotFound("Ingen reservationer blev fundet");
             } else {
-                return Ok(reservations.ToDTOs());
+                return Ok(reservations.ReservationsToDTOs());
             }
         }
         

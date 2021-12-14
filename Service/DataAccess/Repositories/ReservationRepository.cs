@@ -32,7 +32,7 @@ namespace DataAccess {
                 using var realConnection = connection ?? CreateConnection();
 
                 //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
-                return await realConnection.QuerySingleAsync<int>(query, reservation);
+                return await realConnection.QuerySingleAsync<int>(query, reservation);  
             } catch (Exception e) {
                 throw new Exception($"Error creating new reservation: '{e.Message}'.", e);
             }
