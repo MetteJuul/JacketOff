@@ -31,9 +31,7 @@ namespace DataAccess.Services {
             connection.Open();
             using var command = new SqlCommand();
 
-            //TODO : Find ud af om det skal være repeatable read? Det giver ved ikke mening
-            //i den her sammenhæng
-            using SqlTransaction transaction = connection.BeginTransaction(IsolationLevel.RepeatableRead);
+            using SqlTransaction transaction = connection.BeginTransaction();
             command.Transaction = transaction;
 
             //Tjek om ordren indeholder data

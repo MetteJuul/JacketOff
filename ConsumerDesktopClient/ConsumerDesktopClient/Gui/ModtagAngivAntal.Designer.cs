@@ -25,11 +25,11 @@
         private void InitializeComponent() {
             this.labelTasker = new System.Windows.Forms.Label();
             this.buttonPlusTasker = new System.Windows.Forms.Button();
-            this.textBoxJakkeNumre = new System.Windows.Forms.TextBox();
+            this.textBoxAntalJakker = new System.Windows.Forms.TextBox();
             this.labelJakker = new System.Windows.Forms.Label();
             this.buttonMinusTasker = new System.Windows.Forms.Button();
             this.buttonPlusJakker = new System.Windows.Forms.Button();
-            this.textBoxTaskeNumre = new System.Windows.Forms.TextBox();
+            this.textBoxAntalTasker = new System.Windows.Forms.TextBox();
             this.buttonMinusJakker = new System.Windows.Forms.Button();
             this.buttonAfbryd = new System.Windows.Forms.Button();
             this.buttonNaeste = new System.Windows.Forms.Button();
@@ -57,16 +57,16 @@
             this.buttonPlusTasker.UseVisualStyleBackColor = true;
             this.buttonPlusTasker.Click += new System.EventHandler(this.buttonPlusTasker_Click);
             // 
-            // textBoxJakkeNumre
+            // textBoxAntalJakker
             // 
-            this.textBoxJakkeNumre.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxJakkeNumre.Location = new System.Drawing.Point(128, 108);
-            this.textBoxJakkeNumre.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxJakkeNumre.Name = "textBoxJakkeNumre";
-            this.textBoxJakkeNumre.Size = new System.Drawing.Size(116, 38);
-            this.textBoxJakkeNumre.TabIndex = 18;
-            this.textBoxJakkeNumre.Text = "0";
-            this.textBoxJakkeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxAntalJakker.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxAntalJakker.Location = new System.Drawing.Point(128, 108);
+            this.textBoxAntalJakker.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxAntalJakker.Name = "textBoxAntalJakker";
+            this.textBoxAntalJakker.Size = new System.Drawing.Size(116, 38);
+            this.textBoxAntalJakker.TabIndex = 18;
+            this.textBoxAntalJakker.Text = "0";
+            this.textBoxAntalJakker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // labelJakker
             // 
@@ -101,16 +101,16 @@
             this.buttonPlusJakker.UseVisualStyleBackColor = true;
             this.buttonPlusJakker.Click += new System.EventHandler(this.buttonPlusJakker_Click);
             // 
-            // textBoxTaskeNumre
+            // textBoxAntalTasker
             // 
-            this.textBoxTaskeNumre.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxTaskeNumre.Location = new System.Drawing.Point(128, 218);
-            this.textBoxTaskeNumre.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxTaskeNumre.Name = "textBoxTaskeNumre";
-            this.textBoxTaskeNumre.Size = new System.Drawing.Size(116, 38);
-            this.textBoxTaskeNumre.TabIndex = 22;
-            this.textBoxTaskeNumre.Text = "0";
-            this.textBoxTaskeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxAntalTasker.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxAntalTasker.Location = new System.Drawing.Point(128, 218);
+            this.textBoxAntalTasker.Margin = new System.Windows.Forms.Padding(0);
+            this.textBoxAntalTasker.Name = "textBoxAntalTasker";
+            this.textBoxAntalTasker.Size = new System.Drawing.Size(116, 38);
+            this.textBoxAntalTasker.TabIndex = 22;
+            this.textBoxAntalTasker.Text = "0";
+            this.textBoxAntalTasker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // buttonMinusJakker
             // 
@@ -159,11 +159,11 @@
             this.Controls.Add(this.buttonAfbryd);
             this.Controls.Add(this.labelTasker);
             this.Controls.Add(this.buttonPlusTasker);
-            this.Controls.Add(this.textBoxJakkeNumre);
+            this.Controls.Add(this.textBoxAntalJakker);
             this.Controls.Add(this.labelJakker);
             this.Controls.Add(this.buttonMinusTasker);
             this.Controls.Add(this.buttonPlusJakker);
-            this.Controls.Add(this.textBoxTaskeNumre);
+            this.Controls.Add(this.textBoxAntalTasker);
             this.Controls.Add(this.buttonMinusJakker);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Name = "ModtagAngivAntal";
@@ -177,11 +177,11 @@
 
         private System.Windows.Forms.Label labelTasker;
         private System.Windows.Forms.Button buttonPlusTasker;
-        private System.Windows.Forms.TextBox textBoxJakkeNumre;
+        private System.Windows.Forms.TextBox textBoxAntalJakker;
         private System.Windows.Forms.Label labelJakker;
         private System.Windows.Forms.Button buttonMinusTasker;
         private System.Windows.Forms.Button buttonPlusJakker;
-        private System.Windows.Forms.TextBox textBoxTaskeNumre;
+        private System.Windows.Forms.TextBox textBoxAntalTasker;
         private System.Windows.Forms.Button buttonMinusJakker;
         private System.Windows.Forms.Button buttonAfbryd;
         private System.Windows.Forms.Button buttonNaeste;

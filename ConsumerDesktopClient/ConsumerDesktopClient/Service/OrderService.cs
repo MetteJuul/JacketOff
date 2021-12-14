@@ -30,7 +30,8 @@ namespace ConsumerDesktopClient.Service {
             //return response.Data;
         }
 
-        public async Task<IEnumerable<GuestDTO>> GetAllGuests() {
+
+        public async Task<List<GuestDTO>> GetAllGuests() {
 
             var response = await _restClient.RequestAsync<IEnumerable<GuestDTO>>(Method.GET, $"guests");
 
@@ -38,7 +39,7 @@ namespace ConsumerDesktopClient.Service {
                 throw new Exception($"Fejl ved hentning af gæster. Fejl besked: {response.Content}");
             }
 
-            return response.Data;
+            return response.Data.ToList();
         }
            
     }

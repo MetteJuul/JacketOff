@@ -21,17 +21,20 @@ namespace ConsumerDesktopClient.Gui {
             InitializeComponent();
             orderController = OrderController.GetInstance();
 
-            if (orderController.JakkeNumre.Count > 0) {
-                jakkeNummer = orderController.JakkeNumre.First();
+            if (orderController.JakkeNumre.Length > 0) {
+                jakkeNummer = orderController.JakkeNumre[0];
             }
-            if (orderController.TaskeNumre.Count > 0) {
-                taskeNummer = orderController.TaskeNumre.First();
+            if (orderController.TaskeNumre.Length > 0) {
+                taskeNummer = orderController.TaskeNumre[0];
             }
-
             textBoxJakkeNumre1.Text = jakkeNummer.ToString();
             textBoxTaskeNumre1.Text = taskeNummer.ToString();
 
+        }
 
+        private void CheckAmount() {
+            int antalJakker = orderController.JakkeNumre.Length;
+            int antalTasker = orderController.TaskeNumre.Length;
         }
 
         private async void buttonAfslut_Click(object sender, EventArgs e) {
@@ -49,89 +52,106 @@ namespace ConsumerDesktopClient.Gui {
             await orderController.CreateOrder();
         }
 
+        #region Plus og Minus Knapper og deres tilhørende metoder
         private void buttonMinusJakker1_Click_1(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxJakkeNumre1, "jakke");
+            Minus(textBoxJakkeNumre1, "jakke");
         }
 
         private void buttonPlusJakker1_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxJakkeNumre1, "jakke");
+            Plus(textBoxJakkeNumre1, "jakke");
         }
 
         private void buttonMinusJakker2_Click(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxJakkeNumre2, "jakke");
+            Minus(textBoxJakkeNumre2, "jakke");
         }
 
         private void buttonPlusJakker2_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxJakkeNumre2, "jakke");
+            Plus(textBoxJakkeNumre2, "jakke");
         }
 
         private void buttonMinusJakker3_Click(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxJakkeNumre3, "jakke");
+            Minus(textBoxJakkeNumre3, "jakke");
         }
 
         private void buttonPlusJakker3_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxJakkeNumre3, "jakke");
+            Plus(textBoxJakkeNumre3, "jakke");
         }
 
         private void buttonMinusTasker1_Click(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxTaskeNumre1, "taske");
+            Minus(textBoxTaskeNumre1, "taske");
         }
 
         private void buttonPlusTasker1_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxTaskeNumre1, "taske");
+            Plus(textBoxTaskeNumre1, "taske");
         }
 
         private void buttonMinusTasker2_Click(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxTaskeNumre2, "taske");
+            Minus(textBoxTaskeNumre2, "taske");
         }
 
         private void buttonPlusTasker2_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxTaskeNumre2, "taske");
+            Plus(textBoxTaskeNumre2, "taske");
         }
 
         private void buttonMinusTasker3_Click(object sender, EventArgs e) {
-            Subtract1FromNumber(textBoxTaskeNumre3, "taske");
+            Minus(textBoxTaskeNumre3, "taske");
         }
 
         private void buttonPlusTasker3_Click(object sender, EventArgs e) {
-            Add1ToNumber(textBoxTaskeNumre3, "taske");
+            Plus(textBoxTaskeNumre3, "taske");
         }
 
-        private void Subtract1FromNumber(TextBox textBox, string type) {
+        //Metode bruges til at trække 1 fra jakke- eller taskenummeret
+        //når der trykkes på minus knapperne.
+        private void Minus(TextBox textBox, string itemType) {
 
-            if (type.Equals("jakke")) {
-                var jakkeNummer = Convert.ToInt32(textBox.Text);
-                if (jakkeNummer > 0) {
-                    textBox.Text = (jakkeNummer - 1).ToString();
-                } else if (jakkeNummer == 0) {
-                    textBox.Text = "999";
-                }
-            } else if (type.Equals("taske")) {
-                var taskeNummer = Convert.ToInt32(textBox.Text);
-                if (taskeNummer > 0) {
-                    textBox.Text = (taskeNummer - 1).ToString();
-                } else if (taskeNummer == 0) {
-                    textBox.Text = "999";
-                }
+            //Vi tjekker om det er en jakke
+            if (itemType.Equals("jakke")) {
+
+                //Hvis jakkenummeret er større end 1 trækker vi bare 1 fra
+                //hvis jakkenummeret er 1 så retter i stedet for nummeret til 999
+                //så vi aldrig rammer 0
+                if (jakkeNummer > 1) { jakkeNummer--; } else { jakkeNummer = 999; }
+
+                //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
+                textBox.Text = jakkeNummer.ToString();
+
+            } else if (itemType.Equals("taske")) {
+                //Hvis taskenummeret er større end 1 trækker vi bare 1 fra
+                //hvis taskenummeret er 1 så retter i stedet for nummeret til 999
+                //så vi aldrig rammer 0
+                if (taskeNummer > 1) { taskeNummer--; } else { taskeNummer = 999; }
+
+                //Vi sikre os at tekstboksen bliver opdateret med det nye taskenummer
+                textBox.Text = taskeNummer.ToString();
             }
         }
-        private void Add1ToNumber(TextBox textBox, string type) {
 
-            if (type.Equals("jakke")) {
-                var jakkeNummer = Convert.ToInt32(textBox.Text);
-                if (jakkeNummer < 999) {
-                    textBox.Text = (jakkeNummer - 1).ToString();
-                } else if (jakkeNummer == 999) {
-                    textBox.Text = "1";
-                }
-            } else if (type.Equals("taske")) {
-                var taskeNummer = Convert.ToInt32(textBox.Text);
-                if (taskeNummer < 999) {
-                    textBox.Text = (taskeNummer - 1).ToString();
-                } else if (taskeNummer == 999) {
-                    textBox.Text = "1";
-                }
+        //Metode bruges til at lægge 1 til jakke- eller taskenummeret
+        //når der trykkes på plus knapperne.
+        private void Plus(TextBox textBox, string itemType) {
+
+            if (itemType.Equals("jakke")) {
+
+                //Hvis jakkenummeret er mindre end 999 lægger vi bare 1 til
+                //hvis jakkenummeret er 999 så retter vi i stedet for nummeret til 1
+                //så vi aldrig rammer 10000
+                if (jakkeNummer < 999) { jakkeNummer++; } else { jakkeNummer = 1; }
+
+                //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
+                textBox.Text = jakkeNummer.ToString();
+
+            } else if (itemType.Equals("taske")) {
+
+                //Hvis taskenummeret er mindre end 999 lægger vi bare 1 til
+                //hvis taskenummeret er 999 så retter vi i stedet for nummeret til 1
+                //så vi aldrig rammer 10000
+                if (taskeNummer < 999) { taskeNummer++; } else { taskeNummer = 1; }
+
+                //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
+                textBox.Text = taskeNummer.ToString();
             }
         }
+        #endregion
     }
 }

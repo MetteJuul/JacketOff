@@ -12,14 +12,14 @@ using System.Windows.Forms;
 namespace ConsumerDesktopClient.Gui {
     public partial class Start : Form {
 
-        //We create a static field of the classes
-        //own type to enable singleton
+        //Vi laver et static field af klassen selv
+        //for at kunne lave den Singleton
         static Start _object;
         private OrderController orderController;
 
-
-        //We create a static method to instantiate our
-        //singleton class
+        //Denne statiske metode bruges til at enten instantiere
+        //eller hente det allerede instantierede object af
+        //klassen.
         public static Start GetInstance() {
             //We check if the class has already been instantiated
             //If not, we instantiate it
@@ -30,15 +30,15 @@ namespace ConsumerDesktopClient.Gui {
                 return _object;            
         }
 
-
+        //Constructoren er privat for at understøtte Singleton
         private Start() {
             InitializeComponent();
             orderController = OrderController.GetInstance();
         }
 
-        //Our panel is made into a public property
-        //So we will be able to set the value of it
-        //Inside our user controllers
+        //Vores paneler laves alle til public properties
+        //så vi er i stand til at sætte deres værdier
+        //og ændre rækkefælgen af user controllers
         public Panel PnlModtag {
             get { return panelModtag; }
             set { panelModtag = value; }
@@ -54,41 +54,35 @@ namespace ConsumerDesktopClient.Gui {
             set { panelRediger = value; }
         }
         
-        private async void Start_Load(object sender, EventArgs e) {
+        private void Start_Load(object sender, EventArgs e) {
             
-            //We make sure our Singelton gets instantated
+            //Vi sikrer os at vores Singleton bliver instantieret
+            //hvis den ikke allerede er det.
             _object = this;
 
+            //Vi instantiere vores usercontrollers som
+            //skal ligge forrest i de 3 paneler når programmet startes
             //We create a new usercontroller of all our Starting types
             ModtagStart ucModtagStart = new ModtagStart();
-            ModtagVaelgGaest ucModtagVaelgGaest = new ModtagVaelgGaest();
             UdleverStart ucUdleverStart = new UdleverStart();
             RedigerStart ucRedigerStart = new RedigerStart();
 
-            await PopulateListbox();
-            ucModtagVaelgGaest.AllGuests = orderController.AllGuests.ToList();
-            ucModtagVaelgGaest.populateListBox();
-
-            //We set them to fill whatever they is docked into
+            //Vi sætter dem til at fylde hvad end de er docket til
             ucModtagStart.Dock = DockStyle.Fill;
-            ucModtagVaelgGaest.Dock = DockStyle.Fill;
             ucUdleverStart.Dock = DockStyle.Fill;
             ucRedigerStart.Dock = DockStyle.Fill;
 
-            //We add our starting usercontrollers to our panels   
+            //Vi tilføjer vores user controllers til deres
+            //respektive paneler
             panelModtag.Controls.Add(ucModtagStart);
-            panelModtag.Controls.Add(ucModtagVaelgGaest);
             panelUdlever.Controls.Add(ucUdleverStart);
             panelRediger.Controls.Add(ucRedigerStart);
 
-            //We bring our Start user controllers to the front
+            //Vi sikrer os at vores Start user controllers
+            //ligger forrest i hver deres panel
             PnlModtag.Controls["ModtagStart"].BringToFront();
             PnlUdlever.Controls["UdleverStart"].BringToFront();
             PnlRediger.Controls["RedigerStart"].BringToFront();
-        }
-
-        private async Task PopulateListbox() {
-            await orderController.GetAllGuests();
         }
 
         #region Udlever
@@ -107,10 +101,6 @@ namespace ConsumerDesktopClient.Gui {
 
 
         #endregion
-
-        private void modtagKvittering1_Load(object sender, EventArgs e) {
-
-        }
 
     }
 }
