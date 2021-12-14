@@ -76,8 +76,8 @@
             this.textBoxJakkeNumre.Name = "textBoxJakkeNumre";
             this.textBoxJakkeNumre.Size = new System.Drawing.Size(116, 38);
             this.textBoxJakkeNumre.TabIndex = 10;
-            this.textBoxJakkeNumre.Text = "239";
             this.textBoxJakkeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxJakkeNumre.TextChanged += new System.EventHandler(this.textBoxJakkeNumre_TextChanged);
             // 
             // labelJakker
             // 
@@ -120,8 +120,8 @@
             this.textBoxTaskeNumre.Name = "textBoxTaskeNumre";
             this.textBoxTaskeNumre.Size = new System.Drawing.Size(116, 38);
             this.textBoxTaskeNumre.TabIndex = 14;
-            this.textBoxTaskeNumre.Text = "145";
             this.textBoxTaskeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxTaskeNumre.TextChanged += new System.EventHandler(this.textBoxTaskeNumre_TextChanged);
             // 
             // buttonMinusJakker
             // 

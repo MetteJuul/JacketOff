@@ -23,27 +23,38 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.labelTasker = new System.Windows.Forms.Label();
-            this.buttonPlusTasker = new System.Windows.Forms.Button();
-            this.textBoxJakkeNumre = new System.Windows.Forms.TextBox();
             this.labelJakker = new System.Windows.Forms.Label();
-            this.buttonMinusTasker = new System.Windows.Forms.Button();
-            this.buttonPlusJakker = new System.Windows.Forms.Button();
-            this.textBoxTaskeNumre = new System.Windows.Forms.TextBox();
-            this.buttonMinusJakker = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.buttonAfslut = new System.Windows.Forms.Button();
+            this.orderControllerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jakkeNumreBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jakkeNumreBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.ticketNumberBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jakkeNumreBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.taskeNummerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewJakkeNumre = new System.Windows.Forms.DataGridView();
+            this.MinusColumnJakker = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.numberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PlusColumnJakker = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.jakkeNummerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTaskeNumre = new System.Windows.Forms.DataGridView();
+            this.MinusColumnTasker = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.numberDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PlusColumnTasker = new System.Windows.Forms.DataGridViewButtonColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.orderControllerBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ticketNumberBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.taskeNummerBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJakkeNumre)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNummerBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaskeNumre)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTasker
@@ -57,26 +68,6 @@
             this.labelTasker.Text = "Tasker";
             this.labelTasker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // buttonPlusTasker
-            // 
-            this.buttonPlusTasker.Location = new System.Drawing.Point(239, 308);
-            this.buttonPlusTasker.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonPlusTasker.Name = "buttonPlusTasker";
-            this.buttonPlusTasker.Size = new System.Drawing.Size(42, 38);
-            this.buttonPlusTasker.TabIndex = 24;
-            this.buttonPlusTasker.Text = "+";
-            this.buttonPlusTasker.UseVisualStyleBackColor = true;
-            // 
-            // textBoxJakkeNumre
-            // 
-            this.textBoxJakkeNumre.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxJakkeNumre.Location = new System.Drawing.Point(123, 95);
-            this.textBoxJakkeNumre.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxJakkeNumre.Name = "textBoxJakkeNumre";
-            this.textBoxJakkeNumre.Size = new System.Drawing.Size(116, 38);
-            this.textBoxJakkeNumre.TabIndex = 18;
-            this.textBoxJakkeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // labelJakker
             // 
             this.labelJakker.AutoSize = true;
@@ -87,166 +78,6 @@
             this.labelJakker.TabIndex = 21;
             this.labelJakker.Text = "Jakker";
             this.labelJakker.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // buttonMinusTasker
-            // 
-            this.buttonMinusTasker.Location = new System.Drawing.Point(83, 308);
-            this.buttonMinusTasker.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonMinusTasker.Name = "buttonMinusTasker";
-            this.buttonMinusTasker.Size = new System.Drawing.Size(40, 38);
-            this.buttonMinusTasker.TabIndex = 23;
-            this.buttonMinusTasker.Text = "-";
-            this.buttonMinusTasker.UseVisualStyleBackColor = true;
-            // 
-            // buttonPlusJakker
-            // 
-            this.buttonPlusJakker.Location = new System.Drawing.Point(239, 95);
-            this.buttonPlusJakker.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonPlusJakker.Name = "buttonPlusJakker";
-            this.buttonPlusJakker.Size = new System.Drawing.Size(42, 38);
-            this.buttonPlusJakker.TabIndex = 20;
-            this.buttonPlusJakker.Text = "+";
-            this.buttonPlusJakker.UseVisualStyleBackColor = true;
-            // 
-            // textBoxTaskeNumre
-            // 
-            this.textBoxTaskeNumre.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxTaskeNumre.Location = new System.Drawing.Point(123, 308);
-            this.textBoxTaskeNumre.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxTaskeNumre.Name = "textBoxTaskeNumre";
-            this.textBoxTaskeNumre.Size = new System.Drawing.Size(116, 38);
-            this.textBoxTaskeNumre.TabIndex = 22;
-            this.textBoxTaskeNumre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // buttonMinusJakker
-            // 
-            this.buttonMinusJakker.Location = new System.Drawing.Point(83, 95);
-            this.buttonMinusJakker.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonMinusJakker.Name = "buttonMinusJakker";
-            this.buttonMinusJakker.Size = new System.Drawing.Size(40, 38);
-            this.buttonMinusJakker.TabIndex = 19;
-            this.buttonMinusJakker.Text = "-";
-            this.buttonMinusJakker.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(123, 149);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(116, 38);
-            this.textBox1.TabIndex = 26;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(239, 149);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(42, 38);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "+";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(83, 149);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(40, 38);
-            this.button2.TabIndex = 27;
-            this.button2.Text = "-";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox2.Location = new System.Drawing.Point(123, 206);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(116, 38);
-            this.textBox2.TabIndex = 29;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(239, 206);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(42, 38);
-            this.button3.TabIndex = 31;
-            this.button3.Text = "+";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(83, 206);
-            this.button4.Margin = new System.Windows.Forms.Padding(0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(40, 38);
-            this.button4.TabIndex = 30;
-            this.button4.Text = "-";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox3.Location = new System.Drawing.Point(123, 362);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(116, 38);
-            this.textBox3.TabIndex = 32;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(239, 362);
-            this.button5.Margin = new System.Windows.Forms.Padding(0);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(42, 38);
-            this.button5.TabIndex = 34;
-            this.button5.Text = "+";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(83, 362);
-            this.button6.Margin = new System.Windows.Forms.Padding(0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(40, 38);
-            this.button6.TabIndex = 33;
-            this.button6.Text = "-";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox4.Location = new System.Drawing.Point(123, 416);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(116, 38);
-            this.textBox4.TabIndex = 35;
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(239, 416);
-            this.button7.Margin = new System.Windows.Forms.Padding(0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(42, 38);
-            this.button7.TabIndex = 37;
-            this.button7.Text = "+";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(83, 416);
-            this.button8.Margin = new System.Windows.Forms.Padding(0);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(40, 38);
-            this.button8.TabIndex = 36;
-            this.button8.Text = "-";
-            this.button8.UseVisualStyleBackColor = true;
             // 
             // buttonAfslut
             // 
@@ -259,34 +90,162 @@
             this.buttonAfslut.UseVisualStyleBackColor = true;
             this.buttonAfslut.Click += new System.EventHandler(this.buttonAfslut_Click);
             // 
+            // orderControllerBindingSource
+            // 
+            this.orderControllerBindingSource.DataSource = typeof(ConsumerDesktopClient.Control.OrderController);
+            // 
+            // jakkeNumreBindingSource
+            // 
+            this.jakkeNumreBindingSource.DataMember = "JakkeNumre";
+            this.jakkeNumreBindingSource.DataSource = this.orderControllerBindingSource;
+            // 
+            // jakkeNumreBindingSource1
+            // 
+            this.jakkeNumreBindingSource1.DataMember = "JakkeNumre";
+            this.jakkeNumreBindingSource1.DataSource = this.orderControllerBindingSource;
+            // 
+            // ticketNumberBindingSource
+            // 
+            this.ticketNumberBindingSource.DataSource = typeof(ConsumerDesktopClient.Gui.Model.JakkeNummer);
+            // 
+            // jakkeNumreBindingSource2
+            // 
+            this.jakkeNumreBindingSource2.DataMember = "JakkeNumre";
+            this.jakkeNumreBindingSource2.DataSource = this.orderControllerBindingSource;
+            // 
+            // taskeNummerBindingSource
+            // 
+            this.taskeNummerBindingSource.DataSource = typeof(ConsumerDesktopClient.Gui.Model.TaskeNummer);
+            // 
+            // dataGridViewJakkeNumre
+            // 
+            this.dataGridViewJakkeNumre.AllowUserToAddRows = false;
+            this.dataGridViewJakkeNumre.AutoGenerateColumns = false;
+            this.dataGridViewJakkeNumre.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewJakkeNumre.ColumnHeadersVisible = false;
+            this.dataGridViewJakkeNumre.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MinusColumnJakker,
+            this.numberDataGridViewTextBoxColumn,
+            this.PlusColumnJakker});
+            this.dataGridViewJakkeNumre.DataSource = this.jakkeNummerBindingSource;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewJakkeNumre.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewJakkeNumre.Location = new System.Drawing.Point(83, 100);
+            this.dataGridViewJakkeNumre.Name = "dataGridViewJakkeNumre";
+            this.dataGridViewJakkeNumre.RowHeadersVisible = false;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewJakkeNumre.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewJakkeNumre.RowTemplate.Height = 38;
+            this.dataGridViewJakkeNumre.Size = new System.Drawing.Size(198, 158);
+            this.dataGridViewJakkeNumre.TabIndex = 40;
+            this.dataGridViewJakkeNumre.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewJakkeNumre_CellContentClick);
+            // 
+            // MinusColumnJakker
+            // 
+            this.MinusColumnJakker.HeaderText = "Minus";
+            this.MinusColumnJakker.Name = "MinusColumnJakker";
+            this.MinusColumnJakker.Text = "-";
+            this.MinusColumnJakker.UseColumnTextForButtonValue = true;
+            this.MinusColumnJakker.Width = 38;
+            // 
+            // numberDataGridViewTextBoxColumn
+            // 
+            this.numberDataGridViewTextBoxColumn.DataPropertyName = "Number";
+            this.numberDataGridViewTextBoxColumn.HeaderText = "Number";
+            this.numberDataGridViewTextBoxColumn.Name = "numberDataGridViewTextBoxColumn";
+            this.numberDataGridViewTextBoxColumn.Width = 116;
+            // 
+            // PlusColumnJakker
+            // 
+            this.PlusColumnJakker.HeaderText = "Plus";
+            this.PlusColumnJakker.Name = "PlusColumnJakker";
+            this.PlusColumnJakker.Text = "+";
+            this.PlusColumnJakker.UseColumnTextForButtonValue = true;
+            this.PlusColumnJakker.Width = 38;
+            // 
+            // jakkeNummerBindingSource
+            // 
+            this.jakkeNummerBindingSource.DataSource = typeof(ConsumerDesktopClient.Gui.Model.JakkeNummer);
+            // 
+            // dataGridViewTaskeNumre
+            // 
+            this.dataGridViewTaskeNumre.AllowUserToAddRows = false;
+            this.dataGridViewTaskeNumre.AutoGenerateColumns = false;
+            this.dataGridViewTaskeNumre.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTaskeNumre.ColumnHeadersVisible = false;
+            this.dataGridViewTaskeNumre.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MinusColumnTasker,
+            this.numberDataGridViewTextBoxColumn1,
+            this.PlusColumnTasker});
+            this.dataGridViewTaskeNumre.DataSource = this.taskeNummerBindingSource;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTaskeNumre.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTaskeNumre.Location = new System.Drawing.Point(83, 317);
+            this.dataGridViewTaskeNumre.Name = "dataGridViewTaskeNumre";
+            this.dataGridViewTaskeNumre.RowHeadersVisible = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTaskeNumre.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewTaskeNumre.RowTemplate.Height = 38;
+            this.dataGridViewTaskeNumre.Size = new System.Drawing.Size(198, 145);
+            this.dataGridViewTaskeNumre.TabIndex = 41;
+            this.dataGridViewTaskeNumre.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTaskeNumre_CellContentClick);
+            // 
+            // MinusColumnTasker
+            // 
+            this.MinusColumnTasker.HeaderText = "MinusColumn";
+            this.MinusColumnTasker.Name = "MinusColumnTasker";
+            this.MinusColumnTasker.Text = "-";
+            this.MinusColumnTasker.UseColumnTextForButtonValue = true;
+            this.MinusColumnTasker.Width = 38;
+            // 
+            // numberDataGridViewTextBoxColumn1
+            // 
+            this.numberDataGridViewTextBoxColumn1.DataPropertyName = "Number";
+            this.numberDataGridViewTextBoxColumn1.HeaderText = "Number";
+            this.numberDataGridViewTextBoxColumn1.Name = "numberDataGridViewTextBoxColumn1";
+            this.numberDataGridViewTextBoxColumn1.Width = 116;
+            // 
+            // PlusColumnTasker
+            // 
+            this.PlusColumnTasker.HeaderText = "Plus";
+            this.PlusColumnTasker.Name = "PlusColumnTasker";
+            this.PlusColumnTasker.Text = "+";
+            this.PlusColumnTasker.UseColumnTextForButtonValue = true;
+            this.PlusColumnTasker.Width = 38;
+            // 
             // ModtagKvittering
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.dataGridViewTaskeNumre);
+            this.Controls.Add(this.dataGridViewJakkeNumre);
             this.Controls.Add(this.buttonAfslut);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.labelTasker);
-            this.Controls.Add(this.buttonPlusTasker);
-            this.Controls.Add(this.textBoxJakkeNumre);
             this.Controls.Add(this.labelJakker);
-            this.Controls.Add(this.buttonMinusTasker);
-            this.Controls.Add(this.buttonPlusJakker);
-            this.Controls.Add(this.textBoxTaskeNumre);
-            this.Controls.Add(this.buttonMinusJakker);
             this.Name = "ModtagKvittering";
             this.Size = new System.Drawing.Size(389, 563);
+            ((System.ComponentModel.ISupportInitialize)(this.orderControllerBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ticketNumberBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNumreBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.taskeNummerBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJakkeNumre)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jakkeNummerBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaskeNumre)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,25 +254,22 @@
         #endregion
 
         private System.Windows.Forms.Label labelTasker;
-        private System.Windows.Forms.Button buttonPlusTasker;
-        private System.Windows.Forms.TextBox textBoxJakkeNumre;
         private System.Windows.Forms.Label labelJakker;
-        private System.Windows.Forms.Button buttonMinusTasker;
-        private System.Windows.Forms.Button buttonPlusJakker;
-        private System.Windows.Forms.TextBox textBoxTaskeNumre;
-        private System.Windows.Forms.Button buttonMinusJakker;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button buttonAfslut;
+        private System.Windows.Forms.BindingSource orderControllerBindingSource;
+        private System.Windows.Forms.BindingSource jakkeNumreBindingSource;
+        private System.Windows.Forms.BindingSource jakkeNumreBindingSource1;
+        private System.Windows.Forms.BindingSource ticketNumberBindingSource;
+        private System.Windows.Forms.BindingSource jakkeNumreBindingSource2;
+        private System.Windows.Forms.BindingSource taskeNummerBindingSource;
+        private System.Windows.Forms.DataGridView dataGridViewJakkeNumre;
+        private System.Windows.Forms.BindingSource jakkeNummerBindingSource;
+        private System.Windows.Forms.DataGridView dataGridViewTaskeNumre;
+        private System.Windows.Forms.DataGridViewButtonColumn MinusColumnJakker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn PlusColumnJakker;
+        private System.Windows.Forms.DataGridViewButtonColumn MinusColumnTasker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numberDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewButtonColumn PlusColumnTasker;
     }
 }

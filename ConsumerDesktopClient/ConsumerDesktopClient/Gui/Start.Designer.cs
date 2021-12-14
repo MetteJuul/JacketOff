@@ -23,29 +23,16 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.buttonRediger = new System.Windows.Forms.Button();
-            this.modtagKvittering1 = new ConsumerDesktopClient.Gui.ModtagKvittering(orderController);
-            this.modtagAngivAntal1 = new ConsumerDesktopClient.Gui.ModtagAngivAntal(orderController);
+            this.modtagKvittering1 = new ConsumerDesktopClient.Gui.ModtagKvittering();
+            this.modtagAngivAntal1 = new ConsumerDesktopClient.Gui.ModtagAngivAntal();
             this.panelUdlever = new System.Windows.Forms.Panel();
             this.panelRediger = new System.Windows.Forms.Panel();
             this.labelModtagOverskrift = new System.Windows.Forms.Label();
             this.labelUdleverOverskrift = new System.Windows.Forms.Label();
             this.labelRedigerOverskrift = new System.Windows.Forms.Label();
-            this.modtagStart1 = new ConsumerDesktopClient.Gui.ModtagStart(orderController);
+            this.modtagStart1 = new ConsumerDesktopClient.Gui.ModtagStart();
             this.panelModtag = new System.Windows.Forms.Panel();
-            this.panelRediger.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonRediger
-            // 
-            this.buttonRediger.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonRediger.Location = new System.Drawing.Point(104, 57);
-            this.buttonRediger.Name = "buttonRediger";
-            this.buttonRediger.Size = new System.Drawing.Size(198, 42);
-            this.buttonRediger.TabIndex = 0;
-            this.buttonRediger.Text = "Rediger";
-            this.buttonRediger.UseVisualStyleBackColor = true;
-            this.buttonRediger.Click += new System.EventHandler(this.buttonRediger_Click);
             // 
             // modtagKvittering1
             // 
@@ -74,7 +61,6 @@
             // 
             // panelRediger
             // 
-            this.panelRediger.Controls.Add(this.buttonRediger);
             this.panelRediger.Location = new System.Drawing.Point(828, 98);
             this.panelRediger.Name = "panelRediger";
             this.panelRediger.Size = new System.Drawing.Size(389, 563);
@@ -147,14 +133,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Start";
             this.Load += new System.EventHandler(this.Start_Load);
-            this.panelRediger.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonRediger;
         private System.Windows.Forms.Panel panelUdlever;
         private System.Windows.Forms.Panel panelRediger;
         private System.Windows.Forms.Label labelModtagOverskrift;

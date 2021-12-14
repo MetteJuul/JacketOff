@@ -16,62 +16,94 @@ namespace ConsumerDesktopClient.Gui {
         private int antalJakker;
         private int antalTasker;
 
-        public ModtagAngivAntal(OrderController orderController) {
-            this.orderController = orderController;
-            InitializeComponent();
-        }
-        public ModtagAngivAntal(OrderController orderController, int antalJakker, int antalTasker) {
-            this.orderController = orderController;
-            this.antalJakker = antalJakker;
-            this.antalTasker = antalTasker;
+        public ModtagAngivAntal() {
+            orderController = OrderController.GetInstance();
             InitializeComponent();
         }
 
         private void buttonAfbryd_Click(object sender, EventArgs e) {
-          
-            //We bring the start user panel back to the front
-            Start.GetInstance.PnlModtag.Controls["ModtagStart"].BringToFront();
+            //Dirrigerer os tilbage til Vores ModtagStart User Controller
+            Start.GetInstance().PnlModtag.Controls["ModtagStart"].BringToFront();
         }
 
         private void buttonNaeste_Click(object sender, EventArgs e) {
             
-            //We check whether our Start form does no contain an instantiated version
-            //of our user controller, we create one and add it to our Start form
-            if (!Start.GetInstance.PnlModtag.Controls.ContainsKey("ModtagKvittering")) {
-
-                ModtagKvittering ucModtagKvittering = new ModtagKvittering(orderController);
-                ucModtagKvittering.Dock = DockStyle.Fill;
-                Start.GetInstance.PnlModtag.Controls.Add(ucModtagKvittering);
+            //Vi gemmer antallet af Tasker og Jakker
+            //til OrderControlleren ved at initiere arrays'ne
+            //med jakkenumre og taskenumre, til at have en længde
+            //tilsvarende til antallet af jakker og tasker.
+            if (antalJakker > 0) {
+                orderController.JakkeNumre = new int[antalJakker];
+                orderController.JakkeNumre[0] = orderController.SidsteJakkeNummer;
+            }
+            if (antalTasker > 0) {
+                orderController.TaskeNumre = new int[antalTasker];
+                orderController.TaskeNumre[0] = orderController.SidsteTaskeNummer;
             }
 
-            //We bring the next user controller to the front of our panel
-            Start.GetInstance.PnlModtag.Controls["ModtagKvittering"].BringToFront();
+            //Vi initiere den næste UserController
+            ModtagKvittering ucModtagKvittering = new ModtagKvittering();
+
+            //Vi sikrer os at den næste user controller udfylder
+            //hvad end den bliver docket ind i
+            ucModtagKvittering.Dock = DockStyle.Fill;
+
+            //Vi tilføjer vores nye user controller til vores Modtag panel
+            //i vores Start Form
+            Start.GetInstance().PnlModtag.Controls.Add(ucModtagKvittering);
+
+            //Vi bringer den næste user controller frem til at stå forrest
+            //i Modtag panelet
+            Start.GetInstance().PnlModtag.Controls["ModtagKvittering"].BringToFront();
+
+            //Vi resetter så antallet af jakker og tasker
+            //så de er klar til næste gang vi rammer samme
+            //user controller
+            antalJakker = 0;
+            antalTasker = 0;
+            textBoxAntalJakker.Text = antalJakker.ToString();
+            textBoxAntalTasker.Text = antalTasker.ToString();
         }
 
         private void buttonPlusJakker_Click(object sender, EventArgs e) {
-            var antalJakker = Convert.ToInt32(textBoxJakkeNumre.Text);
-            textBoxJakkeNumre.Text = (antalJakker + 1).ToString();
+            
+            //Vi opdaterer antallet af jakker og viser derefter det nye antal
+            //i vores tekstboks for antal jakker
+            antalJakker = Convert.ToInt32(textBoxAntalJakker.Text) + 1;
+            textBoxAntalJakker.Text = (antalJakker).ToString();
         }
 
         private void buttonMinusJakker_Click(object sender, EventArgs e) {
-            var antalJakker = Convert.ToInt32(textBoxJakkeNumre.Text);
 
+            //Vi opdaterer antallet af jakker medmindre det vil blive
+            //mindre end 0, og viser derefter det nye antal
+            //i vores tekstboks for antal jakker
+            antalJakker = Convert.ToInt32(textBoxAntalJakker.Text);
             if (antalJakker > 0) {
-                textBoxJakkeNumre.Text = (antalJakker - 1).ToString();
-            } 
+                antalJakker = antalJakker - 1;
+                
+            }
+            textBoxAntalJakker.Text = antalJakker.ToString();
         }
 
         private void buttonPlusTasker_Click(object sender, EventArgs e) {
-            var antalTasker = Convert.ToInt32(textBoxTaskeNumre.Text);
-            textBoxTaskeNumre.Text = (antalTasker + 1).ToString();
+
+            //Vi opdaterer antallet af tasker og viser derefter det nye antal
+            //i vores tekstboks for antal tasker
+            antalTasker = Convert.ToInt32(textBoxAntalTasker.Text) + 1;
+            textBoxAntalTasker.Text = (antalTasker).ToString();
         }
 
         private void buttonMinusTasker_Click(object sender, EventArgs e) {
-            var antalTasker = Convert.ToInt32(textBoxTaskeNumre.Text);
 
+            //Vi opdaterer antallet af tasker medmindre det vil blive
+            //mindre end 0, og viser derefter det nye antal
+            //i vores tekstboks for antal tasker
+            antalTasker = Convert.ToInt32(textBoxAntalTasker.Text);
             if (antalTasker > 0) {
-                textBoxTaskeNumre.Text = (antalTasker - 1).ToString();
+                antalTasker = antalTasker - 1;
             }
+            textBoxAntalTasker.Text = (antalTasker).ToString();
         }
     }
 }
