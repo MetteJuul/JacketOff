@@ -7,6 +7,7 @@ using ConsumerWebClient.TestData;
 using ConsumerWebClient.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace ConsumerWebClient.Controllers {
 
@@ -14,13 +15,12 @@ namespace ConsumerWebClient.Controllers {
 
         readonly DataPopulation _data;
         private IJacketOffApiClient _client;
-        private readonly ILogger<HomeController> _logger;
 
 
         public ReservationsController(IJacketOffApiClient client) {
             _client = client;
             _data = new DataPopulation();
-            
+
         }
 
         //Retrieves all the user's reservations
@@ -32,9 +32,10 @@ namespace ConsumerWebClient.Controllers {
 
                 return View(reservations);
 
-            } catch {
-                return View("OhNo");
+            } catch (Exception e) {
+                ViewBag.ErrorMessage = e.Message;
             }
+            return View("OhNo");
         }
 
         //This method is purely used to generate the view
@@ -51,14 +52,14 @@ namespace ConsumerWebClient.Controllers {
 
                 return View(reservationViewModel);
 
-            } catch {
-                return View("OhNo");
-               
+            } catch (Exception e) {
+                ViewBag.ErrorMessage = e.Message;
             }
+            return View("OhNo");
         }
-               
+
         [HttpPost]
-        public async Task <ActionResult> Reservation(ReservationViewModel reservationViewModel) {
+        public async Task<ActionResult> Reservation(ReservationViewModel reservationViewModel) {
 
             //We extract the reservationDTO from our view model, to post it's data
             ReservationDTO newReservation = reservationViewModel.Reservation;
@@ -72,11 +73,16 @@ namespace ConsumerWebClient.Controllers {
             //the CreateReservation method in our APIClient
             //If we fail, we show the error.
             try {
-               await _client.CreateReservation(newReservation);
-               return RedirectToAction(nameof(MyReservations));
-            } catch {
-                return View("OhNo");
+                if (await _client.CreateReservation(newReservation) > 0) {
+                    TempData["Message"] = "Reservation oprettet!";
+                    return RedirectToAction(nameof(MyReservations));
+                } else {
+                    ViewBag.ErrorMessage = "Reservationen blev ikke oprettet!";
+                }
+            } catch (Exception e) {
+                ViewBag.ErrorMessage = e.Message;
             }
+            return View("OhNo");
         }
 
     }

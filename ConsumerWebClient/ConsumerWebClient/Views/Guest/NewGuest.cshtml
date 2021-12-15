@@ -1,30 +1,13 @@
-﻿@model APIClient.DTOs.GuestDTO
+﻿@model ConsumerWebClient.Models.GuestViewModel
 
 @{
-    ViewData["Title"] = "Create new profile";
+    ViewData["Title"] = "Du har oprettet en gæst";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<h4>Select a name for your blog, and enter your email and desired password</h4>
+<h4>Tillykke, du kan nu bruge vores online garderobe-service!</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Guest">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-            </div>
-
-            <span>@ViewBag.ErrorMessage</span>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index" asp-controller="Home">Afbryd</a>
-</div>
 
 @section Scripts {
     @{
