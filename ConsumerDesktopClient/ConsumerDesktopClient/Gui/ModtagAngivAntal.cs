@@ -27,7 +27,10 @@ namespace ConsumerDesktopClient.Gui {
         }
 
         private void buttonNaeste_Click(object sender, EventArgs e) {
-            
+
+            antalJakker = Convert.ToInt32(textBoxAntalJakker.Text);
+            antalTasker = Convert.ToInt32(textBoxAntalTasker.Text);
+
             //Vi gemmer antallet af Tasker og Jakker
             //til OrderControlleren ved at initiere arrays'ne
             //med jakkenumre og taskenumre, til at have en længde

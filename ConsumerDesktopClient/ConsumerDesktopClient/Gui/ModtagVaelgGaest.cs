@@ -75,6 +75,7 @@ namespace ConsumerDesktopClient.Gui {
             orderController.Guest = (GuestDTO)foundGuest;
 
             listBoxGuests.SelectedIndex = -1;
+
         }
 
         private void listBoxGuests_SelectedIndexChanged(object sender, EventArgs e) {

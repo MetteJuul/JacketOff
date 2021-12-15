@@ -23,12 +23,17 @@ namespace ConsumerDesktopClient.Gui {
         private int startNummerTaske;
 
         public ModtagKvittering() {
+            
             InitializeComponent();
             orderController = OrderController.GetInstance();
-
+            
             InitializeArrays();
             PopulateDataGridViewJakkeNumre();
             PopulateDataGridViewTaskeNumre();
+        }
+
+        public void Seppuku() {
+            Start.GetInstance().PnlModtag.Controls.Remove(this);
         }
 
         private void InitializeArrays() {
@@ -93,14 +98,13 @@ namespace ConsumerDesktopClient.Gui {
                     jakkeNummerBindingSource.Add(new JakkeNummer() { Number = nummer });
                 }
             }
-
         }
 
         private void PopulateDataGridViewTaskeNumre() {
 
-            //Vi clearer vores kilde til at loade dataen
-            //ind i vores view, så det kun er den nye
-            //data der ligger deri
+            ////Vi clearer vores kilde til at loade dataen
+            ////ind i vores view, så det kun er den nye
+            ////data der ligger deri
             taskeNummerBindingSource.Clear();
 
             //Vi opretter TaskeNummer objekter for hvert nummer
@@ -111,6 +115,7 @@ namespace ConsumerDesktopClient.Gui {
                     taskeNummerBindingSource.Add(new TaskeNummer() { Number = nummer });
                 }
             }
+
         }
 
         private async void buttonAfslut_Click(object sender, EventArgs e) {
@@ -125,131 +130,25 @@ namespace ConsumerDesktopClient.Gui {
 
             //We bring the start user panel back to the front
             Start.GetInstance().PnlModtag.Controls["ModtagStart"].BringToFront();
+
+            Seppuku();
         }
 
         private async Task buttonAfslutClickHandlerAsync() {
             await orderController.CreateOrder();
         }
 
-        #region Plus og Minus Knapper og deres tilhørende metoder
-        //private void buttonMinusJakker1_Click_1(object sender, EventArgs e) {
-        //    Minus(textBoxJakkeNumre1, "jakke");
-        //}
-
-        //private void buttonPlusJakker1_Click(object sender, EventArgs e) {
-        //    Plus(textBoxJakkeNumre1, "jakke");
-        //}
-
-        //private void buttonMinusJakker2_Click(object sender, EventArgs e) {
-        //    Minus(textBoxJakkeNumre2, "jakke");
-        //}
-
-        //private void buttonPlusJakker2_Click(object sender, EventArgs e) {
-        //    Plus(textBoxJakkeNumre2, "jakke");
-        //}
-
-        //private void buttonMinusJakker3_Click(object sender, EventArgs e) {
-        //    Minus(textBoxJakkeNumre3, "jakke");
-        //}
-
-        //private void buttonPlusJakker3_Click(object sender, EventArgs e) {
-        //    Plus(textBoxJakkeNumre3, "jakke");
-        //}
-
-        //private void buttonMinusTasker1_Click(object sender, EventArgs e) {
-        //    Minus(textBoxTaskeNumre1, "taske");
-        //}
-
-        //private void buttonPlusTasker1_Click(object sender, EventArgs e) {
-        //    Plus(textBoxTaskeNumre1, "taske");
-        //}
-
-        //private void buttonMinusTasker2_Click(object sender, EventArgs e) {
-        //    Minus(textBoxTaskeNumre2, "taske");
-        //}
-
-        //private void buttonPlusTasker2_Click(object sender, EventArgs e) {
-        //    Plus(textBoxTaskeNumre2, "taske");
-        //}
-
-        //private void buttonMinusTasker3_Click(object sender, EventArgs e) {
-        //    Minus(textBoxTaskeNumre3, "taske");
-        //}
-
-        //private void buttonPlusTasker3_Click(object sender, EventArgs e) {
-        //    Plus(textBoxTaskeNumre3, "taske");
-        //}
-
-        //Metode bruges til at trække 1 fra jakke- eller taskenummeret
-        //når der trykkes på minus knapperne.
-        private void Minus(TextBox textBox, string itemType) {
-
-            ////Vi tjekker om det er en jakke
-            //if (itemType.Equals("jakke")) {
-
-            //    //Hvis jakkenummeret er større end 1 trækker vi bare 1 fra
-            //    //hvis jakkenummeret er 1 så retter i stedet for nummeret til 999
-            //    //så vi aldrig rammer 0
-            //    if (jakkeNumre > 1) { jakkeNumre--; } else { jakkeNumre = 999; }
-
-            //    //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
-            //    textBox.Text = jakkeNumre.ToString();
-
-            //} else if (itemType.Equals("taske")) {
-            //    //Hvis taskenummeret er større end 1 trækker vi bare 1 fra
-            //    //hvis taskenummeret er 1 så retter i stedet for nummeret til 999
-            //    //så vi aldrig rammer 0
-            //    if (taskeNummer > 1) { taskeNummer--; } else { taskeNummer = 999; }
-
-            //    //Vi sikre os at tekstboksen bliver opdateret med det nye taskenummer
-            //    textBox.Text = taskeNummer.ToString();
-            //}
-        }
-
-        //Metode bruges til at lægge 1 til jakke- eller taskenummeret
-        //når der trykkes på plus knapperne.
-        private void Plus(TextBox textBox, string itemType) {
-
-            //if (itemType.Equals("jakke")) {
-
-            //    //Hvis jakkenummeret er mindre end 999 lægger vi bare 1 til
-            //    //hvis jakkenummeret er 999 så retter vi i stedet for nummeret til 1
-            //    //så vi aldrig rammer 10000
-            //    if (jakkeNumre < 999) { jakkeNumre++; } else { jakkeNumre = 1; }
-
-            //    //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
-            //    textBox.Text = jakkeNumre.ToString();
-
-            //} else if (itemType.Equals("taske")) {
-
-            //    //Hvis taskenummeret er mindre end 999 lægger vi bare 1 til
-            //    //hvis taskenummeret er 999 så retter vi i stedet for nummeret til 1
-            //    //så vi aldrig rammer 10000
-            //    if (taskeNummer < 999) { taskeNummer++; } else { taskeNummer = 1; }
-
-            //    //Vi sikre os at tekstboksen bliver opdateret med det nye jakkenummer
-            //    textBox.Text = taskeNummer.ToString();
-            //}
-        }
-        #endregion
-
         private void dataGridViewJakkeNumre_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-
-            var index = dataGridViewJakkeNumre.Rows[e.RowIndex];
 
             if (dataGridViewJakkeNumre.Columns[e.ColumnIndex].Name == "MinusColumnJakker") {
 
-                for(int i = 0; i < antalJakker; i++) {
+                for (int i = 0; i < antalJakker; i++) {
                     jakkeNumre[i]--;
                 }
                 PopulateDataGridViewJakkeNumre();
             }
 
-            if(dataGridViewJakkeNumre.Columns[e.ColumnIndex].Name == "PlusColumnJakker") {
-
-                //while (index < antalJakker) {
-                //    jakkeNumre[index]++;
-                //}
+            if (dataGridViewJakkeNumre.Columns[e.ColumnIndex].Name == "PlusColumnJakker") {
 
                 for (int i = 0; i < antalJakker; i++) {
                     jakkeNumre[i]++;

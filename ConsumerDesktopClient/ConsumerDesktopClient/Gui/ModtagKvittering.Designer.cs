@@ -198,7 +198,7 @@
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridViewTaskeNumre.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTaskeNumre.RowTemplate.Height = 38;
-            this.dataGridViewTaskeNumre.Size = new System.Drawing.Size(198, 145);
+            this.dataGridViewTaskeNumre.Size = new System.Drawing.Size(198, 158);
             this.dataGridViewTaskeNumre.TabIndex = 41;
             this.dataGridViewTaskeNumre.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTaskeNumre_CellContentClick);
             // 
