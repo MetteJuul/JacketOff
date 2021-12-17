@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerDesktopClient.DTOs {
+namespace APIClient.DTOs {
     public class ItemTypeDTO {
         public int TypeID { get; set; }
         public decimal Price { get; set; }

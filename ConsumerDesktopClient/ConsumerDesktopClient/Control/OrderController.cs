@@ -1,5 +1,5 @@
-﻿using ConsumerDesktopClient.DTOs;
-using ConsumerDesktopClient.Service;
+﻿using APIClient.DTOs;
+using APIClient.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace ConsumerDesktopClient.Control {
     public class OrderController {
 
         static OrderController _object;
-        private readonly OrderService _orderService;
+        private readonly JacketOffApiClient _client;
 
         //Metode der bruges af andre klasser til at interagere med
         //singleton controlleren, der har en privat constructor
@@ -23,7 +23,7 @@ namespace ConsumerDesktopClient.Control {
 
         //Privat constructoren for singleton klassen
         private OrderController() {
-            _orderService = new OrderService();
+            _client = new JacketOffApiClient();
         }
 
         //Vi laver en del public properties, så vi kan
@@ -39,7 +39,7 @@ namespace ConsumerDesktopClient.Control {
         //Metoden bruges til at hente alle gæster op og opbevarer den
         //i vores AllGuests Property
         public async Task<List<GuestDTO>> GetAllGuests() {
-            AllGuests = await _orderService.GetAllGuests();
+            AllGuests = await _client.GetAllGuests();
             return AllGuests;
         }
 
@@ -112,7 +112,7 @@ namespace ConsumerDesktopClient.Control {
             //vores ordrer til API'en gennem vores service klasse
             try {
                 foreach (OrderDTO item in orders) {
-                    await _orderService.CreateOrder(item);
+                    await _client.CreateOrder(item);
                 }
             } catch (Exception e) {
                 throw new Exception($"Fejl ved oprettelse af ordrer '{e.Message}'.", e);

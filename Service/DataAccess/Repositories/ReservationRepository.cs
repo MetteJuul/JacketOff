@@ -23,16 +23,18 @@ namespace DataAccess {
                 //as the current time
                 reservation.OrderTime = DateTime.Now;
 
+                //Connection is created - ?? only initiates the connection if 
+                //it doesn't already contain an open connection
+                using var realConnection = connection ?? CreateConnection();
+
                 //Query is created and each property of the reservation object
                 //is mapped to the query using dapper
                 var query = "INSERT INTO Reservation(guestID_FK, orderTime, arrivalTime, amountOfJackets, amountOfBags, price, wardrobeID_FK)" +
                     "OUTPUT INSERTED.reservationID VALUES (@GuestID_FK, @OrderTime, @ArrivalTime, @AmountOfJackets, @AmountOfBags, @Price, @WardrobeID_FK)";
 
-                //Connection is created - ?? betyder "er connection object null, så laver den en ny"
-                using var realConnection = connection ?? CreateConnection();
-
                 //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
-                return await realConnection.QuerySingleAsync<int>(query, reservation);  
+                return await realConnection.QuerySingleAsync<int>(query, reservation);
+                
             } catch (Exception e) {
                 throw new Exception($"Error creating new reservation: '{e.Message}'.", e);
             }

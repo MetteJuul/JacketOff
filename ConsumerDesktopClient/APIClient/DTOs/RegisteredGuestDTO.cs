@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerDesktopClient.DTOs {
+namespace APIClient.DTOs {
     public class RegisteredGuestDTO {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

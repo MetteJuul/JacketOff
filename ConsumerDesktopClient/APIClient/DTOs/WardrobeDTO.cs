@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerDesktopClient.DTOs {
+namespace APIClient.DTOs {
     public class WardrobeDTO {
         public string ID { get; set; }
         public int MaxAmountOfItems { get; set; }
