@@ -47,8 +47,9 @@ namespace DataAccess.Services {
                     }
 
                     //Check that guest is not making a reservation more than 14 days into the future
-                    DateTime legalReservationTime = DateTime.Now.AddDays(14);
-                    if (dateToUse < legalReservationTime) {
+                    DateTime legalReservationTime14Days = DateTime.Now.AddDays(14);
+                    DateTime now = DateTime.Now;
+                    if (dateToUse < legalReservationTime14Days && dateToUse > now) {
 
                         //Get WardrobeControl object
                         var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse.Date);
@@ -81,7 +82,7 @@ namespace DataAccess.Services {
                         //}
 
                     } else {
-                        throw new Exception($"Du kan ikke oprette en reservation senere end {legalReservationTime}");
+                        throw new Exception($"Er datoen for din reservation rigtigt? Husk, du kan ikke oprette en reservation tidligere end i dag eller senere end {legalReservationTime14Days}.");
                     }
                     transaction.Commit();
                     return 1;
