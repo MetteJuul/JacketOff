@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerDesktopClient.DTOs {
+namespace APIClient.DTOs {
     public class WardrobeControlDTO {
         public string WardrobeID_FK { get; set; }
         public DateTime Date { get; set; }

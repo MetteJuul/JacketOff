@@ -79,7 +79,6 @@ namespace APIClient {
 
         public async Task<IEnumerable<ItemTypeDTO>> GetAllItemTypes()
         {
-
             //We create a response variable in which we call our api/reservations
             //in order to store our list of all reservations
             var response = await _restClient.RequestAsync<IEnumerable<ItemTypeDTO>>(Method.GET, $"itemtypes");
@@ -91,7 +90,6 @@ namespace APIClient {
             {
                 throw new Exception($"Fejl ved hentning af alle ItemTypes. Fejl besked: {response.Content}");
             }
-
             //We then return the response, which should contain the list
             // of all reservations
             return response.Data;
