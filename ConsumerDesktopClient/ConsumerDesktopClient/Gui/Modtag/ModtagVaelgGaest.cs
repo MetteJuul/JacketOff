@@ -1,5 +1,5 @@
 ﻿using ConsumerDesktopClient.Control;
-using ConsumerDesktopClient.DTOs;
+using APIClient.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

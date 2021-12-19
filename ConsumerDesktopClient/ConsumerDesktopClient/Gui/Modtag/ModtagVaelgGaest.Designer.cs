@@ -26,7 +26,6 @@
             this.buttonNaeste = new System.Windows.Forms.Button();
             this.buttonAfbryd = new System.Windows.Forms.Button();
             this.listBoxGuests = new System.Windows.Forms.ListBox();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.labelGuests = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -60,20 +59,11 @@
             // 
             this.listBoxGuests.FormattingEnabled = true;
             this.listBoxGuests.ItemHeight = 15;
-            this.listBoxGuests.Location = new System.Drawing.Point(56, 182);
+            this.listBoxGuests.Location = new System.Drawing.Point(56, 107);
             this.listBoxGuests.Name = "listBoxGuests";
-            this.listBoxGuests.Size = new System.Drawing.Size(263, 289);
+            this.listBoxGuests.Size = new System.Drawing.Size(263, 364);
             this.listBoxGuests.TabIndex = 30;
             this.listBoxGuests.SelectedIndexChanged += new System.EventHandler(this.listBoxGuests_SelectedIndexChanged);
-            // 
-            // textBoxSearch
-            // 
-            this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxSearch.Location = new System.Drawing.Point(56, 135);
-            this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(263, 29);
-            this.textBoxSearch.TabIndex = 31;
-            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // labelGuests
             // 
@@ -90,7 +80,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelGuests);
-            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.listBoxGuests);
             this.Controls.Add(this.buttonNaeste);
             this.Controls.Add(this.buttonAfbryd);
@@ -106,7 +95,6 @@
         private System.Windows.Forms.Button buttonNaeste;
         private System.Windows.Forms.Button buttonAfbryd;
         private System.Windows.Forms.ListBox listBoxGuests;
-        private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label labelGuests;
     }
 }

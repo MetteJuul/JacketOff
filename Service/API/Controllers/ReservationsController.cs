@@ -50,7 +50,6 @@ namespace API.Controllers {
         }
 
         //PUT: api/reservations/5
-        //TODO: Test om id virker i test. hvis det kan undlades skal det slettes.
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateReservation(int id, [FromBody] ReservationDTO reservationDTOUpdate) {
             if (!await _reservationRepository.UpdateReservation(reservationDTOUpdate.ReservationFromDTO())) {
@@ -69,8 +68,10 @@ namespace API.Controllers {
         //GET api/reservations/email
         [HttpGet("{email}")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetByGuestEmail(string email) {
+
             IEnumerable<Reservation> reservations = null;
             reservations = await _reservationRepository.GetByGuestEmail(email);
+
             if (reservations == null) {
                 return NotFound("Ingen reservationer blev fundet");
             } else {

@@ -2,9 +2,8 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ConsumerDesktopClient.Service {
+namespace APIClient.Service {
     public static class RestClientExtensions {
-
         //These two methods enables Json serialization and HTTP calls in one line 
         public static async Task<IRestResponse<T>> RequestAsync<T>(this RestClient client, Method method, string resource = null, object body = null) {
 
