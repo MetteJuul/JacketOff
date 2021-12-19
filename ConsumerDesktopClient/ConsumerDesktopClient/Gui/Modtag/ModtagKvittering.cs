@@ -32,7 +32,7 @@ namespace ConsumerDesktopClient.Gui {
             PopulateDataGridViewTaskeNumre();
         }
 
-        public void Seppuku() {
+        private void Seppuku() {
             Start.GetInstance().PnlModtag.Controls.Remove(this);
         }
 

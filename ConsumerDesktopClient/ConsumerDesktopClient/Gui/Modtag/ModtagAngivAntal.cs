@@ -20,10 +20,15 @@ namespace ConsumerDesktopClient.Gui {
             orderController = OrderController.GetInstance();
             InitializeComponent();
         }
+        private void Seppuku() {
+            Start.GetInstance().PnlModtag.Controls.Remove(this);
+        }
 
         private void buttonAfbryd_Click(object sender, EventArgs e) {
             //Dirrigerer os tilbage til Vores ModtagStart User Controller
             Start.GetInstance().PnlModtag.Controls["ModtagStart"].BringToFront();
+
+            Seppuku();
         }
 
         private void buttonNaeste_Click(object sender, EventArgs e) {
@@ -62,10 +67,7 @@ namespace ConsumerDesktopClient.Gui {
             //Vi resetter så antallet af jakker og tasker
             //så de er klar til næste gang vi rammer samme
             //user controller
-            antalJakker = 0;
-            antalTasker = 0;
-            textBoxAntalJakker.Text = antalJakker.ToString();
-            textBoxAntalTasker.Text = antalTasker.ToString();
+            Seppuku();
         }
 
         private void buttonPlusJakker_Click(object sender, EventArgs e) {
