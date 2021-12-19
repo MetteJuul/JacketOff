@@ -110,6 +110,7 @@ namespace ConsumerDesktopClient.Control {
 
             //Til sidst bruger vi en try catch til at forsøge og sende
             //vores ordrer til API'en gennem vores service klasse
+            //kan flyttes i en transaktion for at sikre dataintegritet
             try {
                 foreach (OrderDTO item in orders) {
                     await _client.CreateOrder(item);

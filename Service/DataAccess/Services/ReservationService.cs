@@ -54,12 +54,6 @@ namespace DataAccess.Services {
                         //Get WardrobeControl object
                         var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse.Date);
 
-                        //If check commented out because of design decision to always have WardrobeControls for the next 14 days
-                        ////if wardrobeControl is null we create a new with the data from newReservation
-                        //if (wardrobeControl == null) {
-                        //    wardrobeControl = new WardrobeControl { WardrobeID_FK = newReservation.WardrobeID_FK, Date = dateToUse, Count = 0 };
-                        //    await wardrobeControlRepo.CreateWardrobeControl(wardrobeControl);
-                        //} else {
                             //Set variables needed for count check
                             int wardrobeCount = wardrobeControl.Count;
                             int addedAmountOfItems = newReservation.AmountOfJackets + newReservation.AmountOfBags;
@@ -79,7 +73,6 @@ namespace DataAccess.Services {
                             } else {
                                 throw new Exception("Der er ikke plads i garderoben");
                             }
-                        //}
 
                     } else {
                         throw new Exception($"Er datoen for din reservation rigtigt? Husk, du kan ikke oprette en reservation tidligere end i dag eller senere end {legalReservationTime14Days}.");
