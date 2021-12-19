@@ -84,6 +84,5 @@ namespace ConsumerWebClient.Controllers {
             }
             return View("OhNo");
         }
-
     }
 }
