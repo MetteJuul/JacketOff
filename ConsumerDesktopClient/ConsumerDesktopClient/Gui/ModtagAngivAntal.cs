@@ -21,10 +21,6 @@ namespace ConsumerDesktopClient.Gui {
             InitializeComponent();
         }
 
-        public void Seppuku() {
-            Start.GetInstance().PnlModtag.Controls.Remove(this);
-        }
-
         private void buttonAfbryd_Click(object sender, EventArgs e) {
             //Dirrigerer os tilbage til Vores ModtagStart User Controller
             Start.GetInstance().PnlModtag.Controls["ModtagStart"].BringToFront();
@@ -63,13 +59,13 @@ namespace ConsumerDesktopClient.Gui {
             //i Modtag panelet
             Start.GetInstance().PnlModtag.Controls["ModtagKvittering"].BringToFront();
 
-
-
-
             //Vi resetter så antallet af jakker og tasker
             //så de er klar til næste gang vi rammer samme
             //user controller
-            Seppuku();
+            antalJakker = 0;
+            antalTasker = 0;
+            textBoxAntalJakker.Text = antalJakker.ToString();
+            textBoxAntalTasker.Text = antalTasker.ToString();
         }
 
         private void buttonPlusJakker_Click(object sender, EventArgs e) {
