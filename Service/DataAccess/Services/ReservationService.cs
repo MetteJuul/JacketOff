@@ -15,7 +15,7 @@ namespace DataAccess.Services {
         private IWardrobeControlRepository wardrobeControlRepo;
         private IReservationRepository reservationRepo;
         private IWardrobeRepository wardrobeRepo;
-        private IDbTransaction transaction;
+        
         public ReservationService(string connectionString) : base(connectionString) {
             reservationRepo = new ReservationRepository(connectionString);
             wardrobeControlRepo = new WardrobeControlRepository(connectionString);
@@ -32,50 +32,72 @@ namespace DataAccess.Services {
 
             try {
 
-                //Check if newReservation contains data
+                // Vi tjekker om newReservation indeholder data
                 if (newReservation == null) {
 
                     return 0;
 
                 } else {
 
+                    // Vi gemmer hvilket tidspunkt gæsten ankommer
+                    DateTime arrivalTime = newReservation.ArrivalTime.Date;
+
+                    // Vi gemmer hvilken dato, der skal tælles på i WardrobeControl
+                    // vi gemmer en værdi på dagen til kl 00.00.00
                     DateTime dateToUse = newReservation.ArrivalTime.Date.Date;
-                    DateTime arrivalDay = newReservation.ArrivalTime.Date;
-                    //Check which day to update the count in WardrobeControl
-                    if (newReservation.ArrivalTime > arrivalDay) {
+
+                    // Vi skal tjekke, om gæsten ankommer efter midnat men før lukketid
+                    // egentligt er det det samme som dateToUse, men for forståelsens skyld gemmer
+                    // gemmer vi en værdi på datoen til kl 00.00.00
+                    DateTime midnight = newReservation.ArrivalTime.Date.Date;
+
+                    //Vi gemmer også en værdi med lukketid på datoen
+                    DateTime closingTime = midnight.AddHours(5);
+
+                    // Vi tjekker hvilken dato, vi skal tælle på i WardrobeControl
+                    if (arrivalTime < closingTime) {
+
+                        // hvis arrivalTime er før closingTime (05.00.00)
+                        // gemmer vi en ny værdi i dateToUse med dagen før
                         dateToUse = newReservation.ArrivalTime.AddDays(-1).Date;
                     }
 
-                    //Check that guest is not making a reservation more than 14 days into the future
-                    DateTime legalReservationTime14Days = DateTime.Now.AddDays(14);
+                    // Vi gemmer variabler, der er nødvendige for at tjekke,
+                    // om gæsten har reserveret længere ud i fremtiden end 30 dage
+                    // eller tidligere end nu
+                    DateTime legalReservationTime = DateTime.Now.AddDays(30);
                     DateTime now = DateTime.Now;
-                    if (dateToUse < legalReservationTime14Days && dateToUse > now) {
-
-                        //Get WardrobeControl object
-                        var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse.Date);
-
-                            //Set variables needed for count check
-                            int wardrobeCount = wardrobeControl.Count;
-                            int addedAmountOfItems = newReservation.AmountOfJackets + newReservation.AmountOfBags;
-                            int MaxAmount = (await wardrobeRepo.GetWardrobeById(newReservation.WardrobeID_FK)).MaxAmountOfItems;
-
-                            //Check if there's enough space to add count of items from newReservation
-                            if (wardrobeCount + addedAmountOfItems <= MaxAmount) {
-
-                                //If there is space in the wardrobe we create the reservation
-                                await reservationRepo.CreateReservation(newReservation);
-
-                                //Then we update the wardrobeCount in our WardrobeControl object 
-                                //and send it to our updateCount method in wardrobeControlRepo
-                                wardrobeControl.Count = wardrobeCount + addedAmountOfItems;
-                                await wardrobeControlRepo.UpdateCount(wardrobeControl);
-
-                            } else {
-                                throw new Exception("Der er ikke plads i garderoben");
-                            }
-
+                    String arrivalDay = arrivalTime.ToShortDateString();
+                    // Tjek at gæsten ikke reserverer længere ud i fremtiden end 30 dage
+                    // eller tidligere end nu.
+                    if ((arrivalTime < now) || (arrivalTime > legalReservationTime)) {
+                        throw new Exception($"Er datoen {arrivalDay} for din reservation rigtigt? " +
+                            $"Husk, du kan ikke oprette en reservation tidligere end i dag " +
+                            $"eller senere end {legalReservationTime.Date}.");
                     } else {
-                        throw new Exception($"Er datoen for din reservation rigtigt? Husk, du kan ikke oprette en reservation tidligere end i dag eller senere end {legalReservationTime14Days}.");
+
+                        // Vi henter WardrobeControl objekt
+                        var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse);
+
+                        // Vi gemmer variabler, der er nødvendige for tælle-tjek 
+                        int wardrobeCount = wardrobeControl.Count;
+                        int addedAmountOfItems = newReservation.AmountOfJackets + newReservation.AmountOfBags;
+                        int MaxAmount = (await wardrobeRepo.GetWardrobeById(newReservation.WardrobeID_FK)).MaxAmountOfItems;
+
+                        // Vi tjekker, om der er plads nok til at tilføje genstandende fra reservationen
+                        if (addedAmountOfItems + wardrobeCount > MaxAmount) {
+                            throw new Exception("Der er ikke plads i garderoben");
+                        } else {
+
+                            // Siden der er plads, kalder vi på metoden til at oprette en reservation 
+                            await reservationRepo.CreateReservation(newReservation);
+
+                            // Vi opdaterer wardrobeCount i WardrobeControl objektet wardrobeControl
+                            wardrobeControl.Count = wardrobeCount + addedAmountOfItems;
+
+                            // Vi kalder på metoden updateCount med det opdaterede objekt af wardrobeControl
+                            await wardrobeControlRepo.UpdateCount(wardrobeControl);
+                        }
                     }
                     transaction.Commit();
                     return 1;
@@ -89,5 +111,6 @@ namespace DataAccess.Services {
 
     }
 }
+
 
 
