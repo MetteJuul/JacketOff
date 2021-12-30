@@ -6,42 +6,41 @@ using System;
 using System.Threading.Tasks;
 
 namespace ConsumerWebClient.Controllers {
-    public class GuestController : Controller {
+    public class SimpleGuestController : Controller {
 
         private IJacketOffApiClient _client;
 
-        public GuestController(IJacketOffApiClient client) {
+        public SimpleGuestController(IJacketOffApiClient client) {
             _client = client;
 
         }
-        // GET: GuestController
-        public ActionResult Index() {
+
+        public IActionResult Index() {
             return View();
         }
 
-        // GET: GuestController/Guest
-        // Vi opretter et view med vores GuestViewModel til vores POST-metode nedenfor.
-        public ActionResult Guest() {
+        // GET
+        public ActionResult Create() {
             GuestViewModel guestViewModel = new();
             return View(guestViewModel);
         }
 
-        // POST: GuestController/Create
-        // Vi modtager GuestViewModel fra GET ovenfor og sætter indholdet ind i GuestDTO 
+        // POST
         [HttpPost]
-        public async Task<IActionResult> Guest(GuestViewModel guestViewModel) {
-            GuestDTO guestDTO = guestViewModel.Guest; 
+        public async Task<IActionResult> Create(GuestViewModel guestViewModel) {
+            GuestDTO guestDTO = guestViewModel.Guest;
             try {
                 if (await _client.CreateSimpleGuest(guestDTO) > 0) {
-                    TempData["Message"] = $"Gæst {guestDTO} oprettet!";
-                    //return RedirectToAction(nameof(Index), "Home");
-                    return View("NewGuest");
+                    TempData.Keep("notice");
+                    TempData["Message"] = $"{guestDTO.Email}";
+                    return View("GuestDetail");
                 } else {
                     ViewBag.ErrorMessage = "Gæsten blev ikke oprettet!";
                 }
             } catch (Exception e) {
                 ViewBag.ErrorMessage = e.Message;
             }
+
             return View();
         }
     }
