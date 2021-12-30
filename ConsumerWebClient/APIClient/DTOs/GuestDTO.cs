@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace APIClient.DTOs {
     public class GuestDTO {
-        public int GuestId { get; set; } 
+        public int GuestId { get; set; }
 
-        [Required]
+        [Display(Name = "E-mailadresse")]
+        [Required(ErrorMessage = "Det er nødvendigt med en e-mailmailadresse")]
+        [EmailAddress(ErrorMessage = "Ugyldig e-mailadresse")]
         public string Email { get; set; }
     }
 }
