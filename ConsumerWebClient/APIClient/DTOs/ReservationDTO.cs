@@ -12,7 +12,7 @@ namespace APIClient.DTOs
         public DateTime OrderTime { get; set; }
 
         [Required]
-        [Display(Name = "Ankomsttid:")]
+        [Display(Name = "Ankomst:")]
         public DateTime ArrivalTime { get; set; }
 
         [Required]

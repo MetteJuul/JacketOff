@@ -9,9 +9,10 @@ namespace APIClient.DTOs {
     public class GuestDTO {
         public int GuestId { get; set; }
 
-        [Display(Name = "E-mailadresse")]
-        [Required(ErrorMessage = "Det er nødvendigt med en e-mailmailadresse")]
+        [Display(Name = "E-mailadresse:")]
+        [Required(ErrorMessage = "Indtast en e-mailadresse")]
         [EmailAddress(ErrorMessage = "Ugyldig e-mailadresse")]
         public string Email { get; set; }
+
     }
 }
