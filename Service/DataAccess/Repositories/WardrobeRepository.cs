@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-
+using System.Data.SqlClient;
 
 namespace DataAccess.Repositories {
     public class WardrobeRepository : BaseDB, IWardrobeRepository {
@@ -21,18 +21,18 @@ namespace DataAccess.Repositories {
             }
         }
 
-        public async Task<Wardrobe> GetWardrobeById(string iD) {
+        public async Task<Wardrobe> GetWardrobeById(string ID, SqlConnection connection = null) {
             try {
                 //Query is created and the input parameter is assigned
                 var query = "SELECT * FROM Wardrobe WHERE WardrobeID=@iD";
 
-                //Connection is made
-                using var connection = CreateConnection();
+                //Connection is created
+                using var realConnection = connection ?? CreateConnection();
 
                 //We execute the query that retrieves a reservation object based on ID
-                return await connection.QuerySingleAsync<Wardrobe>(query, new { iD });
+                return await realConnection.QuerySingleAsync<Wardrobe>(query, new { ID });
             } catch (Exception e) {
-                throw new Exception($"Error getting Wardrobe with id {iD}: '{e.Message}'.", e);
+                throw new Exception($"Error getting Wardrobe with id {ID}: '{e.Message}'.", e);
             }
         }
     }

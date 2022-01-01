@@ -30,7 +30,7 @@ namespace DataAccess.Repositories {
             }
         }
 
-        //Retrieves a list of all WardrobeControl objects with a specific date and ID from the database
+        //Retrieves a WardrobeControl object with a specific date and ID from the database
         //BEWARE: returns a result where date only contains date and not time 
         public async Task<WardrobeControl> GetWardrobeControlByIdAndDate(string WardrobeID_FK, DateTime Date, SqlConnection connection = null) {
             try {
@@ -42,8 +42,8 @@ namespace DataAccess.Repositories {
 
                 //We execute the query that retrieves a reservation object based on ID
                 var foundWardrobeControl = await realConnection.QueryFirstOrDefaultAsync<WardrobeControl>(query, new { WardrobeID_FK, Date });
-                return foundWardrobeControl;
 
+                return foundWardrobeControl;
 
             } catch (Exception e) {
                 throw new Exception($"Fejl ved hentning af garderobekontrol {WardrobeID_FK}: '{e.Message}'.", e);
@@ -88,8 +88,8 @@ namespace DataAccess.Repositories {
 
                 var query = "INSERT INTO WardrobeControl (wardrobeID_FK, date, count) " +
                     "OUTPUT INSERTED.wardrobeID_FK VALUES (@WardrobeID_FK, @Date, @Count);";
-                
 
+                //Connection is created
                 using var realConnection = connection ?? CreateConnection();
 
                 return await realConnection.QuerySingleAsync<int>(query, wardrobeControl);

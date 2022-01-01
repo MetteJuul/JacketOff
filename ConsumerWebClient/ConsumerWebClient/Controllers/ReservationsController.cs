@@ -68,6 +68,10 @@ namespace ConsumerWebClient.Controllers {
             //from logged in user 
             newReservation.GuestID_FK = _data.Guest.GuestId;
             newReservation.WardrobeID_FK = _data.WardrobeID;
+            newReservation.OrderTime = DateTime.Now;
+
+            //TODO tilføj bruger feedback på korrekt oprettelse
+            //af reservation
 
             //We attempt to pass our reservation to
             //the CreateReservation method in our APIClient

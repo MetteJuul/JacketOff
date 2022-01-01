@@ -125,7 +125,7 @@ namespace ConsumerDesktopClient.Gui {
 
             //We call our async create order method, which
             // has been moved to a seperate method, to better
-            //collaborate with winformsZ
+            //collaborate with winforms
             await buttonAfslutClickHandlerAsync();
 
             //We bring the start user panel back to the front

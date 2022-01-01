@@ -8,11 +8,10 @@
     decimal jakkePris = 0;
     decimal taskePris = 0;
 
-    foreach(var itemType in Model.ItemTypes)
-    {
-        if (itemType.TypeName.Equals("taske")){
+    foreach (var itemType in Model.ItemTypes) {
+        if (itemType.TypeName.Equals("taske")) {
             taskePris = itemType.Price;
-        } else if(itemType.TypeName.Equals("jakke")){
+        } else if (itemType.TypeName.Equals("jakke")) {
             jakkePris = itemType.Price;
         }
     }
@@ -25,26 +24,32 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Reservation">
-            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @{/*TODO min og max validering af dato i javascript*/}
             <div class="form-group">
-                <label asp-for="Reservation.ArrivalTime" class="control-label">Ankomst</label>
-                <input asp-for="Reservation.ArrivalTime" class="form-control" />
-                <span asp-validation-for="Reservation.ArrivalTime" class="text-danger"></span>
+                <label asp-for="OnlyDate" class="control-label">Hvilken nat vil du i byen?</label>
+                <input asp-for="OnlyDate" value="@DateTime.Now.Date" class="form-control" id="datefield" />
+                <span asp-validation-for="OnlyDate" class="text-danger"></span>
+            </div>
+            @{/*TODO min og max validering af tidspunkt i javascript*/}
+            <div class="form-group">
+                <label asp-for="OnlyTime" class="control-label">Hvornår ankommer du?</label>
+                <input asp-for="OnlyTime" value="@DateTime.Now.TimeOfDay" class="form-control" />
+                <span asp-validation-for="OnlyTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reservation.AmountOfJackets" class="control-label">Antal Jakker</label>
+                <label asp-for="Reservation.AmountOfJackets" class="control-label">Hvor mange jakker har du med?</label>
                 <input asp-for="Reservation.AmountOfJackets" value=0 class="form-control" id="amountOfJackets" onchange="calcPrice()" />
                 <span asp-validation-for="Reservation.AmountOfJackets" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reservation.AmountOfBags" class="control-label">Antal Tasker</label>
+                <label asp-for="Reservation.AmountOfBags" class="control-label">Hvor mange tasker har du med?</label>
                 <input asp-for="Reservation.AmountOfBags" value=0 class="form-control" id="amountOfBags" onchange="calcPrice()" />
                 <span asp-validation-for="Reservation.AmountOfBags" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reservation.Price" class="control-label">Pris</label>
-                <input asp-for="Reservation.Price" id="res" class="form-control" onchange="calcPrice()"/>
+                <label asp-for="Reservation.Price" class="control-label">Pris:</label>
+                <input asp-for="Reservation.Price" id="res" class="form-control" onchange="calcPrice()" />
                 <span asp-validation-for="Reservation.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,6 +67,24 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+    
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("datefield").setAttribute("min", today);
+</script>
 <script>
     function calcPrice(){
 
@@ -70,10 +93,7 @@
 
     let returnValue = parseInt(amountOfJackets)*@jakkePris+parseInt(amountOfBags)*@taskePris;
     document.getElementById("res").value=returnValue;
-
-    
     }
-
 </script>
 
 }

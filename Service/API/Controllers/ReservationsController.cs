@@ -45,8 +45,6 @@ namespace API.Controllers {
         public async Task<ActionResult<int>> CreateReservation([FromBody] ReservationDTO newReservationDTO) {
 
             return Ok(await _service.CreateReservation(newReservationDTO.ReservationFromDTO()));
-
-            //return Ok(await _reservationRepository.CreateReservation(newReservationDTO.FromDTO()));
         }
 
         //PUT: api/reservations/5
