@@ -7,8 +7,8 @@ namespace ConsumerWebClient.TestData {
         public DataPopulation() {
             Guest = new GuestDTO();
 
-            Guest.GuestId = 2;
-            Guest.Email = "Andreas@BigD.com";
+            Guest.GuestId = 13;
+            Guest.Email = "line@dahlgaardstivoli.dk";
             WardrobeID = "guldhornene";
 
         }
