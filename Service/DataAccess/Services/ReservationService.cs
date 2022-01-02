@@ -40,7 +40,7 @@ namespace DataAccess.Services {
                 } else {
 
                     // Vi gemmer hvilket tidspunkt gæsten ankommer
-                    DateTime arrivalTime = newReservation.ArrivalTime.Date;
+                    DateTime arrivalTime = newReservation.ArrivalTime;
 
                     // Vi gemmer hvilken dato, der skal tælles på i WardrobeControl
                     // vi gemmer en værdi på dagen til kl 00.00.00
