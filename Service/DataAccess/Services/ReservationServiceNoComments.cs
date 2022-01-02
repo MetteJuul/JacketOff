@@ -37,9 +37,8 @@ namespace DataAccess.Services {
                 } else {
 
                     DateTime arrivalTime = newReservation.ArrivalTime;
-                    DateTime dateToUse = newReservation.ArrivalTime.Date.Date;
-                    DateTime midnight = newReservation.ArrivalTime.Date.Date;
-                    DateTime closingTime = midnight.AddHours(5);
+                    DateTime dateToUse = newReservation.ArrivalTime.Date;
+                    DateTime closingTime = dateToUse.AddHours(5);
 
                     if (arrivalTime < closingTime) {
 
