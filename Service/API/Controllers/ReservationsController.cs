@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using DataAccess.Model;
 using DataAccess.Repositories;
 using DataAccess.Services;
+using System.Linq;
+using DataAccess.Exceptions;
+using System.Net;
 
 namespace API.Controllers {
     [Route("api/[controller]")]
@@ -17,9 +20,9 @@ namespace API.Controllers {
     public class ReservationsController : ControllerBase {
 
         IReservationRepository _reservationRepository;
-        IReservationService _service;       
+        IReservationService _service;
 
-    public ReservationsController(IConfiguration configuration) {
+        public ReservationsController(IConfiguration configuration) {
             _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
             _service = new ReservationService(configuration.GetConnectionString("JacketOff"));
         }
@@ -65,19 +68,38 @@ namespace API.Controllers {
             if (!await _reservationRepository.DeleteByID(id)) { return NotFound(); } else { return Ok(); }
         }
 
+        ////GET api/reservations/email
+        //[HttpGet("{email}")]
+        //public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetByGuestEmail(string email) {
+
+        //    IEnumerable<Reservation> reservations = null;
+        //    reservations = await _reservationRepository.GetByGuestEmail(email);
+
+        //    if (reservations == null) {
+        //        return NotFound("Ingen reservationer blev fundet");
+        //    } else {
+        //        return Ok(reservations.ReservationsToDTOs());
+        //    }
+        //}
+
         //GET api/reservations/email
         [HttpGet("{email}")]
         public async Task<ActionResult<IEnumerable<ReservationDTO>>> GetByGuestEmail(string email) {
 
-            IEnumerable<Reservation> reservations = null;
-            reservations = await _reservationRepository.GetByGuestEmail(email);
 
-            if (reservations == null) {
-                return NotFound("Ingen reservationer blev fundet");
-            } else {
+
+            try {
+                IEnumerable<Reservation> reservations = null;
+                reservations = await _reservationRepository.GetByGuestEmail(email);
+
                 return Ok(reservations.ReservationsToDTOs());
+
+            } catch (NoReservationFoundException e) {
+                return NotFound(e.Message); 
+            } catch (Exception e) {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        
+
     }
 }

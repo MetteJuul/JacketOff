@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using DataAccess.Repositories;
 
 using System.Data.SqlClient;
-
-
+using DataAccess.Exceptions;
 
 namespace DataAccess {
     public class ReservationRepository : BaseDB, IReservationRepository {
@@ -34,7 +33,7 @@ namespace DataAccess {
 
                 //returnerer hvor mange rows der er skrevet i. Altså, hvis 0 = ikke succes, hvis større end 0 succes
                 return await realConnection.QuerySingleAsync<int>(query, reservation);
-                
+
             } catch (Exception e) {
                 throw new Exception($"Error creating new reservation: '{e.Message}'.", e);
             }
@@ -70,7 +69,8 @@ namespace DataAccess {
         public async Task<Reservation> GetByID(int ID, SqlConnection connection = null) {
             try {
                 //Query is created and the input parameter is assigned
-                var query = "SELECT * FROM Reservation WHERE reservationID=@ID";
+                //var query = "SELECT * FROM Reservation WHERE reservationID=@ID";
+                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email) ORDER BY arrivalTime ASC";
 
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();
@@ -97,6 +97,22 @@ namespace DataAccess {
             }
         }
 
+        //public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
+        //    try {
+        //        //Query is created taking guestID as a variable
+        //        var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email)";
+
+        //        //Connection is made
+        //        using var realConnection = connection ?? CreateConnection();
+
+        //        //Query is executed passing guestID to retrieve a list of all reservations
+        //        //made by that guest
+        //        return (await realConnection.QueryAsync<Reservation>(query, new { email })).ToList();
+        //    } catch (Exception e) {
+        //        throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
+        //    }
+        //}
+
         public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
             try {
                 //Query is created taking guestID as a variable
@@ -104,12 +120,20 @@ namespace DataAccess {
 
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();
+                var result = (await realConnection.QueryAsync<Reservation>(query, new { email })).ToList();
 
                 //Query is executed passing guestID to retrieve a list of all reservations
                 //made by that guest
-                return (await realConnection.QueryAsync<Reservation>(query, new { email })).ToList();
-            } catch (Exception e) {
-                throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
+                if (result.Count == 0) {
+                    throw new NoReservationFoundException($"Der blev ikke fundet nogen reservationer på email: {email}", email);
+                    //throw new ArgumentNullException();
+                }
+                return result;
+
+            } catch {
+                //throw new Exception(e.Message);
+                // retrow den exception, der blev kastet tidligere
+                throw;
             }
         }
     }
