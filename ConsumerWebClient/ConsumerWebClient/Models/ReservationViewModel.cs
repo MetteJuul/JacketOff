@@ -7,7 +7,6 @@ namespace ConsumerWebClient.Models {
     public class ReservationViewModel {
         private DateTime _onlyDate;
         private DateTime _onlyTime;
-        private int _amountOfTests;
 
         public ReservationDTO Reservation { get; set; }
         public IEnumerable<ItemTypeDTO> ItemTypes { get; set; }
