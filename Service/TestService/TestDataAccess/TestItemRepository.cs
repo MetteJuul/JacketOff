@@ -12,34 +12,22 @@ namespace TestService.TestDataAccess {
     public class TestItemRepository {
 
         private ItemRepository _itemRepository;
-        private Item _newItem;
         private ItemType _newItemType;
 
         #region Setup and Teardown
         [SetUp]
         public async Task SetupAsync() {
             _itemRepository = new ItemRepository(Configuration.CONNECTION_STRING);
-            await CreateNewItemAsync();
             await CreateNewItemTypeAsync();
         }
 
         [TearDown]
         public async Task CleanUpAsync() {
-            await new ItemRepository(Configuration.CONNECTION_STRING).DeleteByID(_newItem.ItemID);
             await new ItemRepository(Configuration.CONNECTION_STRING).DeleteItemTypeByID(_newItemType.TypeID);
         }
         #endregion
 
         #region Setup help methods
-        public async Task<Item> CreateNewItemAsync() {
-            _newItem = new Item()
-            {
-                WardrobeID_FK = "Guldhornene",
-                TypeID_FK = 1,
-            };
-            _newItem.ItemID = await _itemRepository.CreateItem(_newItem);
-            return _newItem;
-        }
 
         public async Task<ItemType> CreateNewItemTypeAsync() {
             _newItemType = new ItemType()
