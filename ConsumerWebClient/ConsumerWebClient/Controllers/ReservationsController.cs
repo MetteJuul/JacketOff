@@ -23,6 +23,10 @@ namespace ConsumerWebClient.Controllers {
 
         }
 
+        public IActionResult Index() {
+            return View();
+        }
+
         //Retrieves all the user's reservations
         [HttpGet]
         public async Task<ActionResult> MyReservations() {
