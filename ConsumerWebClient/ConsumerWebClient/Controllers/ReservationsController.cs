@@ -37,7 +37,7 @@ namespace ConsumerWebClient.Controllers {
                 return View(reservations);
 
             } catch (Exception e) {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.ErrorMessage = "Dine reservationer kunne ikke hentes. :( ";
             }
             return View("OhNo");
         }
@@ -57,7 +57,7 @@ namespace ConsumerWebClient.Controllers {
                 return View(reservationViewModel);
 
             } catch (Exception e) {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.ErrorMessage = "Vi arbejder på at løse problemet. Tak for din tålmodighed.";
             }
             return View("OhNo");
         }
@@ -81,7 +81,7 @@ namespace ConsumerWebClient.Controllers {
                     TempData["Message"] = "Reservation oprettet!";
                     return RedirectToAction(nameof(MyReservations));
                 } else {
-                    ViewBag.ErrorMessage = "Reservationen blev ikke oprettet!";
+                    ViewBag.ErrorMessage = "Reservationen kunne ikke oprettes. :( ";
                 }
             } catch (Exception e) {
                 ViewBag.ErrorMessage = e.Message;

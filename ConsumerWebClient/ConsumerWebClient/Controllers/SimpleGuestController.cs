@@ -30,17 +30,13 @@ namespace ConsumerWebClient.Controllers {
         public async Task<IActionResult> Create(GuestViewModel guestViewModel) {
             GuestDTO guestDTO = guestViewModel.Guest;
             try {
-                if (await _client.CreateSimpleGuest(guestDTO) > 0) {
-                    TempData.Keep("notice");
-                    TempData["Message"] = $"{guestDTO.Email}";
-                    return View("GuestDetail");
-                } else {
-                    ViewBag.ErrorMessage = "Gæsten blev ikke oprettet!";
-                }
+                
+                await _client.CreateSimpleGuest(guestDTO);
+                TempData["Message"] = $"{guestDTO.Email}";
+                return View("GuestDetail");
             } catch (Exception e) {
-                ViewBag.ErrorMessage = e.Message;
+                ViewBag.ErrorMessage = "Gæsten kunne ikke oprettes! :( ";
             }
-
             return View();
         }
     }
