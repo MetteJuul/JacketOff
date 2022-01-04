@@ -56,7 +56,7 @@ namespace ConsumerWebClient.Controllers {
 
                 return View(reservationViewModel);
 
-            } catch (Exception e) {
+            } catch {
                 ViewBag.ErrorMessage = "Vi arbejder på at løse problemet. Tak for din tålmodighed.";
             }
             return View("OhNo");
@@ -77,14 +77,14 @@ namespace ConsumerWebClient.Controllers {
             //the CreateReservation method in our APIClient
             //If we fail, we show the error.
             try {
-                if (await _client.CreateReservation(newReservation) > 0) {
-                    TempData["Message"] = "Reservation oprettet!";
-                    return RedirectToAction(nameof(MyReservations));
-                } else {
-                    ViewBag.ErrorMessage = "Reservationen kunne ikke oprettes. :( ";
-                }
+
+                await _client.CreateReservation(newReservation);
+                TempData["Message"] = "Reservation oprettet!";
+                return RedirectToAction(nameof(MyReservations));
+
             } catch (Exception e) {
-                ViewBag.ErrorMessage = e.Message;
+                //ViewBag.ErrorMessage = e.Message;
+                ViewBag.ErrorMessage = ("Reservationen kunne ikke oprettes. :(");
             }
             return View("OhNo");
         }
