@@ -24,7 +24,7 @@ namespace API.Controllers {
 
         public ReservationsController(IConfiguration configuration) {
             _reservationRepository = new ReservationRepository(configuration.GetConnectionString("JacketOff"));
-            _service = new ReservationService(configuration.GetConnectionString("JacketOff"));
+            _service = new ReservationServiceNoComments(configuration.GetConnectionString("JacketOff"));
         }
 
         //GET: api/reservations        
