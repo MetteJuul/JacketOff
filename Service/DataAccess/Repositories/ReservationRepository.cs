@@ -100,7 +100,7 @@ namespace DataAccess {
         public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
             try {
                 //Query is created taking guestID as a variable
-                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email)";
+                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email) ORDER BY arrivalTime ASC";
 
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();

@@ -41,7 +41,7 @@ namespace DataAccess.Services {
 
                     var dateToUse = newReservation.ArrivalTime.Date;
 
-                    //Check that guest is not making a reservation more than 14 days into the future
+                    //Check that guest is not making a reservation more than 1 month into the future
                     var legalReservationTime1Month = (DateTime.Now.AddMonths(1)).Date;
                     var now = (DateTime.Now).Date;
                     if (dateToUse <= legalReservationTime1Month && dateToUse >= now) {

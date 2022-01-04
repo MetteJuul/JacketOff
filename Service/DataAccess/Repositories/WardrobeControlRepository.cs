@@ -53,14 +53,11 @@ namespace DataAccess.Repositories {
         public async Task<bool> UpdateCount(WardrobeControl wardrobeControl, SqlConnection connection = null) {
             try {
 
-                var query = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" +
-                    "UPDATE WardrobeControl SET count=@Count WHERE wardrobeID_FK=@WardrobeID_FK and date=@Date";
-
+                var query = "UPDATE WardrobeControl SET count=@Count WHERE wardrobeID_FK=@WardrobeID_FK and date=@Date";
 
                 using var realConnection = connection?? CreateConnection();
 
                 return await realConnection.ExecuteAsync(query, wardrobeControl) > 0;
-
 
             } catch (Exception e) {
 
