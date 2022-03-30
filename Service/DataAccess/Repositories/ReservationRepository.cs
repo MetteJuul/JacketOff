@@ -10,8 +10,6 @@ using DataAccess.Repositories;
 
 using System.Data.SqlClient;
 
-
-
 namespace DataAccess {
     public class ReservationRepository : BaseDB, IReservationRepository {
         public ReservationRepository(string connectionString) : base(connectionString) { }
@@ -44,10 +42,13 @@ namespace DataAccess {
             try {
                 //Query is created and the input parameter iD is inserted into it
                 var query = "DELETE FROM Reservation WHERE reservationID=@iD";
+
                 //Connection is created
                 using var realConnection = connection ?? CreateConnection();
+
                 //Using Async the query is executed only if the iD is larger than 0
                 return await realConnection.ExecuteAsync(query, new { ID }) > 0;
+
             } catch (Exception e) {
                 throw new Exception($"Error deleting reservation with id {ID}: '{e.Message}'.", e);
             }
@@ -57,11 +58,13 @@ namespace DataAccess {
             try {
                 //Query is created
                 var query = "SELECT * FROM Reservation";
+
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();
 
                 //We execute the query that retreives a list of all reservations
                 return (await realConnection.QueryAsync<Reservation>(query)).ToList();
+
             } catch (Exception e) {
                 throw new Exception($"Error getting all reservations: '{e.Message}'.", e);
             }
@@ -77,6 +80,7 @@ namespace DataAccess {
 
                 //We execute the query that retrieves a reservation object based on ID
                 return await realConnection.QuerySingleAsync<Reservation>(query, new { ID });
+
             } catch (Exception e) {
                 throw new Exception($"Error getting reservation with id {ID}: '{e.Message}'.", e);
             }
@@ -92,6 +96,7 @@ namespace DataAccess {
 
                 //Query is executed by passing the reservation object along with the query
                 return await realConnection.ExecuteAsync(query, reservation) > 0;
+
             } catch (Exception e) {
                 throw new Exception($"Error updating reservation: '{e.Message}'.", e);
             }
@@ -100,7 +105,7 @@ namespace DataAccess {
         public async Task<IEnumerable<Reservation>> GetByGuestEmail(string email, SqlConnection connection = null) {
             try {
                 //Query is created taking guestID as a variable
-                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email) ORDER BY arrivalTime ASC";
+                var query = "SELECT * FROM Reservation WHERE guestID_FK IN(SELECT guestID FROM Guest WHERE email = @email) ORDER BY arrivalTime DESC";
 
                 //Connection is made
                 using var realConnection = connection ?? CreateConnection();
@@ -108,6 +113,7 @@ namespace DataAccess {
                 //Query is executed passing guestID to retrieve a list of all reservations
                 //made by that guest
                 return (await realConnection.QueryAsync<Reservation>(query, new { email })).ToList();
+
             } catch (Exception e) {
                 throw new Exception($"Error getting all reservation for guest with email {email} '{e.Message}'.", e);
             }

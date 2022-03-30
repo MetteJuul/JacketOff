@@ -43,8 +43,8 @@ namespace DataAccess.Services {
 
                     //Check that guest is not making a reservation more than 1 month into the future
                     var legalReservationTime1Month = (DateTime.Now.AddMonths(1)).Date;
-                    var now = (DateTime.Now).Date;
-                    if (dateToUse <= legalReservationTime1Month && dateToUse >= now) {
+
+                    if (dateToUse <= legalReservationTime1Month && dateToUse >= (DateTime.Now).Date) {
 
                         //Get WardrobeControl object
                         var wardrobeControl = await wardrobeControlRepo.GetWardrobeControlByIdAndDate(newReservation.WardrobeID_FK, dateToUse.Date);
